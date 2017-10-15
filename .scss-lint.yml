@@ -1,0 +1,30 @@
+scss_files: "src/client/**/*.scss"
+
+linters:
+  Comment:
+    enabled: true,
+    allowed: '^[/* ]*'
+
+  HexNotation:
+    style: uppercase
+
+  HexLength:
+    style: long
+
+  Indentation:
+    enabled: true
+    allow_non_nested_indentation: false
+    character: space
+    width: 2
+
+  NestingDepth:
+    max_depth: 3
+
+  PropertySortOrder:
+    enabled: true
+    ignore_unspecified: true
+    min_properties: 2
+    separate_groups: false
+
+  SelectorFormat:
+    convention: hyphenated_BEM
