@@ -1,6 +1,6 @@
 /** Used in .babelrc for 'test' environment */
 
-const devConfig = require('./webpack.config.development');
+const devConfig = require('./webpack.config.app');
 
 module.exports = {
   output: {

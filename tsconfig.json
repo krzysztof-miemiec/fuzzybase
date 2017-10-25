@@ -20,10 +20,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "outDir": "../build/dist"
+    "outDir": "./app/dist"
   },
   "files": [
-    "app/index.tsx"
+    "app/src/index.tsx"
   ],
   "include": [
     "app/**/*.ts",

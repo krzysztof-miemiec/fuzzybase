@@ -30,19 +30,17 @@
   },
   "main": "./app/main.js",
   "scripts": {
-    "cleanup": "rimraf ./build",
+    "cleanup": "rimraf ./release && rimraf ./app/dist",
     "test": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js",
-    "test-all": "npm run test && npm run build && npm run test-e2e",
-    "test-watch": "npm test -- --watch",
-    "test-e2e": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js e2e",
-    "hot-server": "cross-env NODE_ENV=development node --max_old_space_size=2096 server.js",
-    "build-main": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
-    "build-renderer": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
-    "build": "npm run build-main && npm run build-renderer",
-    "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main",
-    "development": "npm run hot-server -- --start-hot",
-    "production": "npm run build && build -mwl"
+    "test:all": "npm run test && npm run build && npm run test:e2e",
+    "test:watch": "npm test -- --watch",
+    "test:e2e": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js e2e",
+    "build:main": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
+    "build:renderer": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack.config.app.js --progress --profile --colors",
+    "build": "npm run build:main && npm run build:renderer",
+    "start:hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main",
+    "development": "cross-env NODE_ENV=development node --max_old_space_size=2096 server.js --start-hot",
+    "production": "npm run cleanup && npm run build && build -mwl"
   },
   "jest": {
     "moduleNameMapper": {
@@ -92,16 +90,23 @@
       "app/package.json"
     ],
     "directories": {
-      "buildResources": "resources",
-      "output": "build/release"
+      "buildResources": "app/dist",
+      "output": "release"
+    },
+    "mac": {
+      "target": [
+        "dir"
+      ]
     },
     "win": {
-      "target": "nsis"
+      "target": [
+        "dir"
+      ]
     },
     "linux": {
       "target": [
-        "deb",
-        "AppImage"
+        "dir",
+        "deb"
       ]
     }
   },
@@ -109,61 +114,64 @@
     "electron": "./node_modules/.bin/electron"
   },
   "devDependencies": {
-    "@types/enzyme": "^2.8.7",
+    "@types/enzyme": "^3.1.1",
     "@types/history": "^4.5.2",
-    "@types/jest": "^21.1.1",
-    "@types/node": "^8.0.2",
-    "@types/react": "^16.0.5",
-    "@types/react-dom": "^16.0.0",
+    "@types/jest": "^21.1.5",
+    "@types/node": "^8.0.47",
+    "@types/react": "^16.0.18",
+    "@types/react-dom": "^16.0.2",
     "@types/react-hot-loader": "^3.0.4",
     "@types/react-redux": "^5.0.4",
     "@types/react-router": "^4.0.11",
     "@types/react-router-dom": "^4.0.7",
     "@types/react-router-redux": "^5.0.2",
-    "@types/redux-logger": "^3.0.0",
-    "@types/sinon": "^2.3.1",
+    "@types/redux-logger": "^3.0.5",
+    "@types/sinon": "^2.3.6",
     "asar": "^0.13.0",
     "boiler-room-custodian": "^0.6.2",
     "concurrently": "^3.1.0",
-    "cross-env": "^5.0.1",
+    "cross-env": "^5.1.0",
     "css-loader": "^0.28.4",
     "css-modules-require-hook": "^4.2.2",
     "devtron": "^1.4.0",
-    "electron": "1.7.6",
+    "electron": "1.7.9",
     "electron-builder": "^19.37.2",
     "electron-builder-http": "^19.15.0",
     "electron-devtools-installer": "^2.0.1",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.0",
-    "express": "^4.14.0",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "file-loader": "^0.11.2",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "express": "^4.16.2",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.24.1",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^21.0.1",
+    "image-webpack-loader": "^3.4.2",
+    "jest": "^21.2.1",
     "json-loader": "^0.5.4",
-    "node-sass": "^4.1.1",
-    "react-hot-loader": "^3.0.0-beta.6",
+    "minimist": "^1.2.0",
+    "node-sass": "^4.5.3",
+    "raven": "^2.2.1",
+    "react-hot-loader": "^3.1.1",
     "react-test-renderer": "^16.0.0",
     "redux-logger": "^3.0.6",
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
-    "sinon": "^4.0.0",
+    "sinon": "^4.0.1",
     "spectron": "^3.4.1",
     "style-loader": "^0.19.0",
-    "ts-loader": "^2.2.0",
+    "ts-loader": "^3.0.5",
     "ts-node": "^3.1.0",
     "tslint": "^5.7.0",
-    "typescript": "^2.4.1",
+    "typescript": "^2.5.3",
     "url-loader": "^0.6.1",
-    "webpack": "^3.3.0",
+    "webpack": "^3.8.1",
     "webpack-dev-middleware": "^1.9.0",
-    "webpack-hot-middleware": "^2.13.2",
-    "webpack-merge": "^2.0.0"
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "cross-spawn": "^5.1.0",
     "electron-debug": "^1.1.0",
-    "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -172,7 +180,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0",
+    "redux-saga": "^0.16.0",
     "source-map-support": "^0.5.0"
   }
 }

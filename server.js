@@ -9,7 +9,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const { spawn } = require('child_process');
 
-const config = require('./webpack.config.development');
+const config = require('./webpack.config.app');
 
 const argv = require('minimist')(process.argv.slice(2));
 
@@ -34,13 +34,14 @@ const server = app.listen(PORT, 'localhost', serverError => {
   }
 
   if (argv['start-hot']) {
-    spawn('npm', ['run', 'start-hot'], { shell: true, env: process.env, stdio: 'inherit' })
+    spawn('npm', ['run', 'start:hot'], { shell: true, env: process.env, stdio: 'inherit' })
       .on('close', code => process.exit(code))
       .on('error', spawnError => console.error(spawnError));
   }
 
   console.log(`Listening at http://localhost:${PORT}`);
 });
+server.keepAliveTimeout = 10000;
 
 process.on('SIGTERM', () => {
   console.log('Stopping dev server');
