@@ -1,0 +1,17 @@
+{
+  "name": "fuzzybase",
+  "productName": "Fuzzybase",
+  "version": "0.0.1",
+  "description": "Fuzzybase - SQL database client with fuzzy queries support",
+  "main": "./main.js",
+  "author": {
+    "name": "Krzysztof Miemiec",
+    "email": "krzysztof.miemiec@gmail.com",
+    "url": "https://github.com/krzysztof-miemiec"
+  },
+  "scripts": {
+    "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
