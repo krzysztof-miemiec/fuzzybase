@@ -40,3 +40,7 @@ script:
 - yarn test-e2e
 - yarn lemmy
 
+branches:
+  only:
+  - develop
+  - master
