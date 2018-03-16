@@ -149,7 +149,7 @@
     "image-webpack-loader": "^3.4.2",
     "jest": "^21.2.1",
     "json-loader": "^0.5.4",
-    "lemmy": "^0.0.7",
+    "lemmy": "^0.0.8",
     "minimist": "^1.2.0",
     "node-sass": "^4.5.3",
     "raven": "^2.2.1",
