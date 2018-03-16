@@ -1,4 +1,5 @@
 'use strict';
+// eslint-disable global-require
 const { app, BrowserWindow, Menu, shell } = require('electron');
 const Raven = require('raven');
 Raven.config('https://1d21dfb7203b48d4886123361c64a63f:d9539900eb7a482e825bfdad2427c78d@sentry.io/235585').install();
@@ -8,18 +9,18 @@ let menu = null;
 let mainWindow = null;
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support'); // eslint-disable-line
+  const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 } else if (process.env.NODE_ENV === 'development') {
-  require('electron-debug')(); // eslint-disable-line global-require
-  const path = require('path'); // eslint-disable-line
-  const p = path.join(__dirname, '../app/node_modules'); // eslint-disable-line
-  require('module').globalPaths.push(p); // eslint-disable-line
+  require('electron-debug')();
+  const path = require('path');
+  const p = path.join(__dirname, '../app/node_modules');
+  require('module').globalPaths.push(p);
 }
 
 const installExtensions = () => {
   if (process.env.NODE_ENV === 'development') {
-    const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
+    const installer = require('electron-devtools-installer');
 
     const extensions = [
       'REACT_DEVELOPER_TOOLS',

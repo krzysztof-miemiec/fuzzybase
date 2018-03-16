@@ -35,6 +35,8 @@ before_script:
 script:
 - node --version
 - yarn package
+- yarn lint
 - yarn test
 - yarn test-e2e
+- yarn lemmy
 

@@ -1,8 +1,11 @@
-import { applyMiddleware, createStore } from 'redux';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { rootReducer } from './reducers';
+
+const rootReducer = combineReducers({
+
+});
 
 export const history = createBrowserHistory();
 const router = routerMiddleware(history);
@@ -13,20 +16,12 @@ interface AppState {
 }
 
 const initialState: AppState = {
-  walkthrough: {}
+  walkthrough: {},
 };
 
 export function configureStore() {
   const enhancer = process.env.NODE_ENV !== 'production'
     ? applyMiddleware(sagaMiddleware, router, require('logger').logger)
     : applyMiddleware(sagaMiddleware, router);
-  const store = createStore(rootReducer, initialState, enhancer);
-  if ((module as any).hot) {
-    (module as any).hot.accept('./reducers', () =>
-      store.replaceReducer(require('./reducers')) // eslint-disable-line global-require
-    );
-  }
-  return store;
+  return createStore(rootReducer, initialState, enhancer);
 }
-
-// sagaMiddleware.run(mySaga);
