@@ -34,7 +34,7 @@ module.exports = {
     ]
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.tsx?$/,
         loaders: ['react-hot-loader/webpack', 'ts-loader'],
@@ -42,25 +42,6 @@ module.exports = {
       }, {
         test: /\.json$/,
         loader: 'json-loader'
-      },
-      {
-        test: /\.(scss|sass)$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: DEV,
-                sourceMap: DEV,
-                importLoaders: 1,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
-              }
-            },
-            {
-              loader: 'sass-loader'
-            }
-          ]
-        })
       },
       {
         test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,

@@ -5,7 +5,7 @@ const { dependencies: externals } = require('./app/package.json');
 module.exports = {
   devtool: 'source-map',
   module: {
-    loaders: [{
+    rules: [{
       test: /\.json$/,
       loader: 'json-loader'
     }]
