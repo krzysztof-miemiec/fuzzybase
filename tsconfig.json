@@ -1,26 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "es2015",
+    "target": "es2015",
     "jsx": "react",
     "lib": [
-      "dom",
-      "es6",
-      "dom.iterable",
-      "scripthost"
+      "es2017",
+      "dom"
     ],
+    "moduleResolution": "node",
     "types": [],
     "alwaysStrict": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "strictNullChecks": false,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "preserveConstEnums": true,
+    "allowJs": true,
     "sourceMap": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./app/dist"
   },
   "files": [

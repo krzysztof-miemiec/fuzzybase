@@ -13,9 +13,9 @@ const publicPath = PROD ? './dist/' : `http://localhost:${port}/dist/`;
 
 module.exports = {
   devtool: PROD ? 'cheap-module-source-map' : 'inline-source-map',
+  mode: PROD ? 'production' : 'development',
   entry: [
     ...DEV ? [
-      'react-hot-loader/patch',
       `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr&reload=true`
     ] : [],
     './app/src/index'
@@ -23,11 +23,10 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'app/dist'),
     filename: 'bundle.js',
-    libraryTarget: 'commonjs2',
     publicPath
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.json'],
+    extensions: ['.js', '.tsx', '.json'],
     modules: [
       path.join(__dirname, 'app'),
       'node_modules',
@@ -37,7 +36,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        loaders: ['react-hot-loader/webpack', 'ts-loader'],
+        loaders: 'babel-loader!ts-loader',
         exclude: /node_modules/
       }, {
         test: /\.json$/,

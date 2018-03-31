@@ -11,6 +11,6 @@ interface State {
 
 export class Toolbar extends Component<Props, State> {
   public render() {
-    return <div></div>;
+    return <div ></div>;
   }
 }

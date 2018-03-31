@@ -25,3 +25,5 @@ export function configureStore() {
     : applyMiddleware(sagaMiddleware, router);
   return createStore(rootReducer, initialState, enhancer);
 }
+
+export const store = configureStore();

@@ -4,6 +4,7 @@ const { dependencies: externals } = require('./app/package.json');
 
 module.exports = {
   devtool: 'source-map',
+  mode: 'production',
   module: {
     rules: [{
       test: /\.json$/,
@@ -14,15 +15,13 @@ module.exports = {
     extensions: ['.js', '.json'],
     modules: [
       path.join(__dirname, 'app'),
-      'node_modules',
+      './app/node_modules',
     ]
   },
   entry: ['./app/main'],
   output: {
     path: __dirname,
     filename: './app/dist/main.js',
-    libraryTarget: 'commonjs2'
-
   },
   plugins: [
     new webpack.DefinePlugin({

@@ -1,19 +1,24 @@
 import { History } from 'history';
-import * as React from 'react';
-import * as Redux from 'react-redux';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
+import { Store } from 'redux';
 import { Layout } from './scenes/layout';
 
 interface Props {
-  store: Redux.Store<any>;
+  store: Store<any>;
   history: History;
 }
 
-export const App: React.SFC<Props> = ({ store, history }) => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Layout />
-    </ConnectedRouter>
-  </Provider>
-);
+export class App extends Component<Props> {
+  render() {
+    const { store, history } = this.props;
+    return (
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Layout />
+        </ConnectedRouter>
+      </Provider>
+    );
+  }
+}

@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'development') {
   require('electron-debug')();
   const path = require('path');
-  const p = path.join(__dirname, '../app/node_modules');
+  const p = path.join(__dirname, './node_modules');
   require('module').globalPaths.push(p);
 }
 

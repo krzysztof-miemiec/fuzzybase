@@ -3,17 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>Fuzzybase</title>
-  <script>
-    {
-      const link = document.createElement('link');
-      link.href = process.env.HOT ? `http://localhost:${process.env.PORT || 3000}/dist/style.css` : './dist/style.css';
-      link.rel = 'stylesheet';
-      document.getElementsByTagName('head')[0].appendChild(link);
-    }
-  </script>
 </head>
 <body>
-<div id="root" class="component--full-screen"></div>
+<div id="root"></div>
 <script>
   {
     const script = document.createElement('script');
