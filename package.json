@@ -164,7 +164,7 @@
     "image-webpack-loader": "^4.2.0",
     "jest": "^22.4.3",
     "json-loader": "^0.5.7",
-    "lemmy": "^0.0.10",
+    "lemmy": "^0.0.11",
     "minimist": "^1.2.0",
     "react-test-renderer": "^16.2.0",
     "redux-logger": "^3.0.6",
