@@ -2,7 +2,7 @@
 logs/
 screenshots/
 release/
-app/dist/
+src/renderer/app/dist/
 coverage/
 lib-cov/
 .tscache/
