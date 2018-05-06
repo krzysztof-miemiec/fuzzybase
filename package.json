@@ -41,10 +41,13 @@
   "electronWebpack": {
     "commonSourceDirectory": "src/common",
     "main": {
-      "sourceDirectory": "src/main"
+      "sourceDirectory": "src/main",
+      "webpackConfig": "webpack.additions.js"
     },
     "renderer": {
-      "sourceDirectory": "src/renderer"
+      "sourceDirectory": "src/renderer",
+      "webpackConfig": "webpack.additions.js",
+      "webpackDllConfig": "webpack.additions.js"
     }
   },
   "build": {
@@ -95,15 +98,18 @@
     }
   },
   "dependencies": {
-    "chalk": "^2.4.1",
+    "@material-ui/icons": "^1.0.0-beta.43",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.3",
-    "history": "^4.6.1",
+    "history": "^4.7.2",
+    "i18next": "^11.2.3",
     "lodash": "^4.17.10",
-    "pg": "^7.4.1",
-    "raven-js": "^3.24.1",
+    "material-ui": "^1.0.0-beta.44",
+    "pg": "^7.4.2",
+    "raven-js": "^3.24.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-i18next": "^7.6.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -117,9 +123,10 @@
   },
   "devDependencies": {
     "@types/history": "^4.6.2",
+    "@types/i18next": "^8.4.3",
     "@types/jest": "^22.2.3",
     "@types/pg": "^7.4.8",
-    "@types/react": "^16.3.11",
+    "@types/react": "^16.3.13",
     "@types/uuid": "^3.4.3",
     "electron": "1.8.4",
     "electron-builder": "^20.11.1",
@@ -128,12 +135,14 @@
     "jest": "^22.4.3",
     "lemmy": "^0.0.13",
     "rimraf": "^2.6.2",
-    "tslint": "^5.9.1",
+    "tslint": "^5.10.0",
+    "tslint-loader": "^3.6.0",
     "tslint-react": "^3.5.1",
-    "typescript": "^2.8.1",
-    "webpack": "^4.6.0"
+    "typescript": "^2.8.3",
+    "webpack": "^4.7.0",
+    "webpack-build-notifier": "^0.1.25"
   },
   "resolutions": {
-    "webpack-sources": "1.0.1"
+    "webpack-sources": "1.1.0"
   }
 }

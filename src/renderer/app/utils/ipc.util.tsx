@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
 import { CommunicationActionType } from '../../../common/actions';
 import { registerForIPC } from '../../../common/ipc';
+import { store } from '../app.store';
 import { handleLogAction } from './log.util';
 
 export const { send: ipcSend, listen } = registerForIPC();
@@ -17,7 +18,7 @@ export module IPCManager {
           handleLogAction(action);
           break;
         default:
-          console.log('Unrecognized action: ' + JSON.stringify(action));
+          store.dispatch(action);
           break;
       }
     });
