@@ -1,7 +1,14 @@
-import { registerForIPC } from '../../common/ipc';
+import { log, LogMethod, LogSource } from '../../common/actions';
+import { store } from './background.store';
+import { listen, send } from './ipc';
 
-const { listen } = registerForIPC();
+console.log = (message: string, optionalParams?: any) =>
+  send(log(LogSource.BACKGROUND, LogMethod.LOG, message, optionalParams));
+console.warn = (message: string, optionalParams?: any) =>
+  send(log(LogSource.BACKGROUND, LogMethod.WARN, message, optionalParams));
+console.error = (message: string, optionalParams?: any) =>
+  send(log(LogSource.BACKGROUND, LogMethod.ERROR, message, optionalParams));
 
 listen().subscribe(action => {
-  console.log(action);
+  store.dispatch(action);
 });

@@ -1,14 +1,18 @@
 // eslint-disable global-require
 import { app, ipcMain, Menu } from 'electron';
+import { DIRECT_CHANNEL, MAIN_APP_CHANNEL, MAIN_BACKGROUND_CHANNEL } from '../common/ipc';
+import { handleLogs, Log } from '../common/log';
 import { createRendererWindow, WindowName } from '../common/window';
 import { handleError } from './errors';
 import { setMenu } from './menu';
+import BrowserWindow = Electron.BrowserWindow;
 
-let mainWindow = null;
-let backgroundWindow = null;
+let appWindow: BrowserWindow = null;
+let backgroundWindow: BrowserWindow = null;
 
 const installExtensions = (): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {
+    Log.d('Development environment found. Initializing devtools.');
     const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 
     const extensions = [
@@ -28,11 +32,12 @@ process.on('uncaughtException', error => {
 });
 
 app.on('ready', () => installExtensions().then(() => {
+  handleLogs(ipcMain);
   backgroundWindow = createRendererWindow({
     name: WindowName.BACKGROUND,
     show: false,
   });
-  mainWindow = createRendererWindow({
+  appWindow = createRendererWindow({
     window: {
       width: 1024,
       height: 728,
@@ -40,24 +45,30 @@ app.on('ready', () => installExtensions().then(() => {
     show: true,
     name: WindowName.APP,
   });
-  setMenu(mainWindow);
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  ipcMain.on(MAIN_APP_CHANNEL, (_event, payload) => {
+    appWindow.webContents.send(DIRECT_CHANNEL, payload);
+  });
+  ipcMain.on(MAIN_BACKGROUND_CHANNEL, (_event, payload) => {
+    backgroundWindow.webContents.send(DIRECT_CHANNEL, payload);
+  });
+  setMenu(appWindow);
+  appWindow.on('closed', () => {
+    appWindow = null;
     backgroundWindow = null;
   });
   if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
   } else if (process.env.NODE_ENV === 'development') {
-    mainWindow.openDevTools();
-    mainWindow.webContents.on('context-menu', (_e, props) => {
+    appWindow.webContents.openDevTools();
+    appWindow.webContents.on('context-menu', (_e, props) => {
       const { x, y } = props;
       Menu.buildFromTemplate([
         {
           label: 'Inspect element',
-          click: () => mainWindow.webContents.inspectElement(x, y),
+          click: () => appWindow.webContents.inspectElement(x, y),
         },
-      ]).popup(mainWindow);
+      ]).popup(appWindow);
     });
     require('electron-debug')();
     const path = require('path');
@@ -70,16 +81,4 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
-});
-
-ipcMain.on('renderer', (event, payload) => {
-  console.log(event);
-  console.log(payload);
-  mainWindow.webContents.send('main', payload);
-});
-
-ipcMain.on('background', (event, payload) => {
-  console.log(event);
-  console.log(payload);
-  backgroundWindow.webContents.send('main', payload);
 });

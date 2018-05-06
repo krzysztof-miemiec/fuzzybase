@@ -1,8 +1,13 @@
 import { WindowName } from '../common/window';
 
-const args = JSON.parse(decodeURIComponent(window.location.hash.replace(/^#/, '')));
+process.on('uncaughtException', error => {
+  console.error(error);
+});
 
-switch (args.name) {
+const args = JSON.parse(decodeURIComponent(window.location.hash.replace(/^#/, '')));
+const windowName = process.env.windowName = args.name;
+
+switch (windowName) {
   case WindowName.APP:
     import('./app/index');
     break;
@@ -10,6 +15,6 @@ switch (args.name) {
     import('./background/index');
     break;
   default:
-    throw new Error(`Invalid window name '${args.name}'.`);
+    throw new Error(`Invalid window name '${windowName}'.`);
 }
-console.log(args.name);
+console.log(windowName);

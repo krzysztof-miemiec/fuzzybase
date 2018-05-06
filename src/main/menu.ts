@@ -27,7 +27,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
           accelerator: 'Command+Shift+H',
           role: 'hideOthers',
         }, {
-          label: 'Show All',
+          label: 'Show SettingsActions',
           role: 'front',
         }, {
           type: 'separator',
@@ -75,7 +75,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
           accelerator: 'Command+V',
           role: 'paste',
         }, {
-          label: 'Select All',
+          label: 'Select SettingsActions',
           accelerator: 'Command+A',
           role: 'selectAll',
         },
@@ -116,7 +116,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
         }, {
           type: 'separator',
         }, {
-          label: 'Bring All to Front',
+          label: 'Bring SettingsActions to Front',
           role: 'front',
         },
       ],

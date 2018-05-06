@@ -2,8 +2,7 @@
 logs/
 screenshots/
 release/
-src/renderer/app/dist/
-coverage/
+dist/
 lib-cov/
 .tscache/
 node_modules/

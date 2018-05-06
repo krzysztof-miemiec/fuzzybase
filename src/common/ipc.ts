@@ -1,49 +1,32 @@
 import { ipcRenderer } from 'electron';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
+import { CommunicationAction } from './actions';
+import { WindowName } from './window';
 
-export enum CommunicationActionType {
-  READY = 'READY',
-}
-
-interface CommunicationAction {
-  type: CommunicationActionType;
-}
-
-const DIRECT_CHANNEL = 'direct';
-const MAIN_CHANNEL = 'main';
+export const MAIN_APP_CHANNEL = 'app';
+export const MAIN_BACKGROUND_CHANNEL = 'background';
+export const DIRECT_CHANNEL = 'direct';
 
 export const registerForIPC = () => {
-  let backgroundWindowId: number;
-  let appWindowId: number;
-  let hasWindowIds: boolean = false;
+  const listen = (): Observable<CommunicationAction> => {
+    const subject = new Subject<CommunicationAction>();
+    ipcRenderer.on(DIRECT_CHANNEL, (_event, payloadString) => {
+      const payload: CommunicationAction = JSON.parse(payloadString);
+      subject.next(payload);
+    });
+    return subject.asObservable();
+  };
 
-  ipcRenderer.on(MAIN_CHANNEL, (_event, payload) => {
-    backgroundWindowId = payload.backgroundWindowId;
-    appWindowId = payload.appWindowId;
-    hasWindowIds = true;
-    ipcRenderer.send(MAIN_CHANNEL, {type: CommunicationActionType.READY});
-  });
+  const destinationChannel = process.env.windowName === WindowName.APP
+    ? MAIN_BACKGROUND_CHANNEL
+    : MAIN_APP_CHANNEL;
+
+  const send = (action: CommunicationAction) => {
+    ipcRenderer.send(destinationChannel, JSON.stringify(action));
+  };
 
   return {
-    listen: (): Observable<CommunicationAction> => {
-      const subject = new BehaviorSubject<CommunicationAction>(null);
-      ipcRenderer.on(DIRECT_CHANNEL, (_event, payload) => {
-        subject.next(payload);
-      });
-      return subject.asObservable();
-    },
-    sendToApp: (action: CommunicationAction) => {
-      if (!hasWindowIds) {
-        throw new Error('Window IDs are not present.');
-      }
-      ipcRenderer.sendTo(appWindowId, DIRECT_CHANNEL, action);
-    },
-    sendToBackground: (action: CommunicationAction) => {
-      if (!hasWindowIds) {
-        throw new Error('Window IDs are not present.');
-      }
-      ipcRenderer.sendTo(backgroundWindowId, DIRECT_CHANNEL, action);
-    },
+    listen,
+    send,
   };
 };

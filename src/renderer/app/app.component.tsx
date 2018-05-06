@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { Store } from 'redux';
 import { Layout } from './scenes/layout/index';
+import { IPCManager } from './utils/ipc.util';
 
 interface Props {
   store: Store<any>;
@@ -11,6 +12,15 @@ interface Props {
 }
 
 export class App extends Component<Props> {
+
+  componentDidMount() {
+    IPCManager.subscribe();
+  }
+
+  componentWillUnmount() {
+    IPCManager.unsubscribe();
+  }
+
   render() {
     const { store, history } = this.props;
     return (

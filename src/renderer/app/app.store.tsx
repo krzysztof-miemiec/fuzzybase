@@ -1,15 +1,15 @@
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import * as settings from './shared/settings/store';
+import { AppStore } from './store';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  settings: settings.reducer,
+});
 
-interface AppState {
-  walkthrough: object;
-}
-
-const initialState: AppState = {
-  walkthrough: {},
+const initialState = {
+  settings: settings.initialState,
 };
 
 function configureStore() {
@@ -20,7 +20,7 @@ function configureStore() {
   const enhancer = process.env.NODE_ENV !== 'production'
     ? applyMiddleware(router)
     : applyMiddleware(router);
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store: AppStore = createStore(rootReducer, initialState, enhancer);
 
   return { store, history };
 }
