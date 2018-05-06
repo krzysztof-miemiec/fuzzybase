@@ -1,9 +1,10 @@
-import {  Persist } from '../../../utils/persist.util';
+import { Persist } from '../../../utils/persist.util';
 
 export interface DatabaseState {
-  id?: string;
+  id: string;
   name: string;
-  uri: string;
+  host: string;
+  port: string;
   username?: string;
   password?: string;
 }

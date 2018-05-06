@@ -1,5 +1,24 @@
 {
-  "toolbar":{
-    "connections": "Connections"
+  "translation": {
+    "connections": {
+      "title": "Connections"
+    },
+    "drawer": {
+      "home": "Home",
+      "databases": "Databases"
+    },
+    "database": {
+      "name": "Database Name",
+      "host": "Host",
+      "port": "Port",
+      "username": "Username",
+      "password": "Password"
+    },
+    "actions": {
+      "add": "Add",
+      "remove": "Remove",
+      "edit": "Edit",
+      "save": "Save"
+    }
   }
 }

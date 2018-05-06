@@ -36,7 +36,7 @@
     "build": "electron-webpack",
     "dev": "electron-webpack dev",
     "dist": "yarn clean && yarn build && electron-builder",
-    "lint": "mkdir -p reports && tslint './app/src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './app/src/**/*.{js,ts,tsx}' --project ./ --format stylish"
+    "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish"
   },
   "electronWebpack": {
     "commonSourceDirectory": "src/common",
@@ -99,12 +99,14 @@
   },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",
+    "classnames": "^2.2.5",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.3",
     "history": "^4.7.2",
     "i18next": "^11.2.3",
+    "i18next-electron-language-detector": "^0.0.10",
     "lodash": "^4.17.10",
-    "material-ui": "^1.0.0-beta.44",
+    "material-ui": "^1.0.0-beta.45",
     "pg": "^7.4.2",
     "raven-js": "^3.24.2",
     "react": "^16.3.2",
@@ -122,11 +124,14 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.3",
     "@types/history": "^4.6.2",
     "@types/i18next": "^8.4.3",
     "@types/jest": "^22.2.3",
     "@types/pg": "^7.4.8",
     "@types/react": "^16.3.13",
+    "@types/react-redux": "^5.0.19",
+    "@types/react-router": "^4.0.24",
     "@types/uuid": "^3.4.3",
     "electron": "1.8.4",
     "electron-builder": "^20.11.1",

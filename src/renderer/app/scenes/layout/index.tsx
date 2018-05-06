@@ -1,1 +1,1 @@
-export * from './components/layout.component';
+export * from './containers/layout.component';

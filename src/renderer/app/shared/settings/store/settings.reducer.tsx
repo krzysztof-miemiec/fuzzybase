@@ -14,17 +14,14 @@ const baseReducer = (state: void | SettingsState, action: SettingsAction): Setti
     state = initialState;
   }
   switch (action.type) {
-    case SETTINGS_ACTIONS.ADD_DATABASE:
+    case SETTINGS_ACTIONS.SET_DATABASE:
       return {
         ...state,
-        databases: [...state.databases, { ...action.database, id: uuid() }],
-      };
-    case SETTINGS_ACTIONS.UPDATE_DATABASE:
-      return {
-        ...state,
-        databases: state.databases.map(database => database.id === action.databaseId
-          ? action.database
-          : database),
+        databases: action.database.id
+          ? state.databases.map(database => database.id === action.database.id
+            ? action.database
+            : database)
+          : [...state.databases, { id: uuid(), ...action.database }],
       };
     case SETTINGS_ACTIONS.REMOVE_DATABASE:
       return {

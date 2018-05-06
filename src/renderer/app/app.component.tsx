@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { Store } from 'redux';
-import { Layout } from './scenes/layout/index';
+import { Layout } from './scenes/layout';
 import { IPCManager } from './utils/ipc.util';
 
 interface Props {

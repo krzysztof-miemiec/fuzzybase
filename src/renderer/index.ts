@@ -17,4 +17,3 @@ switch (windowName) {
   default:
     throw new Error(`Invalid window name '${windowName}'.`);
 }
-console.log(windowName);

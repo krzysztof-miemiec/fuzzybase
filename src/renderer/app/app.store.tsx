@@ -1,18 +1,20 @@
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import * as layout from './scenes/layout/store';
 import * as settings from './shared/settings/store';
 import { AppStore } from './store';
 
-const rootReducer = combineReducers({
-  settings: settings.reducer,
-});
-
-const initialState = {
-  settings: settings.initialState,
-};
-
 function configureStore() {
+  const rootReducer = combineReducers({
+    settings: settings.reducer,
+    layout: layout.reducer,
+  });
+
+  const initialState = {
+    settings: settings.initialState,
+    layout: layout.initialState,
+  };
 
   const history = createBrowserHistory();
   const router = routerMiddleware(history);
