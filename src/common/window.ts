@@ -1,5 +1,6 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import { handleError } from '../main/errors';
+import { Config } from './config';
 
 export enum WindowName {
   APP = 'app',
@@ -7,7 +8,7 @@ export enum WindowName {
 }
 
 export function getIndexLocation() {
-  return process.env.NODE_ENV === 'development'
+  return Config.IS_DEV
     ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}/`
     : `${__dirname}\\index.html`;
 }

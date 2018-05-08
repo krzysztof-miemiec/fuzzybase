@@ -1,7 +1,8 @@
 import { PersistConfig, persistReducer } from 'redux-persist';
-import uuid from 'uuid/v4';
 import { defaultPersistConfig } from '../../../utils/persist.util';
+import { select } from '../../../utils/selector.util';
 import { SETTINGS_ACTIONS, SettingsAction } from './settings.actions';
+import { getDatabase } from './settings.selectors';
 import { initialState, SettingsState } from './settings.state';
 
 export const persistConfig: PersistConfig = {
@@ -15,13 +16,14 @@ const baseReducer = (state: void | SettingsState, action: SettingsAction): Setti
   }
   switch (action.type) {
     case SETTINGS_ACTIONS.SET_DATABASE:
+      const databaseExists = !!select(state, getDatabase(action.database.id));
       return {
         ...state,
-        databases: action.database.id
-          ? state.databases.map(database => database.id === action.database.id
-            ? action.database
-            : database)
-          : [...state.databases, { id: uuid(), ...action.database }],
+        databases: databaseExists
+          ? state.databases.map(
+            database => database.id === action.database.id ? action.database : database
+          )
+          : [...state.databases, action.database],
       };
     case SETTINGS_ACTIONS.REMOVE_DATABASE:
       return {

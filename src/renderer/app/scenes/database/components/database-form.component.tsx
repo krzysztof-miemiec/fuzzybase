@@ -1,9 +1,12 @@
 import { Save } from '@material-ui/icons';
-import { Button } from 'material-ui';
+import classNames from 'classnames';
+import { Button, Card, CardActions, CardContent, withStyles } from 'material-ui';
 import React from 'react';
 import { FormInput } from '../../../shared/components/input.component';
 import { DatabaseState } from '../../../shared/settings/store';
 import { i18n } from '../../../utils/i18n.util';
+import { StyleProps } from '../../../utils/styles.util';
+import { styles } from './database-form.styles';
 
 interface Props {
   database: DatabaseState;
@@ -14,7 +17,12 @@ interface State {
   database: DatabaseState;
 }
 
-export class DatabaseForm extends React.PureComponent<Props, State> {
+export class DatabaseFormComponent extends React.PureComponent<Props & StyleProps<typeof styles>, State> {
+
+  constructor(props: Props & StyleProps<typeof styles>) {
+    super(props);
+    this.state = { database: props.database };
+  }
 
   componentWillUpdate(nextProps: Props) {
     if (nextProps.database !== this.props.database) {
@@ -27,19 +35,54 @@ export class DatabaseForm extends React.PureComponent<Props, State> {
   };
 
   render() {
+    const { classes } = this.props;
     const { database } = this.state;
     return (
-      <div>
-        <FormInput form={database} key="name" name={i18n.t('database.name')} />
-        <FormInput form={database} key="host" name={i18n.t('database.host')} />
-        <FormInput form={database} key="port" name={i18n.t('database.port')} />
-        <FormInput form={database} key="username" name={i18n.t('database.username')} />
-        <FormInput form={database} key="password" type="password" name={i18n.t('database.password')} />
-        <Button variant="raised" size="medium" onClick={this.onSubmit}>
-          <Save />
-          {i18n.t('actions.save')}
-        </Button>
-      </div>
+      <Card className={classes.container}>
+        <CardContent >
+          <FormInput
+            form={database}
+            id="name"
+            label={i18n.t('database.name')}
+            className={classes.input}
+          />
+          <FormInput
+            form={database}
+            id="host"
+            label={i18n.t('database.host')}
+            className={classes.input}
+          />
+          <FormInput
+            form={database}
+            id="port"
+            label={i18n.t('database.port')}
+            rowsMax={5}
+            normalize={value => Number.parseInt(value, 10)}
+            className={classNames([classes.input, classes.inputShort])}
+          />
+          <FormInput
+            form={database}
+            id="username"
+            label={i18n.t('database.username')}
+            className={classes.input}
+          />
+          <FormInput
+            form={database}
+            id="password"
+            type="password"
+            label={i18n.t('database.password')}
+            className={classes.input}
+          />
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={this.onSubmit}>
+            <Save />
+            {i18n.t('actions.save')}
+          </Button>
+        </CardActions>
+      </Card>
     );
   }
 }
+
+export const DatabaseForm = withStyles(styles)(DatabaseFormComponent);

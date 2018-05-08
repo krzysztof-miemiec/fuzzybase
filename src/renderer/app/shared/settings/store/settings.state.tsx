@@ -4,7 +4,7 @@ export interface DatabaseState {
   id: string;
   name: string;
   host: string;
-  port: string;
+  port: number;
   username?: string;
   password?: string;
 }

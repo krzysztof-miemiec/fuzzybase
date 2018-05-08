@@ -1,8 +1,20 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 import { App } from './app.component';
-import { history, store } from './app.store';
 
-const app = document.getElementById('app');
-document.body.style.margin = '0';
-render(<App store={store} history={history} />, app);
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    document.getElementById('app')
+  );
+};
+
+render(App);
+
+// Webpack Hot Module Replacement API
+if ((module as any).hot) {
+  (module as any).hot.accept('./app.component', () => render(App));
+}

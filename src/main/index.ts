@@ -68,7 +68,7 @@ app.on('ready', () => installExtensions().then(() => {
           label: 'Inspect element',
           click: () => appWindow.webContents.inspectElement(x, y),
         },
-      ]).popup(appWindow);
+      ]).popup({ window: appWindow });
     });
     require('electron-debug')();
     const path = require('path');

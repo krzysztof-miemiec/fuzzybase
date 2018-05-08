@@ -1,3 +1,3 @@
 import { registerForIPC } from '../../common/ipc';
 
-export const { listen, send } = registerForIPC();
+export const { listen, send, sendAction$ } = registerForIPC();

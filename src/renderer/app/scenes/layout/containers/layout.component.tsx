@@ -24,7 +24,7 @@ const mapDispatchToProps = mapActions({
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const LayoutComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
-  isDrawerOpen, actions, classes,
+  isDrawerOpen, actions, classes, children,
 }) => (
   <div className={classes.root}>
     <Toolbar isDrawerOpen={isDrawerOpen} onMenuClicked={actions.openDrawer} />
@@ -32,7 +32,7 @@ const LayoutComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
     <Snackbar />
     <div className={classes.content}>
       <div className={classes.toolbar} />
-      {require('../../../app.navigation').AppNavigation()}
+      {children}
     </div>
   </div>
 );

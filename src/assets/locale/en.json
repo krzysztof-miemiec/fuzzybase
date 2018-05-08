@@ -7,6 +7,9 @@
       "home": "Home",
       "databases": "Databases"
     },
+    "databases": {
+      "title": "Databases"
+    },
     "database": {
       "name": "Database Name",
       "host": "Host",

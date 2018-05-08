@@ -1,13 +1,10 @@
+import { Config } from '../common/config';
 import { WindowName } from '../common/window';
+import './main.css';
 
-process.on('uncaughtException', error => {
-  console.error(error);
-});
+(window as any).ELECTRON_DISABLE_SECURITY_WARNINGS = Config.IS_DEV;
 
-const args = JSON.parse(decodeURIComponent(window.location.hash.replace(/^#/, '')));
-const windowName = process.env.windowName = args.name;
-
-switch (windowName) {
+switch (Config.WINDOW_NAME) {
   case WindowName.APP:
     import('./app/index');
     break;
@@ -15,5 +12,5 @@ switch (windowName) {
     import('./background/index');
     break;
   default:
-    throw new Error(`Invalid window name '${windowName}'.`);
+    throw new Error(`Invalid window name '${Config.WINDOW_NAME}'.`);
 }

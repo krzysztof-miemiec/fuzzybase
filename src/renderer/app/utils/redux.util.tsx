@@ -11,3 +11,10 @@ export const mapActions: <T extends object>(actions: T) => {
   }
   return result;
 }) as any;
+
+export const createAction = <Type extends string, Payload extends object>(
+  type: Type, payload: Payload
+): { type: Type } & Payload => ({
+  type,
+  ...(payload as object),
+} as any);

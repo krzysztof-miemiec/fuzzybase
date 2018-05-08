@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { isBoolean, isNumber, isString } from 'lodash';
 import IpcMain = Electron.IpcMain;
+import { Config } from './config';
 
 const isMainProcess = process.type === 'browser';
 
@@ -17,21 +18,21 @@ export const Log = {
     if (isMainProcess) {
       console.log((window ? window + ': ' : '') + stringify(message));
     } else {
-      ipcRenderer.send('Log.d', { window: process.env.windowName, message: stringify(message) });
+      ipcRenderer.send('Log.d', { window: Config.WINDOW_NAME, message: stringify(message) });
     }
   },
   w(message: any, window?: string) {
     if (isMainProcess) {
       console.warn((window ? window + ': ' : '') + stringify(message));
     } else {
-      ipcRenderer.send('Log.w', { window: process.env.windowName, message: stringify(message) });
+      ipcRenderer.send('Log.w', { window: Config.WINDOW_NAME, message: stringify(message) });
     }
   },
   e(message: any, window?: string) {
     if (isMainProcess) {
       console.error((window ? window + ': ' : '') + stringify(message));
     } else {
-      ipcRenderer.send('Log.e', { window: process.env.windowName, message: stringify(message) });
+      ipcRenderer.send('Log.e', { window: Config.WINDOW_NAME, message: stringify(message) });
     }
   },
 };

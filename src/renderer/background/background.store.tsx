@@ -1,6 +1,8 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { actionsEpics } from './actions/actions.epics';
+import { CommunicationActionType } from '../../common/actions';
+import { IPCManager } from '../app/utils/ipc.util';
+import { sendAction$ } from './ipc';
 import { postgresEpics } from './postgres/postgres.epics';
 import { postgresReducer } from './postgres/postgres.reducer';
 
@@ -13,7 +15,7 @@ const reducer = combineReducers({
 // ------------------------------------
 const epics = combineEpics(
   postgresEpics,
-  actionsEpics
+  sendAction$
 );
 
 // CONFIG
@@ -27,3 +29,10 @@ const configureStore = () => {
 };
 
 export const store = configureStore();
+setInterval(
+  () => IPCManager.send({
+    type: CommunicationActionType.STATE_REFLECTION,
+    state: store.getState(),
+  }),
+  3000
+);

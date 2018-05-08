@@ -1,6 +1,9 @@
 import { ipcRenderer } from 'electron';
+import { ActionsObservable } from 'redux-observable';
 import { Observable, Subject } from 'rxjs';
+import { ignoreElements, tap } from 'rxjs/operators';
 import { CommunicationAction } from './actions';
+import { Config } from './config';
 import { WindowName } from './window';
 
 export const MAIN_APP_CHANNEL = 'app';
@@ -17,7 +20,7 @@ export const registerForIPC = () => {
     return subject.asObservable();
   };
 
-  const destinationChannel = process.env.windowName === WindowName.APP
+  const destinationChannel = Config.WINDOW_NAME === WindowName.APP
     ? MAIN_BACKGROUND_CHANNEL
     : MAIN_APP_CHANNEL;
 
@@ -25,8 +28,19 @@ export const registerForIPC = () => {
     ipcRenderer.send(destinationChannel, JSON.stringify(action));
   };
 
+  const sendAction$ = (action$: ActionsObservable<any>) => action$
+    .pipe(
+      tap(action => {
+        if (action._from !== Config.NAME) {
+          send({ ...action, _from: Config.NAME });
+        }
+      }),
+      ignoreElements()
+    );
+
   return {
     listen,
     send,
+    sendAction$,
   };
 };

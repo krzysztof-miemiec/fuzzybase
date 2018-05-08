@@ -1,5 +1,6 @@
 export enum CommunicationActionType {
   LOG = 'LOG',
+  STATE_REFLECTION = 'STATE_REFLECTION',
 }
 
 export enum LogSource {
@@ -13,7 +14,7 @@ export enum LogMethod {
   ERROR = 'error',
 }
 
-export interface Log {
+export interface LogAction {
   type: CommunicationActionType.LOG;
   source: LogSource;
   method: LogMethod;
@@ -26,7 +27,7 @@ export const log = (
   method: LogMethod,
   message: string,
   optionalParams?: any
-): Log => ({
+): LogAction => ({
   type: CommunicationActionType.LOG,
   source,
   method,
@@ -34,5 +35,11 @@ export const log = (
   optionalParams,
 });
 
+export interface StateReflectionAction {
+  type: CommunicationActionType.STATE_REFLECTION;
+  state: any;
+}
+
 export type CommunicationAction =
-  | Log;
+  | LogAction
+  | StateReflectionAction;

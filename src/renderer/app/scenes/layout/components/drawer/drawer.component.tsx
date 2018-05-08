@@ -1,12 +1,12 @@
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import classNames from 'classnames';
 import {
-  Avatar,
   Divider,
   Drawer as MaterialDrawer,
   IconButton,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   withStyles
 } from 'material-ui';
@@ -39,10 +39,14 @@ export const DrawerComponent: React.SFC<Props & RouteComponentProps<{}> & StyleP
     <Divider />
     <List>
       {getDrawerItems().map(({ path, icon: Icon, title }) => (
-        <ListItem key={path} onClick={() => history.push(path)}>
-          <Avatar>
+        <ListItem
+          button={true}
+          key={path}
+          onClick={() => history.push(path)}
+        >
+          <ListItemIcon>
             <Icon />
-          </Avatar>
+          </ListItemIcon>
           <ListItemText primary={title} />
         </ListItem>
       ))}

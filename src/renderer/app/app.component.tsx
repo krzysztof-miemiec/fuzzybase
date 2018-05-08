@@ -1,17 +1,12 @@
-import { History } from 'history';
-import React, { Component } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
-import { Store } from 'redux';
-import { Layout } from './scenes/layout';
+import { PersistGate } from 'redux-persist/integration/react';
+import { AppNavigation } from './app.navigation';
+import { history, persistor, store } from './app.store';
 import { IPCManager } from './utils/ipc.util';
 
-interface Props {
-  store: Store<any>;
-  history: History;
-}
-
-export class App extends Component<Props> {
+export class App extends React.Component {
 
   componentDidMount() {
     IPCManager.subscribe();
@@ -22,12 +17,13 @@ export class App extends Component<Props> {
   }
 
   render() {
-    const { store, history } = this.props;
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Layout />
-        </ConnectedRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <ConnectedRouter history={history}>
+            <AppNavigation />
+          </ConnectedRouter>
+        </PersistGate>
       </Provider>
     );
   }

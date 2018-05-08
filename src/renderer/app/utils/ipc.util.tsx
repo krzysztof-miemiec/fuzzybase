@@ -4,7 +4,7 @@ import { registerForIPC } from '../../../common/ipc';
 import { store } from '../app.store';
 import { handleLogAction } from './log.util';
 
-export const { send: ipcSend, listen } = registerForIPC();
+const { send: ipcSend, listen, sendAction$ } = registerForIPC();
 
 export module IPCManager {
   let subscription: Subscription;
@@ -31,4 +31,5 @@ export module IPCManager {
     subscription = undefined;
   };
   export const send = ipcSend;
+  export const sendActionEpic = sendAction$;
 }

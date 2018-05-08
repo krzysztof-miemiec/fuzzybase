@@ -1,13 +1,12 @@
-import { FormControl, Input, InputLabel } from 'material-ui';
-import { InputProps } from 'material-ui/Input';
+import { TextField } from 'material-ui';
+import { TextFieldProps } from 'material-ui/TextField';
 import * as React from 'react';
 
 type ValueType = Array<string | number> | string | number;
 
-interface Props extends InputProps {
-  name: string;
-  key: string;
+interface Props extends TextFieldProps {
   form: any;
+  normalize?: (value: string) => any;
 }
 
 interface State {
@@ -18,27 +17,23 @@ export class FormInput extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { value: props.form[props.key] };
+    this.state = { value: props.form[props.id] };
   }
 
   render() {
-    const { className, key, name, form, ...rest } = this.props;
+    const { form, normalize, ...props } = this.props;
 
     return (
-      <FormControl className={className}>
-        <InputLabel htmlFor={key}>{name}</InputLabel>
-        <Input
-          id={key}
-          value={this.state.value}
-          onChange={event => {
-            const value = event.target.value;
-            this.setState({ value }, () => {
-              form[key] = value;
-            });
-          }}
-          {...rest}
-        />
-      </FormControl>
+      <TextField
+        {...props}
+        value={this.state.value}
+        onChange={event => {
+          const value = event.target.value;
+          this.setState({ value }, () => {
+            form[props.id] = normalize ? normalize(value) : value;
+          });
+        }}
+      />
     );
   }
 }
