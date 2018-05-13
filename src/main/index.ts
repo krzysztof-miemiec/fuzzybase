@@ -1,18 +1,17 @@
 // eslint-disable global-require
-import { app, ipcMain, Menu } from 'electron';
-import { DIRECT_CHANNEL, MAIN_APP_CHANNEL, MAIN_BACKGROUND_CHANNEL } from '../common/ipc';
-import { handleLogs, Log } from '../common/log';
-import { createRendererWindow, WindowName } from '../common/window';
+import { app, BrowserWindow, Menu } from 'electron';
+import { Config } from '../common/config';
+import { listen, setIpcReceiver } from '../common/ipc';
+import { createRendererWindow } from '../common/window';
 import { handleError } from './errors';
+import { store } from './main.store';
 import { setMenu } from './menu';
-import BrowserWindow = Electron.BrowserWindow;
 
 let appWindow: BrowserWindow = null;
-let backgroundWindow: BrowserWindow = null;
 
 const installExtensions = (): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {
-    Log.d('Development environment found. Initializing devtools.');
+    console.log('Development environment found. Initializing devtools.');
     const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 
     const extensions = [
@@ -32,29 +31,19 @@ process.on('uncaughtException', error => {
 });
 
 app.on('ready', () => installExtensions().then(() => {
-  handleLogs(ipcMain);
-  backgroundWindow = createRendererWindow({
-    name: WindowName.BACKGROUND,
-    show: false,
-  });
   appWindow = createRendererWindow({
     window: {
       width: 1024,
       height: 728,
+      title: Config.NAME,
     },
     show: true,
-    name: WindowName.APP,
   });
-  ipcMain.on(MAIN_APP_CHANNEL, (_event, payload) => {
-    appWindow.webContents.send(DIRECT_CHANNEL, payload);
-  });
-  ipcMain.on(MAIN_BACKGROUND_CHANNEL, (_event, payload) => {
-    backgroundWindow.webContents.send(DIRECT_CHANNEL, payload);
-  });
+  setIpcReceiver(appWindow.webContents);
+  listen().subscribe(action => store.dispatch(action));
   setMenu(appWindow);
   appWindow.on('closed', () => {
     appWindow = null;
-    backgroundWindow = null;
   });
   if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');

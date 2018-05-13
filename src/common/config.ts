@@ -1,10 +1,11 @@
 import packageJson from '../../package.json';
 
-const args = ((global as any).window && JSON.parse(decodeURIComponent(window.location.hash.replace(/^#/, ''))))
-  || {};
+const IS_MAIN = !(global as any).window;
 
 export const Config = {
   NAME: packageJson.productName,
-  WINDOW_NAME: args.name,
+  PROCESS: IS_MAIN ? 'main' : 'app',
+  IS_MAIN,
+  IS_APP: !IS_MAIN,
   IS_DEV: process.env.NODE_ENV === 'development',
 };

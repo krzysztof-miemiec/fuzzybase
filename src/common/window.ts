@@ -2,11 +2,6 @@ import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import { handleError } from '../main/errors';
 import { Config } from './config';
 
-export enum WindowName {
-  APP = 'app',
-  BACKGROUND = 'background',
-}
-
 export function getIndexLocation() {
   return Config.IS_DEV
     ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}/`
@@ -15,22 +10,17 @@ export function getIndexLocation() {
 
 type RendererWindowOptions = {
   window?: BrowserWindowConstructorOptions,
-  name: WindowName;
   show: boolean;
 };
 
-export function createRendererWindow({ window: windowOptions, name, show }: RendererWindowOptions) {
+export function createRendererWindow({ window: windowOptions, show }: RendererWindowOptions) {
   const window = new BrowserWindow({
     show,
     ...windowOptions,
   });
 
-  const args = {
-    name,
-  };
-
   const url = getIndexLocation();
-  window.loadURL(`${url}#${encodeURIComponent(JSON.stringify(args))}`);
+  window.loadURL(url);
   window.webContents.on('crashed', (event, killed) => {
     if (!killed) {
       handleError(event);

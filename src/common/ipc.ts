@@ -1,46 +1,38 @@
-import { ipcRenderer } from 'electron';
+import { ipcMain, ipcRenderer, IpcRenderer, WebContents } from 'electron';
+import { Action } from 'redux';
 import { ActionsObservable } from 'redux-observable';
 import { Observable, Subject } from 'rxjs';
 import { ignoreElements, tap } from 'rxjs/operators';
 import { CommunicationAction } from './actions';
 import { Config } from './config';
-import { WindowName } from './window';
 
-export const MAIN_APP_CHANNEL = 'app';
-export const MAIN_BACKGROUND_CHANNEL = 'background';
 export const DIRECT_CHANNEL = 'direct';
+const ipc = Config.IS_MAIN ? ipcMain : ipcRenderer;
+let ipcReceiver: WebContents | IpcRenderer;
+export const setIpcReceiver = (receiver?: WebContents | IpcRenderer) => ipcReceiver = receiver;
 
-export const registerForIPC = () => {
-  const listen = (): Observable<CommunicationAction> => {
-    const subject = new Subject<CommunicationAction>();
-    ipcRenderer.on(DIRECT_CHANNEL, (_event, payloadString) => {
-      const payload: CommunicationAction = JSON.parse(payloadString);
-      subject.next(payload);
-    });
-    return subject.asObservable();
-  };
-
-  const destinationChannel = Config.WINDOW_NAME === WindowName.APP
-    ? MAIN_BACKGROUND_CHANNEL
-    : MAIN_APP_CHANNEL;
-
-  const send = (action: CommunicationAction) => {
-    ipcRenderer.send(destinationChannel, JSON.stringify(action));
-  };
-
-  const sendAction$ = (action$: ActionsObservable<any>) => action$
-    .pipe(
-      tap(action => {
-        if (action._from !== Config.NAME) {
-          send({ ...action, _from: Config.NAME });
-        }
-      }),
-      ignoreElements()
-    );
-
-  return {
-    listen,
-    send,
-    sendAction$,
-  };
+export const listen = (): Observable<Action<any>> => {
+  const subject = new Subject<Action<any>>();
+  ipc.on(DIRECT_CHANNEL, (_event, payloadString) => {
+    const payload: CommunicationAction = JSON.parse(payloadString);
+    subject.next(payload);
+  });
+  return subject.asObservable();
 };
+
+export const send = (action: Action<any>) => {
+  if (!ipcReceiver) {
+    throw new Error('Receiver not set yet.');
+  }
+  ipcReceiver.send(DIRECT_CHANNEL, JSON.stringify(action));
+};
+
+export const sendAction$ = (action$: ActionsObservable<any>) => action$
+  .pipe(
+    tap(action => {
+      if (!action._from) {
+        send({ ...action, _from: Config.PROCESS });
+      }
+    }),
+    ignoreElements()
+  );
