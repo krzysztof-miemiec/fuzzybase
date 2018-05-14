@@ -1,6 +1,6 @@
 import { Theme } from 'material-ui';
 import { CSSProperties } from 'material-ui/styles/withStyles';
-import { R } from '../../../../common/resources';
+import { R } from '../../../../../common/resources';
 
 export const styles = (theme: Theme) => ({
   root: {

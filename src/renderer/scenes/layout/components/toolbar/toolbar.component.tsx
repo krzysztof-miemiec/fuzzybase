@@ -6,7 +6,7 @@ import React from 'react';
 import { Config } from '../../../../../common/config';
 import { i18n } from '../../../../utils/i18n.util';
 import { StyleProps } from '../../../../utils/styles.util';
-import { styles } from '../../containers/layout.styles';
+import { styles } from '../../containers/layout/layout.styles';
 
 interface Props {
   isDrawerOpen: boolean;

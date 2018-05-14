@@ -1,3 +1,4 @@
+import { webFrame } from 'electron';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
@@ -6,6 +7,9 @@ import { App } from './app.component';
 import './main.css';
 
 (window as any).ELECTRON_DISABLE_SECURITY_WARNINGS = Config.IS_DEV;
+
+webFrame.setVisualZoomLevelLimits(1, 1);
+webFrame.setLayoutZoomLevelLimits(1, 1);
 
 const render = Component => {
   ReactDOM.render(

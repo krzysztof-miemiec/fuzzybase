@@ -5,6 +5,10 @@ export const getDatabasesState = (state: AppState) => state.db;
 
 export const getDatabaseList = (state: DbState) => state.databases;
 
+export const getConnectionList = (state: DbState) => state.connections;
+
+export const getConnection = (id: string) => (state: DbState) => state.connections[id];
+
 export const getDatabase = (id: string) => (state: DbState) =>
   state.databases.find(db => db.id === id);
 

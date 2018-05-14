@@ -1,16 +1,16 @@
 import { withStyles } from 'material-ui';
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../../store';
-import { mapActions } from '../../../utils/redux.util';
-import { select } from '../../../utils/selector.util';
-import { StyleProps } from '../../../utils/styles.util';
-import { Drawer } from '../components/drawer/drawer.component';
-import { Toolbar } from '../components/toolbar/toolbar.component';
-import { getLayoutState, isDrawerOpen } from '../store';
-import { closeDrawer, openDrawer } from '../store/layout.actions';
+import { AppState } from '../../../../store';
+import { mapActions } from '../../../../utils/redux.util';
+import { select } from '../../../../utils/selector.util';
+import { StyleProps } from '../../../../utils/styles.util';
+import { Toolbar } from '../../components/toolbar/toolbar.component';
+import { getLayoutState, isDrawerOpen } from '../../store';
+import { closeDrawer, openDrawer } from '../../store/layout.actions';
+import { Drawer } from '../drawer/drawer.component';
+import { Snackbars } from '../snackbar/snackbars.component';
 import { styles } from './layout.styles';
-import { Snackbars } from './snackbars.component';
 
 const mapStateToProps = (state: AppState) => ({
   isDrawerOpen: select(state, getLayoutState, isDrawerOpen),

@@ -1,11 +1,11 @@
 import { withStyles } from 'material-ui';
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../../store';
-import { select } from '../../../utils/selector.util';
-import { StyleProps } from '../../../utils/styles.util';
-import { getLayoutState, getSnackbarsState } from '../store';
-import { styles } from './layout.styles';
+import { AppState } from '../../../../store/index';
+import { select } from '../../../../utils/selector.util';
+import { StyleProps } from '../../../../utils/styles.util';
+import { getLayoutState, getSnackbarsState } from '../../store/index';
+import { styles } from '../layout/layout.styles';
 import { Snackbar } from './snackbar.component';
 
 const mapStateToProps = (state: AppState) => ({

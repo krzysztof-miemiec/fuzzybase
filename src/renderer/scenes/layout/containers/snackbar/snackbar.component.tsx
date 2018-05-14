@@ -2,11 +2,11 @@ import { Close } from '@material-ui/icons';
 import { Button, IconButton, Snackbar as MaterialSnackbar, withStyles } from 'material-ui';
 import React from 'react';
 import { connect } from 'react-redux';
-import { mapActions } from '../../../utils/redux.util';
-import { StyleProps } from '../../../utils/styles.util';
-import { SnackbarState } from '../store';
-import { hideSnackbar } from '../store/layout.actions';
-import { styles } from './layout.styles';
+import { mapActions } from '../../../../utils/redux.util';
+import { StyleProps } from '../../../../utils/styles.util';
+import { SnackbarState } from '../../store/index';
+import { hideSnackbar } from '../../store/layout.actions';
+import { styles } from '../layout/layout.styles';
 
 interface ComponentProps {
   snackbar: SnackbarState;
