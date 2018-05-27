@@ -1,4 +1,4 @@
-import { withStyles } from 'material-ui';
+import { withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../../../store/index';

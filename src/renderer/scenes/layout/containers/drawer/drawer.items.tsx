@@ -1,5 +1,5 @@
 import { Dns, Home } from '@material-ui/icons';
-import { SvgIconProps } from 'material-ui/SvgIcon/SvgIcon';
+import { SvgIconProps } from '@material-ui/core/SvgIcon/SvgIcon';
 import * as React from 'react';
 import { PATHS } from '../../../../app.paths';
 import { i18n } from '../../../../utils/i18n.util';

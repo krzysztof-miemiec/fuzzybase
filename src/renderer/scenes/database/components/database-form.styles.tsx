@@ -1,5 +1,5 @@
-import { Theme } from 'material-ui';
-import { StyleRules } from 'material-ui/styles';
+import { Theme } from '@material-ui/core';
+import { StyleRules } from '@material-ui/core/styles';
 
 type Classes = 'container' | 'input' | 'inputShort';
 

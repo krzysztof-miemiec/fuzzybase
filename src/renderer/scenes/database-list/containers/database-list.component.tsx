@@ -8,7 +8,7 @@ import {
   Paper,
   Typography,
   withStyles
-} from 'material-ui';
+} from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -30,7 +30,7 @@ import { select } from '../../../utils/selector.util';
 import { StyleProps } from '../../../utils/styles.util';
 import { styles } from './database-list.styles';
 
-const List = require('material-ui').List;
+const List = require('@material-ui/core').List;
 
 const mapStateToProps = (state: AppState) => ({
   dbState: select(state, getDatabasesState),

@@ -1,5 +1,5 @@
-import { TextField } from 'material-ui';
-import { TextFieldProps } from 'material-ui/TextField';
+import { TextField } from '@material-ui/core';
+import { TextFieldProps } from '@material-ui/core/TextField';
 import * as React from 'react';
 
 type ValueType = Array<string | number> | string | number;

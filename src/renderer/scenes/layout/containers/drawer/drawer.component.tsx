@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   withStyles
-} from 'material-ui';
+} from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';

@@ -1,6 +1,6 @@
 import { Save } from '@material-ui/icons';
 import classNames from 'classnames';
-import { Button, Card, CardActions, CardContent, withStyles } from 'material-ui';
+import { Button, Card, CardActions, CardContent, withStyles } from '@material-ui/core';
 import React from 'react';
 import { DatabaseState } from '../../../../common/db/store/app';
 import { FormInput } from '../../../shared/components/input.component';

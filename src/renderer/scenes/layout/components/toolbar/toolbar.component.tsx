@@ -1,7 +1,7 @@
 import { CompareArrows, Menu } from '@material-ui/icons';
 import classNames from 'classnames';
-import { AppBar, IconButton, Toolbar as MaterialToolbar, Tooltip, Typography } from 'material-ui';
-import { withStyles } from 'material-ui/es';
+import { AppBar, IconButton, Toolbar as MaterialToolbar, Tooltip, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/es';
 import React from 'react';
 import { Config } from '../../../../../common/config';
 import { i18n } from '../../../../utils/i18n.util';

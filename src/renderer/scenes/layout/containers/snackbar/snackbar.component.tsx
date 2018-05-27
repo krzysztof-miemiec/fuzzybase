@@ -1,5 +1,5 @@
 import { Close } from '@material-ui/icons';
-import { Button, IconButton, Snackbar as MaterialSnackbar, withStyles } from 'material-ui';
+import { Button, IconButton, Snackbar as MaterialSnackbar, withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapActions } from '../../../../utils/redux.util';
