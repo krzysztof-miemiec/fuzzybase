@@ -2,9 +2,10 @@ import { Paper, Typography } from '@material-ui/core';
 import React from 'react';
 
 export const QuickStart: React.SFC<{}> = () => (
-  <Paper>
-    <Typography>
+  <>
+    <Typography variant="display1">
       Quick start
     </Typography>
-  </Paper>
+    <Paper />
+  </>
 );

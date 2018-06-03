@@ -17,3 +17,5 @@ export const getFirstDatabaseConnection = (databaseId: string) => (state: DbStat
     .find(connection => connection.clientId === databaseId);
 
 export const getStatus = (state: DatabaseConnectionState) => state.status;
+
+export const getQuery = (id: string) => (state: DatabaseConnectionState) => state.queries[id];

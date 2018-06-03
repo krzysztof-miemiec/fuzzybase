@@ -1,5 +1,3 @@
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import classNames from 'classnames';
 import {
   Avatar,
   Divider,
@@ -11,6 +9,8 @@ import {
   ListItemText,
   withStyles
 } from '@material-ui/core';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import classNames from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';

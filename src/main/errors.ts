@@ -1,11 +1,14 @@
 import Raven from 'raven-js';
+import { Config } from '../common/config';
 
-Raven.install();
+if (!Config.IS_DEV) {
+  Raven.install();
+}
 
 export const handleError = error => {
-  if (process.env.NODE_ENV === 'production') {
-    Raven.captureException(error);
-  } else {
+  if (Config.IS_DEV) {
     console.error(error);
+  } else {
+    Raven.captureException(error);
   }
 };

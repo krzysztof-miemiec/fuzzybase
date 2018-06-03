@@ -4,6 +4,6 @@ export const R = {
   },
   timing: {
     animationDuration: 350,
-    snackbarDuration: 3000,
+    snackbarDuration: 1800,
   },
 };

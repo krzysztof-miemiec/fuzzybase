@@ -1,8 +1,10 @@
 import { Theme } from '@material-ui/core';
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../../common/resources';
 
-export const styles = (theme: Theme) => ({
+type Classes = 'drawerPaper' | 'drawerPaperClose' | 'toolbar';
+
+export const styles = (theme: Theme): StyleRules<Classes> => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -11,7 +13,7 @@ export const styles = (theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  } as CSSProperties,
+  },
   drawerPaperClose: {
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
@@ -22,12 +24,12 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing.unit * 9,
     },
-  } as CSSProperties,
+  },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
-  } as CSSProperties,
+  },
 });

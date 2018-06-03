@@ -1,3 +1,5 @@
+import './utils/codemirror.util';
+
 import { webFrame } from 'electron';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -24,5 +26,8 @@ render(App);
 
 // Webpack Hot Module Replacement API
 if ((module as any).hot) {
-  (module as any).hot.accept('./app.component', () => render(App));
+  (module as any).hot.accept('./app.component', () => {
+    const NextApp = require('./app.component').App;
+    render(NextApp);
+  });
 }

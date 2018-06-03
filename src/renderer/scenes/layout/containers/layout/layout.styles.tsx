@@ -1,22 +1,36 @@
 import { Theme } from '@material-ui/core';
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../../common/resources';
 
-export const styles = (theme: Theme) => ({
+type Classes =
+  | 'root'
+  | 'snackbarContainer'
+  | 'snackbar'
+  | 'content'
+  | 'toolbar'
+  | 'flex'
+  | 'appBar'
+  | 'appBarShift'
+  | 'menuButton'
+  | 'hide';
+
+export const styles = (theme: Theme): StyleRules<Classes> => ({
   root: {
     flexGrow: 1,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
-  } as CSSProperties,
+    height: '100%',
+    width: '100%',
+  },
   snackbarContainer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     display: 'flex',
     flexDirection: 'column-reverse',
-  } as CSSProperties,
+  },
   snackbar: {
     position: 'relative',
     padding: theme.spacing.unit,
@@ -24,29 +38,29 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     left: 0,
     transform: 'none',
-  } as CSSProperties,
+  },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  } as CSSProperties,
+    height: '100%',
+  },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
-  } as CSSProperties,
+  },
   flex: {
     flex: 1,
-  } as CSSProperties,
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-  } as CSSProperties,
+  },
   appBarShift: {
     marginLeft: R.dimen.drawerWidth,
     width: `calc(100% - ${R.dimen.drawerWidth}px)`,
@@ -54,12 +68,12 @@ export const styles = (theme: Theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  } as CSSProperties,
+  },
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
-  } as CSSProperties,
+  },
   hide: {
     display: 'none',
-  } as CSSProperties,
+  },
 });

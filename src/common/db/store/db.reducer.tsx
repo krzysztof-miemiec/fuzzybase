@@ -41,6 +41,7 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
             end: 0,
             query: action.query,
             result: null,
+            error: null,
           },
         },
       };
@@ -54,6 +55,7 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
             ...state.queries[action.queryId],
             end: Date.now(),
             result: action.result,
+            error: action.error,
           },
         },
       };

@@ -3,6 +3,7 @@ logs/
 screenshots/
 release/
 dist/
+docs/Fuzzy/
 lib-cov/
 .tscache/
 node_modules/

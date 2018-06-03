@@ -10,4 +10,13 @@ export const styles = (theme: Theme) => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   } as CSSProperties,
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
 });

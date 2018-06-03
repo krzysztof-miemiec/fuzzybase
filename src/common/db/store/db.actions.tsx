@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 import { createAction } from '../../../renderer/utils/redux.util';
-import { ConnectionStatus, DatabaseState, PostgresClientConfiguration } from './db.state';
+import { ConnectionStatus, DatabaseState, PostgresClientConfiguration, PostgresResponse } from './db.state';
 
 export enum DB_ACTIONS {
   SET_DATABASE = 'DB/SET_DATABASE',
@@ -44,8 +44,8 @@ export const postgresQuery = (connectionId: string, queryId: string, query: stri
   createAction(DB_ACTIONS.QUERY, { connectionId, queryId, query });
 
 export type PostgresQueryResultAction = ReturnType<typeof postgresQueryResult>;
-export const postgresQueryResult = (connectionId: string, queryId: string, result: any) =>
-  createAction(DB_ACTIONS.QUERY_RESULT, { connectionId, queryId, result });
+export const postgresQueryResult = (connectionId: string, queryId: string, result: PostgresResponse, error: Error) =>
+  createAction(DB_ACTIONS.QUERY_RESULT, { connectionId, queryId, result, error });
 
 export type DbAction =
   | SetDatabaseAction

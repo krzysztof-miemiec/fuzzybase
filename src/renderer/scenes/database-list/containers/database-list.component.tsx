@@ -1,14 +1,14 @@
-import { Add, Close, CompareArrows } from '@material-ui/icons';
 import {
-  Button, CircularProgress,
+  Button,
+  CircularProgress,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
   IconButton,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Paper,
   Typography,
   withStyles
 } from '@material-ui/core';
+import { Add, Close, CompareArrows, ExpandMore } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -18,16 +18,17 @@ import {
   getDatabaseList,
   getDatabasesState,
   getFirstDatabaseConnection,
-  getStatus
+  getStatus,
+  setDatabase
 } from '../../../../common/db/store/app';
 import { connectToPostgres } from '../../../../common/db/store/db.actions';
-import { getDatabaseUrl } from '../../../../common/db/store/db.utils';
-import { PATHS } from '../../../app.paths';
+import { createDatabaseState, getDatabaseUrl } from '../../../../common/db/store/db.utils';
 import { AppState } from '../../../store';
 import { i18n } from '../../../utils/i18n.util';
 import { mapActions } from '../../../utils/redux.util';
 import { select } from '../../../utils/selector.util';
 import { StyleProps } from '../../../utils/styles.util';
+import { DatabaseForm } from '../../database/components/database-form.component';
 import { styles } from './database-list.styles';
 
 const List = require('@material-ui/core').List;
@@ -39,63 +40,86 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = mapActions({
   connectToPostgres,
   disconnectFromPostgres,
+  setDatabase,
 });
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteComponentProps<{}>;
 
-const DatabaseListComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
-  dbState, history, classes, actions,
-}) => {
-  const databases = select(dbState, getDatabaseList);
-  return (
-    <Paper className={classes.container}>
-      <Typography variant="headline">
-        {i18n.t('databases.title')}
-      </Typography>
-      {databases.length > 0 ? (
-        <List>
-          {databases.map(db => {
-            const connection = select(dbState, getFirstDatabaseConnection(db.id));
-            const status = select(connection, getStatus);
-            return (
-              <ListItem key={db.id} onClick={() => history.push(PATHS.DATABASE(db.id))}>
-                <ListItemText primary={db.name} secondary={getDatabaseUrl(db)} />
-                <ListItemSecondaryAction>
-                  {(!status || status === ConnectionStatus.DISCONNECTED) && (
-                    <IconButton aria-label="Connect" onClick={() => actions.connectToPostgres(db)}>
-                      <CompareArrows />
-                    </IconButton>
-                  )}
-                  {status === ConnectionStatus.CONNECTING && (
-                    <CircularProgress />
-                  )}
-                  {status === ConnectionStatus.CONNECTED && (
-                    <IconButton
-                      aria-label="Disconnect"
-                      onClick={() => actions.disconnectFromPostgres(connection.connectionId)}
-                    >
-                      <Close />
-                    </IconButton>
-                  )}
-                </ListItemSecondaryAction>
-              </ListItem>
-            );
-          })}
-        </List>
-      ) : (
-        <Typography>There are no databases defined at the moment.</Typography>
-      )}
-      <Button
-        variant="fab"
-        className={classes.fab}
-        color="secondary"
-        onClick={() => history.push(PATHS.DATABASE(null))}
-      >
-        <Add />
-      </Button>
-    </Paper>
-  );
-};
+interface State {
+  expanded?: string;
+}
+
+class DatabaseListComponent extends React.PureComponent<Props & StyleProps<typeof styles>, State> {
+
+  state = { expanded: null };
+
+  handleChange = id => (_, expanded) => this.setState({ expanded: expanded ? id : null });
+
+  render() {
+    const { dbState, classes, actions } = this.props;
+    const { expanded } = this.state;
+    const databases = select(dbState, getDatabaseList);
+    return (
+      <div>
+        <Typography variant="display1">
+          {i18n.t('databases.title')}
+        </Typography>
+        {databases.length > 0 ? (
+          <List>
+            {databases.map(db => {
+              const connection = select(dbState, getFirstDatabaseConnection(db.id));
+              const status = select(connection, getStatus);
+              return (
+                <ExpansionPanel key={db.id} expanded={expanded === db.id} onChange={this.handleChange(db.id)}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+                    <Typography className={classes.heading}>{db.name}</Typography>
+                    <Typography className={classes.secondaryHeading}>{getDatabaseUrl(db)}</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <DatabaseForm
+                      database={db}
+                      onSubmit={actions.setDatabase}
+                    />
+                    {(!status || status === ConnectionStatus.DISCONNECTED) && (
+                      <IconButton aria-label="Connect" onClick={() => actions.connectToPostgres(db)}>
+                        <CompareArrows />
+                      </IconButton>
+                    )}
+                    {status === ConnectionStatus.CONNECTING && (
+                      <CircularProgress />
+                    )}
+                    {status === ConnectionStatus.CONNECTED && (
+                      <IconButton
+                        aria-label="Disconnect"
+                        onClick={() => actions.disconnectFromPostgres(connection.connectionId)}
+                      >
+                        <Close />
+                      </IconButton>
+                    )}
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              );
+            })}
+          </List>
+        ) : (
+          <Typography>There are no databases defined at the moment.</Typography>
+        )}
+        <Button
+          variant="fab"
+          className={classes.fab}
+          color="secondary"
+          onClick={() => {
+            const database = createDatabaseState();
+            actions.setDatabase(database);
+            this.setState({ expanded: database.id });
+          }}
+        >
+          <Add />
+        </Button>
+      </div>
+    );
+  }
+}
 
 export const DatabaseList = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)<Props>(DatabaseListComponent)

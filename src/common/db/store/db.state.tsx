@@ -11,7 +11,8 @@ export interface DatabaseQueryState {
   query: string;
   start: number;
   end: number;
-  result: any;
+  result?: PostgresResponse;
+  error?: Error;
 }
 
 export interface DatabaseConnectionState {
@@ -39,6 +40,13 @@ export interface DatabaseState {
   port: number;
   username?: string;
   password?: string;
+}
+
+export interface PostgresResponse {
+  command: string;
+  rowCount: number;
+  oid: any;
+  rows: object[];
 }
 
 export interface DbState {

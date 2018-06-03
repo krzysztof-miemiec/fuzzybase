@@ -30,7 +30,7 @@
   },
   "main": "./app/dist/main.js",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "node ./scripts/patch.js && electron-builder install-app-deps",
     "purge": "yarn clean && rimraf 'node_modules' && yarn",
     "clean": "rimraf '{release,app/dist,.tscache,reports,screenshots}'",
     "build": "electron-webpack",
@@ -39,13 +39,10 @@
     "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish"
   },
   "electronWebpack": {
-    "commonSourceDirectory": "src/common",
     "main": {
-      "sourceDirectory": "src/main",
       "webpackConfig": "webpack.additions.js"
     },
     "renderer": {
-      "sourceDirectory": "src/renderer",
       "webpackConfig": "webpack.additions.js",
       "webpackDllConfig": "webpack.additions.js"
     }
@@ -101,7 +98,8 @@
     "@material-ui/core": "^1.1.0",
     "@material-ui/icons": "^1.1.0",
     "classnames": "^2.2.5",
-    "electron-debug": "^1.5.0",
+    "codemirror": "^5.37.0",
+    "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
     "history": "^4.7.2",
     "i18next": "^11.3.2",
@@ -110,6 +108,7 @@
     "pg": "^7.4.3",
     "raven-js": "^3.25.2",
     "react": "^16.4.0",
+    "react-codemirror2": "^5.0.4",
     "react-dom": "^16.4.0",
     "react-hot-loader": "^4.2.0",
     "react-i18next": "^7.6.1",
@@ -125,7 +124,9 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "@h1/lemmy": "^0.2.2",
     "@types/classnames": "^2.2.3",
+    "@types/codemirror": "^0.0.57",
     "@types/history": "^4.6.2",
     "@types/i18next": "^8.4.3",
     "@types/jest": "^22.2.3",
@@ -134,20 +135,21 @@
     "@types/react-redux": "^5.0.19",
     "@types/react-router": "^4.0.25",
     "@types/react-router-redux": "^5.0.14",
+    "@types/react-syntax-highlighter": "^0.0.5",
     "@types/uuid": "^3.4.3",
-    "electron": "2.0.0",
-    "electron-builder": "^20.13.3",
-    "electron-webpack": "^2.1.0",
+    "cpx": "^1.5.0",
+    "electron": "2.0.2",
+    "electron-builder": "^20.15.1",
+    "electron-webpack": "^2.1.2",
     "electron-webpack-ts": "^2.0.2",
     "jest": "^22.4.3",
-    "lemmy": "^0.2.2",
     "rimraf": "^2.6.2",
     "tslint": "^5.10.0",
     "tslint-loader": "^3.6.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^2.8.3",
-    "webpack": "^4.8.3",
-    "webpack-build-notifier": "^0.1.25"
+    "typescript": "^2.8.4",
+    "webpack": "^4.10.2",
+    "webpack-build-notifier": "^0.1.27"
   },
   "resolutions": {
     "webpack-sources": "1.1.0"
