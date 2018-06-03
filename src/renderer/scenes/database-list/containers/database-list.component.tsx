@@ -60,7 +60,7 @@ class DatabaseListComponent extends React.PureComponent<Props & StyleProps<typeo
     const { expanded } = this.state;
     const databases = select(dbState, getDatabaseList);
     return (
-      <div>
+      <div className={classes.container}>
         <Typography variant="display1">
           {i18n.t('databases.title')}
         </Typography>
