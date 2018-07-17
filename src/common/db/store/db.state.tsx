@@ -25,6 +25,7 @@ export interface DatabaseConnectionState {
 
 export interface PostgresClientConfiguration {
   id: string;
+  name?: string;
   user?: string;
   database?: string;
   password?: string;
@@ -33,13 +34,24 @@ export interface PostgresClientConfiguration {
   connectionString?: string;
 }
 
+export interface DatabaseTable {
+  name: string;
+  fields: any[];
+}
+
+export interface DatabaseMetadata {
+  tables: DatabaseTable[];
+}
+
 export interface DatabaseState {
   id: string;
   name: string;
   host: string;
   port: number;
+  database: string;
   username?: string;
   password?: string;
+  meta: Partial<DatabaseMetadata>;
 }
 
 export interface PostgresResponse {

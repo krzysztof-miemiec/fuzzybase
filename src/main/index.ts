@@ -9,6 +9,8 @@ import { setMenu } from './menu';
 
 let appWindow: BrowserWindow = null;
 
+const isMac = process.platform === 'darwin';
+
 const installExtensions = (): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {
     console.log('Development environment found. Initializing devtools.');
@@ -36,6 +38,7 @@ app.on('ready', () => installExtensions().then(() => {
       width: 1024,
       height: 728,
       title: Config.NAME,
+      titleBarStyle: isMac ? 'hidden' : 'default',
     },
     show: true,
   });
@@ -67,7 +70,7 @@ app.on('ready', () => installExtensions().then(() => {
 }));
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     app.quit();
   }
 });

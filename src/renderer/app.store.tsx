@@ -7,10 +7,10 @@ import { persistStore } from 'redux-persist';
 import * as databases from '../common/db/store/app';
 import { appDbEpics } from '../common/db/store/app.db.epics';
 import { reducer as dbReducer } from '../common/db/store/db.reducer';
-import * as layout from './scenes/layout/store';
-import { layoutEpics } from './scenes/layout/store/layout.epics';
 import { AppState, AppStore } from './store';
 import { IPCManager } from './utils/ipc.util';
+import * as layout from './views/layout/store';
+import { layoutEpics } from './views/layout/store/layout.epics';
 
 // TODO Remove the hack for Redux 4 Devtools
 // tslint:disable:no-var-requires
@@ -39,14 +39,16 @@ function configureStore() {
   };
 
   const history = createBrowserHistory();
+  const epicMiddleware = createEpicMiddleware();
 
   const store: AppStore = createStore(rootReducer, initialState, composeWithDevTools(
     applyMiddleware(
       routerMiddleware(history),
-      createEpicMiddleware(epics)
+      epicMiddleware
     )
   ));
   const persistor = persistStore(store);
+  epicMiddleware.run(epics);
 
   return { store, history, persistor };
 }

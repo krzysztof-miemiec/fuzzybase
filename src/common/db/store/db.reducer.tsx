@@ -2,7 +2,7 @@ import { PersistConfig, persistReducer } from 'redux-persist';
 import { defaultPersistConfig } from '../../../renderer/utils/persist.util';
 import { select } from '../../../renderer/utils/selector.util';
 import { DB_ACTIONS, DbAction } from './db.actions';
-import { getDatabase } from './db.selectors';
+import { getDatabaseIndex } from './db.selectors';
 import { ConnectionStatus, DatabaseConnectionState, DbState, initialState } from './db.state';
 
 export const persistConfig: PersistConfig = {
@@ -70,16 +70,32 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
     state = initialState;
   }
   switch (action.type) {
-    case DB_ACTIONS.SET_DATABASE:
-      const databaseExists = !!select(state, getDatabase(action.database.id));
-      return {
-        ...state,
-        databases: databaseExists
-          ? state.databases.map(
-            database => database.id === action.database.id ? action.database : database
-          )
-          : [...state.databases, action.database],
+    case DB_ACTIONS.SET_DATABASE: {
+      const databaseIndex = select(state, getDatabaseIndex(action.database.id));
+      const databases = [...state.databases];
+      if (databaseIndex < 0) {
+        databases.push(action.database);
+      } else {
+        databases[databaseIndex] = action.database;
+      }
+      return { ...state, databases };
+    }
+    case DB_ACTIONS.SET_TABLES_METADATA: {
+      const databaseIndex = select(state, getDatabaseIndex(action.databaseId));
+      if (databaseIndex < 0) {
+        return state;
+      }
+      const databases = [...state.databases];
+      const database = databases[databaseIndex];
+      databases[databaseIndex] = {
+        ...database,
+        meta: {
+          ...database.meta,
+          tables: action.tables,
+        },
       };
+      return { ...state, databases };
+    }
     case DB_ACTIONS.REMOVE_DATABASE:
       return {
         ...state,
@@ -106,9 +122,7 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
       };
     }
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };
 

@@ -1,6 +1,29 @@
+import { Config } from './config';
+
 export const R = {
+  color: {
+    primary: '#851f42',
+    accent: '#304799',
+    drawer: '#333',
+    sidebar: '#444',
+    white: '#FFF',
+    gray: '#666',
+    lightGray: '#CCC',
+    inputBackground: '#EEEEEE',
+  },
   dimen: {
-    drawerWidth: 240,
+    corner: 3,
+    spacing: 8,
+    drawerWidth: 68,
+    drawerIconContainer: 40,
+    drawerIcon: 28,
+    sidebarWidth: 230,
+    headerHeight: 64,
+    toolbarHeight: 56,
+    titleBarPadding: Config.IS_MAC ? 24 : 0,
+  },
+  fontSize: {
+    bolder: '16px',
   },
   timing: {
     animationDuration: 350,

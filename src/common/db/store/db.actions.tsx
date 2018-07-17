@@ -1,6 +1,12 @@
 import uuid from 'uuid/v4';
 import { createAction } from '../../../renderer/utils/redux.util';
-import { ConnectionStatus, DatabaseState, PostgresClientConfiguration, PostgresResponse } from './db.state';
+import {
+  ConnectionStatus,
+  DatabaseState,
+  DatabaseTable,
+  PostgresClientConfiguration,
+  PostgresResponse
+} from './db.state';
 
 export enum DB_ACTIONS {
   SET_DATABASE = 'DB/SET_DATABASE',
@@ -10,9 +16,11 @@ export enum DB_ACTIONS {
   DISCONNECT = 'DB/DISCONNECT',
   QUERY = 'DB/QUERY',
   QUERY_RESULT = 'DB/QUERY_RESULT',
+  GET_TABLES_METADATA = 'DB/GET_TABLES_METADATA',
+  SET_TABLES_METADATA = 'DB/SET_TABLES_METADATA',
 }
 
-// ADD_DATABASE
+// SET_DATABASE
 export type SetDatabaseAction = ReturnType<typeof setDatabase>;
 export const setDatabase = (database: DatabaseState) =>
   createAction(DB_ACTIONS.SET_DATABASE, { database });
@@ -47,6 +55,14 @@ export type PostgresQueryResultAction = ReturnType<typeof postgresQueryResult>;
 export const postgresQueryResult = (connectionId: string, queryId: string, result: PostgresResponse, error: Error) =>
   createAction(DB_ACTIONS.QUERY_RESULT, { connectionId, queryId, result, error });
 
+export type GetTablesMetadataAction = ReturnType<typeof getTablesMetadata>;
+export const getTablesMetadata = (connectionId: string) =>
+  createAction(DB_ACTIONS.GET_TABLES_METADATA, { connectionId });
+
+export type SetTablesMetadataAction = ReturnType<typeof setTablesMetadata>;
+export const setTablesMetadata = (databaseId: string, tables: DatabaseTable[]) =>
+  createAction(DB_ACTIONS.SET_TABLES_METADATA, { databaseId, tables });
+
 export type DbAction =
   | SetDatabaseAction
   | RemoveDatabaseAction
@@ -54,4 +70,6 @@ export type DbAction =
   | ConnectionStatusChangedAction
   | DisconnectFromPostgresAction
   | PostgresQueryAction
-  | PostgresQueryResultAction;
+  | PostgresQueryResultAction
+  | GetTablesMetadataAction
+  | SetTablesMetadataAction;

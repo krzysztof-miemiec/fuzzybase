@@ -11,13 +11,16 @@
       "title": "Databases"
     },
     "database": {
-      "name": "Database Name",
-      "host": "Host",
+      "name": "Connection Name",
+      "server": "Server",
+      "database": "Database",
       "port": "Port",
       "username": "Username",
       "password": "Password"
     },
     "actions": {
+      "cancel": "Cancel",
+      "create": "Create",
       "add": "Add",
       "remove": "Remove",
       "edit": "Edit",

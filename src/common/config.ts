@@ -1,5 +1,6 @@
 import packageJson from '../../package.json';
 
+const IS_MAC = process.platform === 'darwin';
 const IS_MAIN = !(global as any).window;
 
 export const Config = {
@@ -8,4 +9,5 @@ export const Config = {
   IS_MAIN,
   IS_APP: !IS_MAIN,
   IS_DEV: process.env.NODE_ENV === 'development',
+  IS_MAC,
 };

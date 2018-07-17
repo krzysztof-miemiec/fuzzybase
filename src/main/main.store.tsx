@@ -8,19 +8,22 @@ const reducer: Reducer = (state) => state || {};
 
 // EPICS
 // ------------------------------------
-const epics = combineEpics(
+const epics = combineEpics<any>(
   mainDbEpics,
   sendAction$
 );
 
 // CONFIG
 // ------------------------------------
+const epicMiddleware = createEpicMiddleware();
 const configureStore = () => {
-  return createStore(reducer, compose(
+  const store =  createStore(reducer, compose(
     applyMiddleware(
-      createEpicMiddleware(epics)
+      epicMiddleware
     )
   ));
+  epicMiddleware.run(epics);
+  return store;
 };
 
 export const store = configureStore();
