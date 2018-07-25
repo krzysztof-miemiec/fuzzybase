@@ -46,7 +46,7 @@ const getTablesMetadata$ = (action$: ActionsObservable<DbAction>, state$: StateO
     switchMap(originalAction => concat(
       of(postgresQuery(
         originalAction.connectionId,
-        'tables',
+        'items',
         'SELECT * FROM pg_catalog.pg_tables;'
       )),
       action$

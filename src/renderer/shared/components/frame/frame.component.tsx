@@ -1,6 +1,5 @@
-import { Typography, withStyles } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React from 'react';
-import { StyleProps } from '../../../utils/styles.util';
 import { styles } from './frame.styles';
 
 interface Props {
@@ -9,26 +8,25 @@ interface Props {
   footer?: React.ReactNode;
 }
 
-export const FrameComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
-  classes, headline, footer, children,
+export const DialogFrame: React.SFC<Props> = ({
+  headline, footer, children,
 }) => (
-  <div className={classes.container}>
-    <div className={classes.frame}>
-      <div className={classes.header}>
+  <div className={styles.container}>
+    <div className={styles.frame}>
+      <div className={styles.header}>
         <Typography
           variant="title"
-          className={classes.headerText}
+          className={styles.headerText}
         >
           {headline}
         </Typography>
       </div>
-      <div className={classes.content}>
+      <div className={styles.content}>
         {children}
       </div>
     </div>
-    <div className={classes.footer}>
+    <div className={styles.footer}>
       {footer}
     </div>
   </div>
 );
-export const Frame = withStyles(styles)<Props>(FrameComponent);

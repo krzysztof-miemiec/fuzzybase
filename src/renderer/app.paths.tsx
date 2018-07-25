@@ -1,6 +1,6 @@
 export const PATHS = {
   HOME: '/',
   DATABASES: '/databases',
-  DATABASE: (key: string = 'new') => `/database/${key}`,
-  CONNECTION: (key: string) => `/connection/${key}`,
+  DATABASE: (databaseId: string = 'new') => `/database/${databaseId}/`,
+  CONNECTION: (databaseId: string, connectionId: string) => `/database/${databaseId}/connection/${connectionId}`,
 };

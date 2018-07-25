@@ -1,33 +1,38 @@
-import { StyleRules } from '@material-ui/core/styles';
+import { createStyles } from '@material-ui/core/es';
 import { R } from '../../../../../common/resources';
 
-type Classes =
-  | 'container'
-  | 'column'
-  | 'sidebar'
-  | 'content'
-  | 'toolbar';
-
-export const styles = (): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
+    display: 'grid',
     height: '100%',
-  },
-  column: {
-    flex: 1,
-    display: 'flex',
-    flexFlow: 'column',
+    '-webkit-app-region': 'no-drag',
+    gridTemplateRows: `${R.dimen.toolbarHeight}px 1fr`,
+    gridTemplateColumns: `${R.dimen.sidebarWidth}px 1fr`,
   },
   sidebar: {
+    gridRowStart: 1,
+    gridRowEnd: 3,
+    gridColumn: 1,
+    display: 'flex',
+    flexFlow: 'column',
     flex: `0 0 ${R.dimen.sidebarWidth}px`,
     backgroundColor: R.color.sidebar,
   },
-  content: {
+  sidebarContent: {
     flex: 1,
+    overflowY: 'scroll',
+  },
+  content: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: '1fr',
+    gridRow: 2,
+    gridColumn: 2,
   },
   toolbar: {
-    flex: `0 0 ${R.dimen.toolbarHeight}px`,
+    gridRow: 1,
+    gridColumn: 2,
     borderBottom: `solid 1px ${R.color.lightGray}`,
+    '-webkit-app-region': 'drag',
   },
 });

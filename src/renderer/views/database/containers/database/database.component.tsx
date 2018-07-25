@@ -1,13 +1,16 @@
 import { withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { Route, RouteComponentProps } from 'react-router';
 import {
   connectToPostgres,
+  DatabaseConnectionState,
   DatabaseState,
   DatabaseTable,
   getConnection,
   getDatabase,
+  getDatabaseConnections,
+  getDatabaseList,
   getDatabaseMetadata,
   getDatabasesState,
   getFirstDatabaseConnection,
@@ -22,26 +25,31 @@ import { AppState } from '../../../../store';
 import { mapActions } from '../../../../utils/redux.util';
 import { select } from '../../../../utils/selector.util';
 import { StyleProps } from '../../../../utils/styles.util';
+import { Connection } from '../../../connection/containers/connection.component';
 import { DatabaseConnect } from '../../components/database-connect';
+import { DatabaseConnections } from '../../components/database-connections';
 import { DatabaseForm } from '../../components/database-form';
 import { DatabaseTables } from '../../components/database-tables';
 import { DatabaseTitle } from '../../components/database-title';
 import { styles } from './database.styles';
 
 type RouteProps = RouteComponentProps<{
-  id?: string;
+  databaseId?: string;
 }>;
 
 const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
-  const { id } = ownProps.match.params;
-  const database = select(state, getDatabasesState, getDatabase(id));
-  const connection = select(state, getDatabasesState, getFirstDatabaseConnection(id));
+  console.log(ownProps);
+  const { databaseId } = ownProps.match.params;
+  const database = select(state, getDatabasesState, getDatabase(databaseId));
+  const connection = select(state, getDatabasesState, getFirstDatabaseConnection(databaseId));
 
   return {
     database,
+    databases: select(state, getDatabasesState, getDatabaseList),
+    connections: select(state, getDatabasesState, getDatabaseConnections(databaseId)),
     connection,
     tablesQuery: connection && select(
-      state, getDatabasesState, getConnection(connection.connectionId), getQuery('tables')
+      state, getDatabasesState, getConnection(connection.connectionId), getQuery('items')
     ),
     tables: select(database, getDatabaseMetadata, getTables),
   };
@@ -64,11 +72,22 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
   state: State = {};
 
   onSubmit = (database: DatabaseState) => {
-    const { actions } = this.props;
+    const { actions, history } = this.props;
     if (database.name && database.database && database.host) {
       this.setState({ isModified: false });
       actions.setDatabase(database);
+      history.replace(PATHS.DATABASE(database.id));
     }
+  };
+
+  onCreateConnection = () => {
+    // TODO create new connection
+  };
+
+  onShowConnection = (connection: DatabaseConnectionState) => {
+    const { history } = this.props;
+    console.log(connection);
+    history.replace(PATHS.CONNECTION(connection.clientId, connection.connectionId));
   };
 
   onAddTable = () => {
@@ -84,8 +103,9 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
   };
 
   onRemove = () => {
-    const { actions, database } = this.props;
+    const { actions, history, database, databases } = this.props;
     actions.removeDatabase(database.id);
+    history.replace(PATHS.DATABASE(databases[0] && databases[0].id));
   };
 
   onConnect = () => {
@@ -98,7 +118,7 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
   };
 
   render() {
-    const { database, tables, connection, classes } = this.props;
+    const { database, tables, connection, connections, classes } = this.props;
     const { isModified } = this.state;
 
     return database && !isModified ? (
@@ -106,15 +126,22 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
         <div className={classes.container}>
           <div className={classes.sidebar}>
             <DatabaseTitle database={database} />
-            <DatabaseTables
-              tables={tables}
-              onAdd={this.onAddTable}
-              onTableClick={this.onTableClick}
-            />
+            <div className={classes.sidebarContent}>
+              <DatabaseConnections
+                connections={connections}
+                onAdd={this.onCreateConnection}
+                onConnectionClick={this.onShowConnection}
+              />
+              <DatabaseTables
+                tables={tables}
+                onAdd={this.onAddTable}
+                onTableClick={this.onTableClick}
+              />
+            </div>
           </div>
-          <div className={classes.column}>
-            <div className={classes.toolbar} />
-            <div className={classes.content} />
+          <div className={classes.toolbar} />
+          <div className={classes.content}>
+            <Route path={PATHS.CONNECTION(':databaseId', ':connectionId')} component={Connection} />
           </div>
         </div>
       ) : (

@@ -1,9 +1,7 @@
-import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../../common/resources';
+import { createStyles, draggable } from '../../../../app.styles';
 
-type Classes = 'container' | 'draggable';
-
-export const styles = (): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
     display: 'flex',
     flex: `0 0 ${R.dimen.drawerWidth}px`,
@@ -13,6 +11,6 @@ export const styles = (): StyleRules<Classes> => ({
   },
   draggable: {
     height: R.dimen.titleBarPadding,
-    '-webkit-app-region': 'drag',
+    ...draggable,
   },
 });

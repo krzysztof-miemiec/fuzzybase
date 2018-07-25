@@ -23,6 +23,10 @@ export const getFirstDatabaseConnection = (databaseId: string) => (state: DbStat
   Object.values(state.connections)
     .find(connection => connection.clientId === databaseId);
 
+export const getDatabaseConnections =  (databaseId: string) => (state: DbState) =>
+  Object.values(state.connections)
+    .filter(connection => connection.clientId === databaseId);
+
 export const getStatus = (state: DatabaseConnectionState) => state.status;
 
 export const getQuery = (id: string) => (state: DatabaseConnectionState) => state.queries[id];

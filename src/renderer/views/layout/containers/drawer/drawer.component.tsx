@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -7,7 +6,6 @@ import { getDatabaseList, getDatabasesState } from '../../../../../common/db/sto
 import { PATHS } from '../../../../app.paths';
 import { AppState } from '../../../../store';
 import { select } from '../../../../utils/selector.util';
-import { StyleProps } from '../../../../utils/styles.util';
 import { DrawerItem } from '../drawer-item/drawer-item.component';
 import { styles } from './drawer.styles';
 
@@ -20,8 +18,7 @@ const mapStateToProps = (state: AppState) => ({
 
 type Props =
   & ReturnType<typeof mapStateToProps>
-  & RouteComponentProps<{}>
-  & StyleProps<typeof styles>;
+  & RouteComponentProps<{}>;
 
 class DrawerComponent extends React.PureComponent<Props> {
 
@@ -34,11 +31,11 @@ class DrawerComponent extends React.PureComponent<Props> {
   );
 
   render() {
-    const { classes, databases } = this.props;
+    const { databases } = this.props;
     return (
-      <div className={classes.container}>
+      <div className={styles.container}>
         {Config.IS_MAC && (
-          <div className={classes.draggable} />
+          <div className={styles.draggable} />
         )}
         {databases.map(this.renderItem)}
         <DrawerItem name="Add" icon={AddIcon} onClick={this.onItemClick} />
@@ -47,8 +44,4 @@ class DrawerComponent extends React.PureComponent<Props> {
   }
 }
 
-export const Drawer = connect(mapStateToProps)(
-  withStyles(styles)(
-    withRouter(DrawerComponent)
-  )
-);
+export const Drawer = connect(mapStateToProps)(withRouter(DrawerComponent));

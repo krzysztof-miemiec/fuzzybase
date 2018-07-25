@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, withStyles } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -9,13 +9,12 @@ import { CodeInput } from '../../../shared/components/code-input';
 import { AppState } from '../../../store';
 import { mapActions } from '../../../utils/redux.util';
 import { select } from '../../../utils/selector.util';
-import { StyleProps } from '../../../utils/styles.util';
 import { styles } from './connection.styles';
 
-type RouteProps = RouteComponentProps<{ id: string }>;
+type RouteProps = RouteComponentProps<{ connectionId: string }>;
 
 const mapStateToProps = (state: AppState, ownProps: RouteProps) => ({
-  connection: select(state, getDatabasesState, getConnection(ownProps.match.params.id)),
+  connection: select(state, getDatabasesState, getConnection(ownProps.match.params.connectionId)),
 });
 
 const mapDispatchToProps = mapActions({
@@ -29,11 +28,11 @@ interface State {
   queryId?: string;
 }
 
-class ConnectionComponent extends React.PureComponent<Props & StyleProps<typeof styles>, State> {
-  state: State = { code: 'SELECT * FROM dupa;' };
+class ConnectionComponent extends React.PureComponent<Props, State> {
+  state: State = { code: 'SELECT * FROM "PracownikMedyczny" LIMIT 100;' };
 
   render() {
-    const { connection, classes, actions } = this.props;
+    const { connection, actions } = this.props;
     const { code, queryId } = this.state;
     const query = select(connection, getQuery(queryId));
     const rows = query && ((query.result && query.result.rows) || [{ error: query.error }]) || [{}];
@@ -42,17 +41,17 @@ class ConnectionComponent extends React.PureComponent<Props & StyleProps<typeof 
       console.log(query);
     }
     return (
-      <div className={classes.container}>
+      <div className={styles.container}>
         <CodeInput
           text={code}
-          className={classes.queryField}
+          className={styles.queryField}
           onTextChanged={code => this.setState({ code })}
           onSendTriggered={() => this.setState({ queryId: uuid() }, () => {
             actions.postgresQuery(connection.connectionId, this.state.queryId, code);
           })}
         />
-        <div className={classes.tableContainer}>
-          <div className={classes.table}>
+        <div className={styles.tableContainer}>
+          <div className={styles.table}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -84,6 +83,4 @@ class ConnectionComponent extends React.PureComponent<Props & StyleProps<typeof 
   }
 }
 
-export const Connection = connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)<Props>(ConnectionComponent)
-);
+export const Connection = connect(mapStateToProps, mapDispatchToProps)(ConnectionComponent);

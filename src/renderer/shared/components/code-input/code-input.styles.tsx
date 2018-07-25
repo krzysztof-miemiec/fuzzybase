@@ -1,16 +1,28 @@
-import { Theme } from '@material-ui/core';
-import { StyleRules } from '@material-ui/core/styles';
+import { R } from '../../../../common/resources';
+import { createStyles } from '../../../app.styles';
 
-type Classes =  'container' | 'input';
-
-export const styles = (_: Theme): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
-    height: '100%',
-    width: '100%',
+    border: `2px solid ${R.color.gray}`,
+    borderRadius: R.dimen.corner,
+    display: 'flex',
+    flexFlow: 'row nowrap',
   },
   input: {
-    height: '100%',
-    width: '100%',
+    flex: '1 0 100px',
+    display: 'grid',
+    padding: R.dimen.spacing,
+    background: 'transparent',
     fontSize: 13,
+  },
+  button: {
+    flex: '0 0 48px',
+    height: '100%',
+    margin: 0,
+    padding: R.dimen.spacing,
+    fontSize: 20,
+    display: 'flex',
+    alignItems: 'flex-end',
+    color: R.color.gray,
   },
 });

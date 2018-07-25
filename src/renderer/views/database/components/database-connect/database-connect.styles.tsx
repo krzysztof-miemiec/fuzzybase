@@ -1,5 +1,5 @@
-import { createStyles } from '@material-ui/core/es';
 import { R } from '../../../../../common/resources';
+import { createStyles } from '../../../../app.styles';
 
 export const styles = createStyles({
   link: {

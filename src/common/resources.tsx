@@ -4,11 +4,11 @@ export const R = {
   color: {
     primary: '#851f42',
     accent: '#304799',
-    drawer: '#333',
-    sidebar: '#444',
+    drawer: '#1a1a1a',
+    sidebar: '#333333',
     white: '#FFF',
-    gray: '#666',
-    lightGray: '#CCC',
+    gray: '#646464',
+    lightGray: '#AEAEAE',
     inputBackground: '#EEEEEE',
   },
   dimen: {

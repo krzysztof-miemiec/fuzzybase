@@ -1,8 +1,9 @@
-import { withStyles } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import React from 'react';
 import { Controlled } from 'react-codemirror2';
-import { StyleProps } from '../../../utils/styles.util';
 import { styles } from './code-input.styles';
+
+import Send from '@material-ui/icons/send';
 
 interface Props {
   className?: string;
@@ -11,7 +12,7 @@ interface Props {
   onSendTriggered?: () => void;
 }
 
-class CodeInputComponent extends React.PureComponent<Props & StyleProps<typeof styles>> {
+export class CodeInput extends React.PureComponent<Props> {
   container: any;
 
   onKeyDown = (keyEvent: KeyboardEvent) => {
@@ -34,14 +35,14 @@ class CodeInputComponent extends React.PureComponent<Props & StyleProps<typeof s
   }
 
   render() {
-    const { classes, className, text, onTextChanged } = this.props;
+    const { className, text, onTextChanged, onSendTriggered } = this.props;
 
     return (
       <div className={className}>
-        <div ref={ref => this.container = ref} className={classes.container}>
+        <div ref={ref => this.container = ref} className={styles.container}>
           <Controlled
             value={text}
-            className={classes.input}
+            className={styles.input}
             options={{
               mode: 'text/x-pgsql',
               theme: 'idea',
@@ -54,10 +55,11 @@ class CodeInputComponent extends React.PureComponent<Props & StyleProps<typeof s
               }
             }}
           />
+          <Button variant="flat" className={styles.button} onClick={onSendTriggered}>
+            <Send color="inherit" fontSize="inherit" />
+          </Button>
         </div>
       </div>
     );
   }
 }
-
-export const CodeInput = withStyles(styles)<Props>(CodeInputComponent);

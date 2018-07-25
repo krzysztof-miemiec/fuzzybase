@@ -2,7 +2,7 @@ import { Button, Typography, withStyles } from '@material-ui/core';
 import React from 'react';
 import { DatabaseState } from '../../../../../common/db/store/app';
 import { createDatabaseState } from '../../../../../common/db/store/db.utils';
-import { Frame } from '../../../../shared/components/frame';
+import { DialogFrame } from '../../../../shared/components/frame';
 import { FormInput } from '../../../../shared/components/input';
 import { i18n } from '../../../../utils/i18n.util';
 import { StyleProps } from '../../../../utils/styles.util';
@@ -56,7 +56,7 @@ export class DatabaseFormComponent extends React.Component<Props & StyleProps<ty
     const { classes, database: sourceDatabase } = this.props;
     const { database } = this.state;
     return database ? (
-      <Frame
+      <DialogFrame
         headline="Create a new database connection"
         footer={this.renderFooter}
       >
@@ -112,7 +112,7 @@ export class DatabaseFormComponent extends React.Component<Props & StyleProps<ty
         >
           {i18n.t(sourceDatabase ? 'actions.save' : 'actions.create')}
         </Button>
-      </Frame>
+      </DialogFrame>
     ) : (
       null
     );

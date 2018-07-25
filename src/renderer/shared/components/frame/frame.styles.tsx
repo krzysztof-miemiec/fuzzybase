@@ -1,16 +1,7 @@
-import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../common/resources';
+import { createStyles, noDraggable } from '../../../app.styles';
 
-type Classes =
-  | 'container'
-  | 'frame'
-  | 'footer'
-  | 'link'
-  | 'content'
-  | 'header'
-  | 'headerText';
-
-export const styles = (): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
     display: 'flex',
     flexFlow: 'column',
@@ -24,7 +15,7 @@ export const styles = (): StyleRules<Classes> => ({
     background: R.color.white,
     borderRadius: R.dimen.corner,
     margin: R.dimen.spacing * 4,
-    '-webkit-app-region': 'no-drag',
+    ...noDraggable,
   },
   link: {
     textDecoration: 'underline',
@@ -52,7 +43,5 @@ export const styles = (): StyleRules<Classes> => ({
     flexFlow: 'column',
     padding: R.dimen.spacing * 2,
   },
-  footer: {
-
-  },
+  footer: {},
 });

@@ -1,25 +1,32 @@
-import { Theme } from '@material-ui/core';
-import { StyleRules } from '@material-ui/core/styles';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/idea.css';
+import { R } from '../../../../common/resources';
+import { createStyles } from '../../../app.styles';
 
-type Classes = 'container' | 'queryField' | 'table' | 'tableContainer';
-
-export const styles = (_: Theme): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
+    display: 'grid',
+    gridRow: 1,
+    gridColumn: 1,
+    gridTemplateRows: 'auto 1fr',
   },
   queryField: {
-    flex: '0 0 120px',
+    gridRow: 1,
+    minHeight: 60,
+    marginLeft: R.dimen.spacing,
+    marginRight: R.dimen.spacing,
+    marginTop: R.dimen.spacing,
   },
   table: {
-    width: 'auto',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    overflow: 'scroll',
   },
   tableContainer: {
-    flex: 1,
-    overflow: 'scroll',
+    position: 'relative',
+    gridRow: 2,
   },
 });

@@ -5,18 +5,16 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography,
-  WithStyles,
-  withStyles
+  Typography
 } from '@material-ui/core';
 import React from 'react';
 import { DatabaseState } from '../../../../../common/db/store/app';
-import { Frame } from '../../../../shared/components/frame';
+import { DialogFrame } from '../../../../shared/components/frame';
 import { styles } from './database-connect.styles';
 
 import Link from '@material-ui/icons/Link';
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   database: DatabaseState;
   onConnect: () => void;
   onModify: () => void;
@@ -27,7 +25,7 @@ interface State {
   removeDialog: boolean;
 }
 
-export class DatabaseConnectComponent extends React.Component<Props, State> {
+export class DatabaseConnect extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { removeDialog: false };
@@ -37,22 +35,27 @@ export class DatabaseConnectComponent extends React.Component<Props, State> {
     this.setState({ removeDialog: true });
   };
 
+  onRemoveConfirmation = () => {
+    this.onDialogClose();
+    this.props.onRemove();
+  };
+
   onDialogClose = () => {
     this.setState({ removeDialog: false });
   };
 
   render() {
-    const { classes, database, onConnect, onModify, onRemove } = this.props;
+    const { database, onConnect, onModify } = this.props;
     const { removeDialog } = this.state;
 
     return (
-      <Frame
+      <DialogFrame
         headline={database.name}
         footer={(
           <Typography variant="caption">
             You can also{' '}
-            <span className={classes.link} onClick={onModify}>modify</span>
-            {' '}or <span className={classes.link} onClick={this.onRemove}>remove</span> the connection.
+            <span className={styles.link} onClick={onModify}>modify</span>
+            {' '}or <span className={styles.link} onClick={this.onRemove}>remove</span> the connection.
           </Typography>
         )}
       >
@@ -76,14 +79,12 @@ export class DatabaseConnectComponent extends React.Component<Props, State> {
             <Button onClick={this.onDialogClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={onRemove} color="primary" autoFocus={true}>
+            <Button onClick={this.onRemoveConfirmation} color="primary" autoFocus={true}>
               Remove
             </Button>
           </DialogActions>
         </Dialog>
-      </Frame>
+      </DialogFrame>
     );
   }
 }
-
-export const DatabaseConnect = withStyles(styles)(DatabaseConnectComponent);
