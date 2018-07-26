@@ -15,6 +15,7 @@ export enum DB_ACTIONS {
   CONNECTION_STATUS_CHANGED = 'DB/CONNECTION_STATUS_CHANGED',
   DISCONNECT = 'DB/DISCONNECT',
   QUERY = 'DB/QUERY',
+  SET_QUERY = 'DB/SET_QUERY',
   QUERY_RESULT = 'DB/QUERY_RESULT',
   GET_TABLES_METADATA = 'DB/GET_TABLES_METADATA',
   SET_TABLES_METADATA = 'DB/SET_TABLES_METADATA',
@@ -47,6 +48,10 @@ export type DisconnectFromPostgresAction = ReturnType<typeof disconnectFromPostg
 export const disconnectFromPostgres = (connectionId: string) =>
   createAction(DB_ACTIONS.DISCONNECT, { connectionId });
 
+export type SetQueryAction = ReturnType<typeof setQuery>;
+export const setQuery = (connectionId: string, queryId: string, query: string) =>
+  createAction(DB_ACTIONS.SET_QUERY, { connectionId, queryId, query });
+
 export type PostgresQueryAction = ReturnType<typeof postgresQuery>;
 export const postgresQuery = (connectionId: string, queryId: string, query: string) =>
   createAction(DB_ACTIONS.QUERY, { connectionId, queryId, query });
@@ -70,6 +75,7 @@ export type DbAction =
   | ConnectionStatusChangedAction
   | DisconnectFromPostgresAction
   | PostgresQueryAction
+  | SetQueryAction
   | PostgresQueryResultAction
   | GetTablesMetadataAction
   | SetTablesMetadataAction;

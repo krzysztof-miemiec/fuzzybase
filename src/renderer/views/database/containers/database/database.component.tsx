@@ -1,10 +1,10 @@
-import { withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router';
+import uuid from 'uuid/v4';
 import {
   connectToPostgres,
-  DatabaseConnectionState,
+  DatabaseQueryState,
   DatabaseState,
   DatabaseTable,
   getConnection,
@@ -17,28 +17,27 @@ import {
   getQuery,
   getTables,
   postgresQuery,
-  removeDatabase
+  removeDatabase, setQuery
 } from '../../../../../common/db/store/app';
 import { setDatabase } from '../../../../../common/db/store/db.actions';
 import { PATHS } from '../../../../app.paths';
 import { AppState } from '../../../../store';
 import { mapActions } from '../../../../utils/redux.util';
 import { select } from '../../../../utils/selector.util';
-import { StyleProps } from '../../../../utils/styles.util';
-import { Connection } from '../../../connection/containers/connection.component';
+import { Query } from '../../../query/containers/query.component';
 import { DatabaseConnect } from '../../components/database-connect';
-import { DatabaseConnections } from '../../components/database-connections';
 import { DatabaseForm } from '../../components/database-form';
+import { DatabaseQueries } from '../../components/database-queries';
 import { DatabaseTables } from '../../components/database-tables';
 import { DatabaseTitle } from '../../components/database-title';
 import { styles } from './database.styles';
 
 type RouteProps = RouteComponentProps<{
   databaseId?: string;
+  connectionId?: string;
 }>;
 
 const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
-  console.log(ownProps);
   const { databaseId } = ownProps.match.params;
   const database = select(state, getDatabasesState, getDatabase(databaseId));
   const connection = select(state, getDatabasesState, getFirstDatabaseConnection(databaseId));
@@ -46,7 +45,7 @@ const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
   return {
     database,
     databases: select(state, getDatabasesState, getDatabaseList),
-    connections: select(state, getDatabasesState, getDatabaseConnections(databaseId)),
+    queries: select(state, getDatabasesState, getDatabaseConnections(databaseId)),
     connection,
     tablesQuery: connection && select(
       state, getDatabasesState, getConnection(connection.connectionId), getQuery('items')
@@ -59,16 +58,20 @@ const mapDispatchToProps = mapActions({
   setDatabase,
   connectToPostgres,
   postgresQuery,
+  setQuery,
   removeDatabase,
 });
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteProps;
+type Props =
+  ReturnType<typeof mapStateToProps>
+  & typeof mapDispatchToProps
+  & RouteProps;
 
 interface State {
   isModified?: boolean;
 }
 
-class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof styles>, State> {
+class DatabaseComponent extends React.PureComponent<Props, State> {
   state: State = {};
 
   onSubmit = (database: DatabaseState) => {
@@ -80,14 +83,14 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
     }
   };
 
-  onCreateConnection = () => {
-    // TODO create new connection
+  onCreateQuery = () => {
+    const {actions, connection} = this.props;
+    actions.setQuery(connection.connectionId, uuid(), 'x');
   };
 
-  onShowConnection = (connection: DatabaseConnectionState) => {
-    const { history } = this.props;
-    console.log(connection);
-    history.replace(PATHS.CONNECTION(connection.clientId, connection.connectionId));
+  onShowQuery = (query: DatabaseQueryState) => {
+    const { history, connection } = this.props;
+    history.replace(PATHS.QUERY(connection.clientId, connection.connectionId, query.id));
   };
 
   onAddTable = () => {
@@ -118,19 +121,20 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
   };
 
   render() {
-    const { database, tables, connection, connections, classes } = this.props;
+    const { database, tables, connection } = this.props;
     const { isModified } = this.state;
+    console.log(connection);
 
     return database && !isModified ? (
       connection ? (
-        <div className={classes.container}>
-          <div className={classes.sidebar}>
+        <div className={styles.container}>
+          <div className={styles.sidebar}>
             <DatabaseTitle database={database} />
-            <div className={classes.sidebarContent}>
-              <DatabaseConnections
-                connections={connections}
-                onAdd={this.onCreateConnection}
-                onConnectionClick={this.onShowConnection}
+            <div className={styles.sidebarContent}>
+              <DatabaseQueries
+                queries={Object.values(connection.queries)}
+                onAdd={this.onCreateQuery}
+                onQueryClick={this.onShowQuery}
               />
               <DatabaseTables
                 tables={tables}
@@ -139,9 +143,9 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
               />
             </div>
           </div>
-          <div className={classes.toolbar} />
-          <div className={classes.content}>
-            <Route path={PATHS.CONNECTION(':databaseId', ':connectionId')} component={Connection} />
+          <div className={styles.toolbar} />
+          <div className={styles.content}>
+            <Route path={PATHS.QUERY(':databaseId', ':connectionId', ':queryId')} component={Query} />
           </div>
         </div>
       ) : (
@@ -162,6 +166,4 @@ class DatabaseComponent extends React.PureComponent<Props & StyleProps<typeof st
   }
 }
 
-export const Database = connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(DatabaseComponent)
-);
+export const Database = connect(mapStateToProps, mapDispatchToProps)(DatabaseComponent);

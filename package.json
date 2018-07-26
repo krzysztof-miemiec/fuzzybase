@@ -132,6 +132,7 @@
     "@types/i18next": "8.4.3",
     "@types/jest": "22.2.3",
     "@types/jss": "^9.5.4",
+    "@types/lodash": "^4.14.113",
     "@types/pg": "7.4.10",
     "@types/react": "16.4.6",
     "@types/react-redux": "5.0.19",

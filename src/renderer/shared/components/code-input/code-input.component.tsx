@@ -12,6 +12,8 @@ interface Props {
   onSendTriggered?: () => void;
 }
 
+// registerHelper('hint', '');
+
 export class CodeInput extends React.PureComponent<Props> {
   container: any;
 
@@ -48,6 +50,7 @@ export class CodeInput extends React.PureComponent<Props> {
               theme: 'idea',
               lineNumbers: true,
               tabSize: 2,
+              extraKeys: { 'Ctrl-Space': 'autocomplete' },
             }}
             onBeforeChange={(_editor, _data, value) => {
               if (onTextChanged) {

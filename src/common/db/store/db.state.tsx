@@ -58,6 +58,7 @@ export interface PostgresResponse {
   command: string;
   rowCount: number;
   oid: any;
+  fields: { name: string, columnID: number }[];
   rows: object[];
 }
 

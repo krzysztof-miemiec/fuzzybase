@@ -17,14 +17,6 @@ export const styles = createStyles({
     marginRight: R.dimen.spacing,
     marginTop: R.dimen.spacing,
   },
-  table: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    overflow: 'scroll',
-  },
   tableContainer: {
     position: 'relative',
     gridRow: 2,

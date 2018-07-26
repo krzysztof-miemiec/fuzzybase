@@ -24,6 +24,9 @@ export const styles = createStyles({
     flex: 1,
     color: R.color.lightGray,
     fontSize: R.fontSize.bolder,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     fontWeight: 700,
   },
   icon: {
@@ -39,5 +42,8 @@ export const styles = createStyles({
     '&:hover': {
       backgroundColor: R.color.gray,
     },
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 });

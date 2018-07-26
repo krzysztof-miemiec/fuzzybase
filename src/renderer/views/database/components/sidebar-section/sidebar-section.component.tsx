@@ -6,6 +6,7 @@ import { styles } from './sidebar-section.styles';
 import Add from '@material-ui/icons/AddCircleOutline';
 
 interface Item {
+  id?: string;
   name: string;
 }
 
@@ -30,7 +31,7 @@ export class SidebarSectionComponent<T extends any>
     return (
       <Typography
         className={classes.element}
-        key={mappedItem.name}
+        key={mappedItem.id || mappedItem.name}
         onClick={() => this.props.onItemClick(item)}
       >
         {mappedItem.name}
@@ -40,7 +41,6 @@ export class SidebarSectionComponent<T extends any>
 
   render() {
     const { classes, title, onAdd, items } = this.props;
-    console.log(items);
     return (
       <div className={classes.container}>
         <div className={classes.titleContainer} onClick={onAdd}>

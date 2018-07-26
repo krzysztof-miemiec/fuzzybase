@@ -1,11 +1,11 @@
-import { createStyles } from '@material-ui/core/es';
 import { R } from '../../../../../common/resources';
+import { createStyles, draggable, noDraggable } from '../../../../app.styles';
 
 export const styles = createStyles({
   container: {
+    ...noDraggable,
     display: 'grid',
     height: '100%',
-    '-webkit-app-region': 'no-drag',
     gridTemplateRows: `${R.dimen.toolbarHeight}px 1fr`,
     gridTemplateColumns: `${R.dimen.sidebarWidth}px 1fr`,
   },
@@ -33,6 +33,6 @@ export const styles = createStyles({
     gridRow: 1,
     gridColumn: 2,
     borderBottom: `solid 1px ${R.color.lightGray}`,
-    '-webkit-app-region': 'drag',
+    ...draggable,
   },
 });

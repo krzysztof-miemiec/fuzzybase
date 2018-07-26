@@ -30,6 +30,19 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
         error: action.error,
       };
     }
+    case DB_ACTIONS.SET_QUERY: {
+      return {
+        ...state,
+        queries: {
+          ...state.queries,
+          [action.queryId]: {
+            ...state.queries[action.queryId],
+            id: action.queryId,
+            query: action.query,
+          },
+        },
+      };
+    }
     case DB_ACTIONS.QUERY: {
       return {
         ...state,
@@ -103,6 +116,7 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
       };
     case DB_ACTIONS.CONNECTION_STATUS_CHANGED:
     case DB_ACTIONS.QUERY:
+    case DB_ACTIONS.SET_QUERY:
     case DB_ACTIONS.QUERY_RESULT: {
       const connection = connectionReducer(state.connections[action.connectionId], action);
       const connections = { ...state.connections };
