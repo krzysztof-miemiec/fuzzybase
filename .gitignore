@@ -1,5 +1,6 @@
 # App directory structure
 logs/
+*.log.txt
 screenshots/
 release/
 dist/
@@ -9,10 +10,14 @@ lib-cov/
 node_modules/
 reports/
 
+# Builds
+*.o
+*.so
+
 # OS
 .DS_Store
 Thumbs.db
 
 # IDE
-.idea/*
+**/.idea/*
 !.idea/runConfigurations

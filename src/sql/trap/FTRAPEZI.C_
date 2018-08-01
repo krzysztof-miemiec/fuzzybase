@@ -1,0 +1,845 @@
+#include "postgres.h"
+#include <utils/elog.h>
+#include <stdlib.h>
+#include "/fuzzy/fstandard/fstandard.c"
+
+text* toText( char* s ) {
+  text* result = (text*)palloc(VARHDRSZ + strlen( s ) );
+  result->vl_len = VARHDRSZ + strlen( s ) ;
+  memcpy( result->vl_dat, s, strlen( s ) );
+  return result ;
+}
+
+//*****************definicja typu ftrapezium***********************
+
+typedef struct { 
+  float8 a, m, dm, b;
+} ftrapezium  ;
+
+//**************definicja typu ftrapeziumext*********************
+
+typedef struct { 
+  float8 ext ;
+  ftrapezium f ;
+  char op [ 4 ] ;
+} ftrapeziumext ;
+
+
+ftrapezium_clear( ftrapezium *f ) {
+  f->a  = 0 ;
+  f->m  = 0 ;
+  f->dm = 0 ;
+  f->b  = 0 ;
+}  
+
+void assignftrapezium( ftrapezium *s, ftrapezium *d ) {
+ if( s == NULL )
+    d = NULL ;
+  else 
+  {
+    d->a  = s->a  ;  
+    d->m  = s->m  ;  
+    d->dm = s->dm ;  
+    d->b  = s->b  ;  
+  }    
+}
+
+//*******************funkcje wykorzystywane przez funkcje ftrapezium_in************** 
+
+int charpos( char* source, char ch ) {
+  int i ;
+  for( i = 0; i< strlen(source ); i ++ )
+    if( source[ i ] == ch ) {
+      return i ;
+  }
+  return - 1 ;
+} ;
+
+ftrapezium * ftrapezium_in( char *lancuch ) { 
+  float8 l, m, n, o ;
+  ftrapezium *wynik = ( ftrapezium * ) palloc( sizeof( ftrapezium ) ) ;
+  
+  bool existsL = charpos( lancuch, '/' ) >= 0 ;
+  bool existsN = charpos( lancuch, '~' ) >= 0 ;
+  bool existsO = charpos( lancuch, '\\' ) >= 0 ;
+
+  if( existsL ) {
+    // zeskanuj i ukroc poczatek az do / wlacznie
+    sscanf( lancuch, "%lf", &l ) ;
+    strcpy( lancuch, lancuch + charpos( lancuch, '/' ) + 1 ) ;
+  } ;
+  
+  // zeskanuj m i jesli nie bylo l to l = m 
+  sscanf( lancuch, "%lf", &m ) ;
+ 
+  if(!existsL)
+    l = m ;
+    
+  if( existsN ) {
+    strcpy( lancuch, lancuch + charpos( lancuch, '~' ) + 1 ) ;
+    // zeskanuj i ukroc poczatek az do / wlacznie
+    sscanf( lancuch, "%lf", &n ) ;
+  } 
+  else
+    n = m ;
+  
+  if( existsO ) {
+    strcpy( lancuch, lancuch + charpos( lancuch, '\\' ) + 1 ) ;
+    // zeskanuj i ukroc poczatek az do / wlacznie
+    sscanf( lancuch, "%lf", &o ) ;
+  } 
+  else
+    o = n ;
+
+  wynik->a = m - l ;
+  wynik->m = m ;
+  wynik->dm = n - m ;
+  wynik->b = o - n ;
+ 
+  return( wynik ) ;
+}
+
+//**********************funkcja wyjsciowa dla typu ftrapezium*****************************
+
+char * ftrapezium_out( ftrapezium *f )
+{
+  char *wynik = ( char * ) palloc( 512 );
+  char wynik_cz[512];
+
+  strcpy( wynik, "" );
+  strcpy( wynik_cz, "" );
+  
+  // parametry
+  if( f->a != 0 ) {
+    sprintf( wynik_cz, "%.2f/", ( f->m ) - ( f->a )  );
+    strcat( wynik, wynik_cz );
+  } ;
+  sprintf( wynik_cz, "%.2f", f->m );
+  strcat( wynik, wynik_cz );
+  if( f->dm != 0 ) {
+    sprintf( wynik_cz, "~%.2f", ( ( f->m ) + ( f->dm ) ) );
+    strcat( wynik, wynik_cz );
+  } ;
+  if( f->b != 0 ) {
+    sprintf( wynik_cz, "\\%.2f", (( f->m ) + ( f->dm ) + ( f->b )) );
+    strcat( wynik, wynik_cz );
+  } ;
+  
+  return(wynik);
+}
+
+//***************poczatek funkcji definiujacych wyrazy rozmyte*******************
+
+ftrapezium* about_r( float8 l, float8 m, float8 n, float8 o ) { 
+  ftrapezium* f = (ftrapezium*) palloc(sizeof(ftrapezium));
+
+  f->a  = m - l ;
+  f->m  = m ;
+  f->dm = n - m ;
+  f->b  = o - n ;
+
+  return f ;  
+}
+
+ftrapezium* about( float8 *l, float8 *m, float8 *n, float8 *o ) { 
+  return about_r( *l, *m, *n, *o ) ;    
+}
+
+
+
+//****************************operacje arytmetyczne na liczbach rozmytych******************
+
+ftrapezium* minus_f( ftrapezium* f ) {
+    
+  float8 b2 = 0 ;
+  
+  if( f == NULL )
+    return NULL ;
+
+  b2 = f->a ;
+  f->m = -( f->m + f->dm ) ;
+  f->dm = f->dm ;
+  f->a =  f->b ;
+  f->b = b2 ;
+  
+  return f ;
+}
+
+ftrapezium* f_sum_r( ftrapezium* f, float8* r ) {
+
+  if(( f == NULL ) || ( r == NULL) )
+    return NULL ;
+
+  f->m += *r ;
+  return f;
+}
+
+ftrapezium* r_sum_f( float8* r, ftrapezium* f) {
+  if(( f == NULL ) || ( r == NULL) )
+    return NULL ;
+
+  return f_sum_r( f, r ) ;
+} ;
+
+ftrapezium* f_sub_r( ftrapezium* f, float8* r ) {
+  if(( f == NULL ) || ( r == NULL) )
+    return NULL ;
+  
+  f->m -= *r ;
+  return f ;
+} ;
+
+ftrapezium* r_sub_f( float8* r, ftrapezium* f ) {
+  if(( f == NULL ) || ( r == NULL) )
+    return NULL ;
+  
+  return minus_f( f_sub_r( f, r ) ) ;
+}
+
+ftrapezium* f_sum_f( ftrapezium *x, ftrapezium *y) {
+  if( ( x == NULL ) || ( y == NULL ) ) 
+    return NULL ;
+  
+  x->a  += y->a  ;
+  x->m  += y->m  ;
+  x->dm += y->dm ;
+  x->b  += y->b  ;
+
+  return x ;
+}
+
+ftrapezium* f_sub_f( ftrapezium *x, ftrapezium *y) {
+  if( ( x == NULL ) || ( y == NULL ) ) 
+    return NULL ;
+  
+  x->a  -=  y->a  ;
+  x->m  -=  y->m  ;
+  x->dm -=  y->dm ;
+  x->b  -=  y->b  ;
+
+  return x ;
+}
+
+ftrapezium* f_mul_r( ftrapezium *f,  float8* r ) {
+  if(( f == NULL ) || ( r == NULL) )
+    return NULL ;
+
+  f->a  *= *r ;
+  f->m  *= *r ;
+  f->dm *= *r ;
+  f->b  *= *r  ;
+
+  return f ;
+}
+
+ftrapezium* r_mul_f( float8* r, ftrapezium* f ) {
+  if(( f == NULL ) || ( r == NULL) )
+    return NULL ;
+  return f_mul_r( f, r ) ;
+}
+
+ftrapezium* f_div_r( ftrapezium *f,  float8* r ) {
+  if(( f == NULL ) || ( r == NULL) || (r==0) )
+    return NULL ;
+
+  f->a  /= *r ;
+  f->m  /= *r ;
+  f->dm /= *r ;
+  f->b  /= *r ; 
+
+  return f ;
+}
+
+ftrapezium* r_div_f( float8* r, ftrapezium *f ) {
+  if(( f == NULL ) || ( r == NULL) || (r==0) )
+    return NULL ;
+
+  f->a  = *r / f->a ;
+  f->m  = *r / f->m ;
+  f->dm = *r / f->dm ;
+  f->b  = *r / f->b ; 
+
+  return f ;
+}
+
+
+ftrapezium* f_mul_f( ftrapezium* a, ftrapezium* b ) {
+  ftrapezium* f = NULL ;
+  
+  float8 al, an, ao, bl, bn, bo ;
+  
+  if(( a == NULL ) || ( b == NULL) )
+    return NULL ;
+
+  f = (ftrapezium*) palloc(sizeof(ftrapezium));
+
+  al = a->m - a->a ;
+  an = a->m + a->dm ;
+  ao = an + a->b ;
+
+  bl = b->m - b->a ;
+  bn = b->m + b->dm ;
+  bo = bn + b->b ;
+
+  f->m  = a->m * b->m ;
+  f->a  = f->m - ( al * bl ) ;
+  f->dm = ( an * bn ) - f->m ;
+  f->b  = ( ao * bo ) - f->dm ;
+
+  return f ;  
+}
+
+ftrapezium* f_div_f( ftrapezium* a, ftrapezium* b ) {
+  ftrapezium* f = NULL ;
+  
+  float8 al, an, ao, bl, bn, bo ;
+  
+  al = a->m - a->a ;
+  an = a->m + a->dm ;
+  ao = an + a->b ;
+
+  bl = b->m - b->a ;
+  bn = b->m + b->dm ;
+  bo = bn + b->b ;
+
+  if(( a == NULL ) || ( b == NULL) || (bl==0) || (b->m==0) || (bn==0) || (bo==0) )
+    return NULL ;
+
+  f = (ftrapezium*) palloc(sizeof(ftrapezium));
+
+
+  f->m  = a->m / b->m ;
+  f->a  = f->m - ( al / bl ) ;
+  f->dm = ( an / bn ) - f->m ;
+  f->b  = ( ao / bo ) - f->dm ;
+
+  return f ;  
+}
+
+//********************** funkcje obliczajace wieksza i mniejsza z wartosci ftrapezium***********
+
+ftrapezium* ftrapeziummin( ftrapezium* f1, ftrapezium* f2 ) {
+  if( ( f1 == NULL ) || (f2 == NULL ) )
+    return NULL ;
+    
+  if( f1->m < f2->m) 
+    return f1 ;
+  else
+    return f2 ;
+}
+
+ftrapezium* ftrapeziummax( ftrapezium* f1, ftrapezium* f2 ) {
+  if( ( f1 == NULL ) || (f2 == NULL ) )
+    return NULL ;
+  if( f1->m > f2->m)
+    return  f1 ;
+  else
+  return f2 ;
+}
+
+ftrapezium* ftrapeziumext_to_ftrapezium( ftrapeziumext* last_state) {
+  if( last_state == NULL ) 
+    return NULL ;
+  return &(last_state->f) ;
+} ;
+
+ftrapeziumext* statemax( ftrapeziumext* state, ftrapezium* next_data ) {
+  if(( state == NULL ) || ( next_data == NULL ))
+    return NULL ;
+
+  if(state->ext == 0) {
+    state->ext++ ;
+    assignftrapezium( next_data, &(state->f) ) ;
+    return state ;
+  } ;
+  assignftrapezium( ftrapeziummax(&(state->f), next_data), &(state->f)) ;
+
+  return state ;
+} ;
+
+ftrapeziumext* statemin( ftrapeziumext* state, ftrapezium* next_data ) {
+  if(( state == NULL ) || ( next_data == NULL ))
+    return NULL ;
+
+  if(state->ext == 0) {
+    state->ext++ ;
+    assignftrapezium( next_data, &(state->f) ) ;
+    return state ;
+  } ;
+  assignftrapezium( ftrapeziummin(&(state->f), next_data), &(state->f)) ;
+
+  return state ;
+} ;
+
+//*************************porownania logiczne elementow rozmytych (frazy order i group by)*****
+
+
+bool is_equal( ftrapezium* ft1, ftrapezium* ft2 ) {
+  if(( ft1 == NULL ) || ( ft2 == NULL ))
+    return false ;
+  return ( ft1->a == ft2->a ) && ( ft1->m == ft2->m )&& ( ft1->dm == ft2->dm )&& ( ft1->b == ft2->b ) ;
+}
+
+bool is_lower( ftrapezium* ft1, ftrapezium* ft2 ) {
+  if(( ft1 == NULL ) || ( ft2 == NULL ))
+    return false ;
+
+  return ( ft1->m < ft2->m) ;
+}
+
+bool is_greater( ftrapezium* ft1, ftrapezium* ft2 ) {
+  if(( ft1 == NULL ) || ( ft2 == NULL ))
+    return false ;
+
+  return ( ft1->m + ft1->dm > ft2->m + ft2->dm  ) ;
+}
+
+bool is_greater_equal( ftrapezium* ft1, ftrapezium* ft2 ) {
+  if(( ft1 == NULL ) || ( ft2 == NULL ))
+    return false ;
+  return (is_greater(ft1, ft2) || is_equal(ft1, ft2)) ;
+}
+
+bool is_lower_equal( ftrapezium* ft1, ftrapezium* ft2 ) {
+  if(( ft1 == NULL ) || ( ft2 == NULL ))
+    return false ;
+  return (is_lower(ft1, ft2) || is_equal(ft1, ft2)) ;
+}
+
+bool not_equal( ftrapezium* ft1, ftrapezium* ft2 ) {
+  if(( ft1 == NULL ) || ( ft2 == NULL ))
+    return false ;
+  return ( ft1->a != ft2->a ) || ( ft1->m != ft2->m ) || ( ft1->dm != ft2->dm ) || ( ft1->b != ft2->b ) ;
+}
+
+//  ftrapeziumorzona  na potrzeby indeksu btree na typie ftrapezium
+int ftrapezium_abs_cmp( ftrapezium* a, ftrapezium* b ) {\
+  if( is_lower( a, b ) )
+    return -1 ;
+  if( is_greater( a, b ) ) 
+    return 1 ;
+  return 0 ;   
+  
+}
+
+//*****************stopien przynaleznosci podanej wartosci rzeczywistej do zbioru rozmytego**************
+
+float8 degree( float8 x, ftrapezium f ) {
+
+  float8 l = f.m - f.a ;
+  float8 m = f.m ;
+  float8 n = f.m + f.dm ;
+  float8 o = f.m + f.dm + f.b ;
+  
+  if( ( x >= m ) && ( x <= n ) )
+    return 1 ; 
+
+  if( ( x > l ) && ( x < m ) )
+    return ( ( x - l ) / ( m - l ) ) ; 
+  
+  if( ( x > n ) && ( x < o ) )
+    return ( ( o - x ) / ( o - n ) ) ;    
+
+  if( ( x <= l ) || ( x >= o ) )
+    return 0 ; 
+
+} ;
+
+
+// funkcje o parametrach - porownywanie wyrazu rozmytego z wartoscia rzeczywista
+
+float8* degreerf( float8* r, ftrapezium* f ) {
+  float8* wynik  ;
+  
+  if(( r == NULL ) || ( f == NULL ))
+    return NULL ;
+
+  wynik = (float8*)palloc(sizeof(float8));
+  // r posluzy tutaj jako rezultat 
+  *wynik = degree( *r, *f ) ;
+  return wynik ;
+} ;
+
+float8* degreefr( ftrapezium* f, float8* r ) {
+  if(( r == NULL ) || ( f == NULL ))
+    return NULL ;
+
+  // r posluzy tutaj jako rezultat 
+  *r = degree( *r, *f ) ;
+  return r ;
+} ;
+
+
+
+//*************funkcje wykorzystywane przez funkcje porownujaca dwa elenety rozmyte**************
+
+float max4( float a, float b, float c, float d ) {
+  if( a < b )
+    a = b ;
+  if( a < c )
+    a = c ;
+  if( a < d )
+    a = d ;
+  return a ;    
+} ;
+
+float e( float xD1, float xG1, float xD2, float xG2 ) {
+  if( ((xD1<xD2) && (xG1>xG2)) || ((xD2<xD1) && (xG2>xG1)) )
+    return ( xD1 - xD2 ) / ( ( xG2 - xD2 ) - ( xG1 - xD1 ) ) ;
+  else 
+    return 0 ;
+} ;
+
+//porownanie dwoch elementow ftrapezium
+
+float8 degreeftofft ( ftrapezium x, ftrapezium y ) {
+      
+  if((( x.m  <=  y.m ) && ( (x.m + x.dm) >= y.m ))
+    || (( y.m <= x.m ) && ( (y.m + y.dm) >= x.m ))) 
+    return 1 ;
+  else 
+    return max4( 
+      e( x.m - x.a, x.m, y.m - y.a, y.m ),
+      e( x.m - x.a, x.m, y.m + y.dm + y.b, y.m + y.dm ),
+      e( x.m + x.dm + x.b, x.m + x.dm, y.m - y.a, y.m ),
+      e( x.m + x.dm + x.b, x.m + x.dm,y.m + y.dm + y.b, y.m + y.dm ) ) ;
+}
+
+float8* degreeoftrapezium ( ftrapezium *x, ftrapezium *y ) {
+  
+  float8 *wynik ;
+
+  if( (x == NULL ) || ( y == NULL ) )
+    return NULL ;
+
+  wynik = ( float8 * ) palloc( sizeof( float8 ) ) ;
+  *wynik = degreeftofft (*x, *y) ;
+  return wynik ;
+}
+
+
+
+//*******************funkcje definiujace typ ftrapeziumext*****************
+
+ftrapeziumext * ftrapeziumext_in( char *lancuch ) { 
+  float8 ext ;
+  ftrapeziumext *wynik = ( ftrapeziumext * ) palloc( sizeof( ftrapeziumext ) ) ;
+  ftrapezium *f = NULL ;
+
+  // zeskanuj wartosc ext
+  sscanf( lancuch, "%lf", &ext ) ;
+  strcpy( lancuch, lancuch + charpos( lancuch, '|' ) + 1 ) ;
+
+  f = ftrapezium_in (lancuch) ;
+
+
+  // przepisanie pomocniczych zmiennych lokalnych do wyniku
+  wynik->ext = ext ;
+  wynik->f.a = f->a ;
+  wynik->f.m = f->m ;
+  wynik->f.dm = f->dm ;
+  wynik->f.b = f->b ;
+ 
+  return( wynik ) ;
+}
+
+char * ftrapeziumext_out(ftrapeziumext *x)
+{
+  char *wynik = (char *) palloc(512) ;
+
+  strcpy( wynik, "" ) ;
+  
+  // parametry
+  if(x->f.a != 0) 
+    sprintf(wynik + strlen( wynik ), "%.2f/", ( x->f.m ) - ( x->f.a ) ) ;
+    
+  // m jest wyswietlane zawsze
+  sprintf(wynik + strlen( wynik ), "%.2f", x->f.m ) ;
+
+  if( x->f.dm != 0 ) 
+    sprintf( wynik + strlen( wynik ), "~%.2f", ( ( x->f.m ) + ( x->f.dm ) ) ) ;
+  
+  if( x->f.b != 0 ) 
+    sprintf( wynik + strlen( wynik ), "\\%.2f", ( ( x->f.m ) + ( x->f.dm ) + ( x->f.b ) ) ) ;
+    
+  sprintf(wynik + strlen( wynik ), " %s ", x->op ) ;
+  sprintf(wynik + strlen( wynik ), "%.2f", x->ext ) ;
+
+  return( wynik ) ;
+}
+
+//****************AVERAGE**********************************
+
+//final function dla funkcji agregujacej average
+
+ftrapezium* finalavg( ftrapeziumext* x ) {
+
+  ftrapezium *wynik = NULL ;
+  
+  if( x == NULL )
+    return NULL ;
+    
+  wynik = ( ftrapezium* ) palloc( sizeof(ftrapezium ) ) ;
+
+  wynik->a = x->f.a / x->ext ;
+  wynik->m = x->f.m / x->ext ;
+  wynik->dm = x->f.dm / x->ext ;
+  wynik->b = x->f.b / x->ext ;
+  
+  return wynik ;
+}
+
+//funkcja state dla funkcji agregujacej average
+
+ftrapeziumext* stateavg( ftrapeziumext* state, ftrapezium* nextdate ){
+
+  ftrapeziumext *wynik = ( ftrapeziumext* ) palloc( sizeof(ftrapeziumext ) ) ;
+  
+  wynik->ext = state->ext + 1 ;
+  wynik->f.a = state->f.a + nextdate->a ;
+  wynik->f.m = state->f.m + nextdate->m ;
+  wynik->f.dm = state->f.dm + nextdate->dm ;
+  wynik->f.b = state->f.b + nextdate->b ;
+   
+  return wynik ;
+}
+
+
+//**************************************PODZAPYTANIA*****************************
+
+// funkcja rozszerza typ ftrapezium o prog defuzzyfikacji
+
+ftrapeziumext* to_fext( ftrapezium* ft, float8* ext, char op[ 4 ] ) {
+
+  ftrapeziumext *wynik = NULL ;
+
+  if( (ft == NULL ) || ( ext == NULL ) || ( op == NULL )  )
+    return NULL ;
+ 
+  wynik = ( ftrapeziumext* ) palloc( sizeof(ftrapeziumext ) ) ;
+
+  wynik->ext = *ext ;
+  wynik->f.a = ft->a ;
+  wynik->f.m = ft->m ;
+  wynik->f.dm = ft->dm ;
+  wynik->f.b = ft->b ;
+  strncpy( wynik->op, op, 4 ) ;
+  
+  return wynik ;
+}
+
+ftrapeziumext* to_fext_equal( ftrapezium* ft, float8* ext ) {
+  return to_fext( ft, ext, "*=" ) ;
+} ;
+ftrapeziumext* to_fext_not_equal( ftrapezium* ft, float8* ext ) {
+  return to_fext( ft, ext, "*<>" ) ;
+} ;
+ftrapeziumext* to_fext_greater( ftrapezium* ft, float8* ext ) {
+  return to_fext( ft, ext, "*>" ) ;
+} ;
+ftrapeziumext* to_fext_greater_equal( ftrapezium* ft, float8* ext ) {
+  return to_fext( ft, ext, "*>=" ) ;
+} ;
+ftrapeziumext* to_fext_lower( ftrapezium* ft, float8* ext ) {
+  return to_fext( ft, ext, "*<" ) ;
+} ;
+ftrapeziumext* to_fext_lower_equal( ftrapezium* ft, float8* ext ) {
+  return to_fext( ft, ext, "*<=" ) ;
+} ;
+
+
+// uniwersalna defuzyfikacja
+
+bool defuzzy( float8 degree, char op[ 4 ], float8 threshold ) {
+
+  if( strcmp( op, "*=") == 0 ) 
+    return degree == threshold  ;
+  if(  op == "*<>" )  
+    return degree != threshold  ;
+  if( strcmp( op, "*<") == 0 ) 
+    return degree < threshold  ;
+  if( strcmp( op, "*<=") == 0 ) 
+    return degree <= threshold  ;
+  if( strcmp( op, "*>") == 0 ) 
+    return degree > threshold ;
+  if( strcmp( op, "*>=") == 0 ) 
+    return degree >= threshold  ;
+
+  return true ;
+} 
+
+// A czyli fext i real
+//*************************podzapytania typu ALL,ANY, IN, NOT IN (fext. real)******************
+
+// defuzzyfikacja wartoci typu ftrapeziumext z wartoscia dokadna
+
+bool defuzzy_A( ftrapeziumext* fext, float8* data ){
+
+  float8 degreex = 0 ;
+
+  if( (fext == NULL ) || ( data == NULL ) )
+    return false ;
+
+  degreex = degree( *data, fext->f ) ;
+  return defuzzy( degreex, fext->op, fext->ext ) ;
+  
+}
+
+bool not_defuzzy_A( ftrapeziumext* fext, float8* data ){
+  if( (fext == NULL ) || ( data == NULL ) )
+    return false ;
+  return !defuzzy_A( fext, data ) ;
+}
+
+//*************************podzapytania typu ALL,ANY, IN, NOT IN (real, fext)******************
+// B
+// defuzzyfikacja wartoci dokladnej z wartoscia typu ftrapeziumext
+
+bool defuzzy_B(float8* data, ftrapeziumext* fext ){
+  return defuzzy_A( fext, data ) ;
+}
+bool not_defuzzy_B(float8* data, ftrapeziumext* fext ){
+  if( (fext == NULL ) || ( data == NULL ) )
+    return false ;
+  return !defuzzy_B( data, fext ) ;
+}
+
+
+// C
+//*************************podzapytania typu ALL,ANY, IN, NOT IN (fext, ft)******************
+
+// defuzzyfikacja wartoci typu ftrapeziumext z wartoscia typu ftrapezium
+
+
+bool defuzzy_C(ftrapeziumext* fext, ftrapezium* ft ){
+
+  float8 degreex = 0 ;
+
+  if( (fext == NULL ) || ( ft == NULL ) )
+    return false ;
+
+  degreex = degreeftofft( fext->f, *ft ) ;
+  return defuzzy( degreex, fext->op, fext->ext ) ;
+}
+
+bool not_defuzzy_C( ftrapeziumext* fext, ftrapezium* ft ){
+
+  if( (fext == NULL ) || ( ft == NULL ) )
+    return false ;
+
+  return( !defuzzy_C( fext, ft ) ) ;
+}
+
+
+// D
+//*************************podzapytania typu ALL,ANY, IN, NOT IN (ft, fext)******************
+
+
+// defuzzyfikacja wartoci typu ftrapezium z wartoscia typu ftrapeziumext
+
+bool defuzzy_D(ftrapezium* ft, ftrapeziumext* fext ){
+
+  if( (fext == NULL ) || ( ft == NULL ) )
+    return false ;
+
+  return defuzzy_C( fext, ft ) ;
+}
+
+bool not_defuzzy_D( ftrapezium* ft, ftrapeziumext* fext ){
+  if( (fext == NULL ) || ( ft == NULL ) )
+    return false ;
+
+  return( !defuzzy_D( ft, fext ) ) ;
+}
+
+// wartosci lingwistyczne 
+
+ftrapezium* prawie_zaden() { return about_r( 0.00 ,0.00 ,0.05 ,0.10 ) ; } 
+ftrapezium* prawie_wszystkie() { return about_r( 0.09 ,0.95 ,1.00 ,1.00 ) ;} 
+ftrapezium* okolo_jedna_czwarta() { return about_r( 0.10 ,0.20 ,0.30 ,0.40 ) ;} 
+ftrapezium* okolo_jedna_trzecia() { return about_r( 0.18 ,0.28 ,0.38 ,0.48 ) ;} 
+ftrapezium* okolo_polowa() {  return about_r( 0.35 ,0.45 ,0.55 ,0.65 ) ;} 
+ftrapezium* okolo_dwie_trzecie() { return about_r( 0.51 ,0.61 ,0.71 ,0.81 ) ; } 
+ftrapezium* okolo_trzy_czwarte() { return about_r( 0.60 ,0.70 ,0.80 ,0.90 ) ;} 
+
+ftrapezium* okolo_jeden() { return about_r( 0, 1, 1, 2 ) ; } 
+ftrapezium* okolo_kilka() { return about_r( 1, 3, 9, 12 ) ; } 
+ftrapezium* okolo_kilkanascie() { return about_r( 8, 12, 19, 22 ) ; } 
+ftrapezium* okolo_kilkadziesiat() { return about_r( 20, 30, 90, 120 ) ;} 
+ftrapezium* okolo_kilkaset() {  return about_r( 100, 300, 900, 1200 ) ;} 
+
+ftrapezium* okolo_minuta() { return about_r( 40, 60, 60, 80 ) ;} 
+ftrapezium* okolo_kwadrans() { return about_r( 10*60, 15*60, 15*60, 20*60 ) ;} 
+ftrapezium* okolo_godzina() { return about_r( 40*60, 60*60, 60*60, 80*60 ) ;} 
+
+ftrapezium* okolo_tydzien() { return about_r( 3, 7, 7, 11 ) ;} 
+ftrapezium* okolo_miesiac() { return about_r( 20, 28, 31, 39 ) ;} 
+ftrapezium* okolo_rok() { return about_r( 160, 365, 366, 570 ) ;} 
+
+text* sekundy_to_str( ftrapezium* sekundy ) {
+
+  if( sekundy == NULL )
+    return toText( "" ) ;
+
+  if( is_equal( sekundy, okolo_minuta() ) )
+    return toText( "okolo_minuta" );
+  if( is_equal( sekundy, okolo_kwadrans() ) )
+    return toText( "okolo_kwadrans" );
+  if( is_equal( sekundy, okolo_godzina() ) )
+    return toText( "okolo_godzina" );
+  
+  return toText( ftrapezium_out( sekundy ) );
+}
+
+text* dni_to_str( ftrapezium* dni ) {
+
+  if( dni == NULL )
+    return toText( "" ) ;
+
+  if( is_equal( dni, okolo_tydzien() ) )
+    return toText( "okolo_tydzien" );
+  if( is_equal( dni, okolo_miesiac() ) )
+    return toText( "okolo_miesiac" );
+  if( is_equal( dni, okolo_rok() ) )
+    return toText( "okolo_rok" );
+  
+  return toText( ftrapezium_out( dni ) );
+
+}
+
+
+
+//**********************************  pochodne odsetka ******************************
+
+
+float8* odsetek_uni_final_func( twoint* last_state, ftrapezium* lingw  ) {
+  float8 odsetek = 0 ;
+  if( (last_state == NULL) || (lingw == NULL) )
+    return NULL ;
+ 
+  odsetek = ( (float8)last_state->bool_count / (last_state->count) ) ;
+  return degreerf( &odsetek, lingw ) ;
+} 
+
+float8* odsetek_prawie_zaden( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, prawie_zaden()) ;
+}
+float8* odsetek_prawie_wszystkie( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, prawie_wszystkie()) ;
+}
+float8* odsetek_okolo_jedna_czwarta( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, okolo_jedna_czwarta()) ;
+}
+float8* odsetek_okolo_jedna_trzecia( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, okolo_jedna_trzecia()) ;
+}
+float8* odsetek_okolo_polowa( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, okolo_polowa()) ;
+}
+float8* odsetek_okolo_dwie_trzecie( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, okolo_dwie_trzecie()) ;
+}
+float8* odsetek_okolo_trzy_czwarte( twoint* last_state ) {
+  return odsetek_uni_final_func( last_state, okolo_trzy_czwarte()) ;
+}
+

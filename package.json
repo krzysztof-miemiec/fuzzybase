@@ -34,6 +34,7 @@
     "purge": "yarn clean && rimraf 'node_modules' && yarn",
     "clean": "rimraf '{release,app/dist,.tscache,reports,screenshots}'",
     "build": "electron-webpack",
+    "build-sql": "(cd ./src/sql && make)",
     "dev": "electron-webpack dev",
     "dist": "yarn clean && yarn build && electron-builder",
     "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish"
