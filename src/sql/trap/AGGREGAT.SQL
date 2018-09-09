@@ -6,21 +6,21 @@ CREATE AGGREGATE sum( basetype = ftrapezium, stype = ftrapezium, sfunc = sum, in
 
 ----tworzenie funkcji agregujacej wyznaczajacej maksymalna liczbe rozmyta MAX
 
-CREATE OR REPLACE FUNCTION statemax( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
-AS '/fuzzy/ftrapezium/ftrapezium.so', 'statemax' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION state_max( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
+AS '/fuzzy/ftrapezium/ftrapezium.so', 'state_max' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION toftrapezium( ftrapeziumext ) RETURNS ftrapezium
 AS '/fuzzy/ftrapezium/ftrapezium.so', 'ftrapeziumext_to_ftrapezium' LANGUAGE 'c' ;
 
-CREATE AGGREGATE max( basetype = ftrapezium, stype = ftrapeziumext, sfunc = statemax, 
+CREATE AGGREGATE max( basetype = ftrapezium, stype = ftrapeziumext, sfunc = state_max,
   finalfunc = toftrapezium, initcond = '0|0' ) ;
 
 ----tworzenie funkcji agregujacej wyznaczajacej minimalna liczbe rozmyta MIN
 
-CREATE OR REPLACE FUNCTION statemin( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
-AS '/fuzzy/ftrapezium/ftrapezium.so', 'statemin' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION state_min( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
+AS '/fuzzy/ftrapezium/ftrapezium.so', 'state_min' LANGUAGE 'c' ;
 
 
-CREATE AGGREGATE min( basetype = ftrapezium, stype = ftrapeziumext, sfunc = statemin, 
+CREATE AGGREGATE min( basetype = ftrapezium, stype = ftrapeziumext, sfunc = state_min,
   finalfunc = toftrapezium, initcond = '0|0' ) ;
 
 
@@ -30,13 +30,13 @@ CREATE AGGREGATE min( basetype = ftrapezium, stype = ftrapeziumext, sfunc = stat
 
 --funkcje dla operatora AVERAGE
 
-CREATE OR REPLACE FUNCTION finalavg( ftrapeziumext ) RETURNS ftrapezium 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'finalavg' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION final_avg( ftrapeziumext ) RETURNS ftrapezium
+  AS '/fuzzy/ftrapezium/ftrapezium.so', 'final_avg' LANGUAGE 'c' ;
 
-CREATE OR REPLACE FUNCTION stateavg( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'stateavg' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION state_avg( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
+  AS '/fuzzy/ftrapezium/ftrapezium.so', 'state_avg' LANGUAGE 'c' ;
 
-CREATE AGGREGATE avg( basetype = ftrapezium, stype = ftrapeziumext, sfunc = stateavg, finalfunc = finalavg, initcond = '0|0/0~0\\0' ) ;
+CREATE AGGREGATE avg( basetype = ftrapezium, stype = ftrapeziumext, sfunc = state_avg, finalfunc = final_avg, initcond = '0|0/0~0\\0' ) ;
 
 -- aggregaty odsetkowe
 CREATE OR REPLACE FUNCTION odsetek_prawie_zaden( twoint ) RETURNS float8 

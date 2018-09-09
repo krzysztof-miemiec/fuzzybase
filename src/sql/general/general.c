@@ -80,13 +80,3 @@ float8 *percentage_final_func(twoint *last_state) {
 
     return result;
 }
-
-
-
-
-
-
-
-
-
-
