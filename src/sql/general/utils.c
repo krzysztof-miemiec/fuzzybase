@@ -2,7 +2,7 @@
 
 text *to_text(char *s) {
     text *result = (text *) palloc(VARHDRSZ + strlen(s));
-    result->vl_len = VARHDRSZ + strlen(s);
+    SET_VARSIZE(result, VARHDRSZ + strlen(s));
     memcpy(result->vl_dat, s, strlen(s));
     return result;
 }
@@ -21,4 +21,25 @@ int charpos(char *source, char ch) {
         }
     }
     return -1;
+};
+
+/**
+ * Finds max of four
+ * @param a
+ * @param b
+ * @param c
+ * @param d
+ * @return The value which is the highest out of a, b, c, d
+ */
+float max4(float a, float b, float c, float d) {
+    if (a < b) {
+        a = b;
+    }
+    if (a < c) {
+        a = c;
+    }
+    if (a < d) {
+        a = d;
+    }
+    return a;
 };

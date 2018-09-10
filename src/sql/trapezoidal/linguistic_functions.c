@@ -1,4 +1,4 @@
-#include "trapezoidal_linguistic_functions.h"
+#include "linguistic_functions.h"
 
 trapezoidal_function *almost_none() { return about_r(0.00, 0.00, 0.05, 0.10); }
 
@@ -70,46 +70,3 @@ text *days_to_str(trapezoidal_function *func) {
 
     return to_text(trapezoidal_function_out(func));
 }
-
-/**
- * Percentage final function
- * @param last_state pointer to last state
- * @param lingw pointer to lingwistic trapezoidal function
- * @return pointer to the degree of membership
- */
-float8 *percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw) {
-    if (last_state == NULL || lingw == NULL) {
-        return NULL;
-    }
-    float8 percentage = (float8) last_state->bool_count / last_state->count;
-    return degreefr(lingw, &percentage);
-}
-
-float8 *percentage_almost_none(twoint *last_state) {
-    return percentage_universal_final_func(last_state, almost_none());
-}
-
-float8 *percentage_almost_all(twoint *last_state) {
-    return percentage_universal_final_func(last_state, almost_all());
-}
-
-float8 *percentage_about_a_quarter(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_a_quarter());
-}
-
-float8 *percentage_about_a_third(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_a_third());
-}
-
-float8 *percentage_about_half(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_half());
-}
-
-float8 *percentage_about_two_thirds(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_two_thirds());
-}
-
-float8 *percentage_about_three_quarters(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_three_quarters());
-}
-

@@ -1,13 +1,13 @@
 #include "postgres.h"
 #include <stdlib.h>
+#include "../general/utils.h"
+#include "./function.h"
 
-#include "./trapezoidal_function.h"
-
-trapezoidal_function *new_trapezoidal_function() {
+trapezoidal_function *new_trapezoidal_function(void) {
     return (trapezoidal_function *) palloc(sizeof(trapezoidal_function));
 }
 
-trapezoidal_function_extended *new_trapezoidal_function_extended() {
+trapezoidal_function_extended *new_trapezoidal_function_extended(void) {
     return (trapezoidal_function_extended *) palloc(sizeof(trapezoidal_function_extended));
 }
 
@@ -99,16 +99,16 @@ char *trapezoidal_function_out(trapezoidal_function *f) {
 
     strcpy(result, "");
 
-    if (x->f.a != 0) {
+    if (f->a != 0) {
         sprintf(result + strlen(result), "%.2f/", f->m - f->a);
     }
 
     sprintf(result + strlen(result), "%.2f", f->m);
 
-    if (x->f.dm != 0) {
+    if (f->dm != 0) {
         sprintf(result + strlen(result), "~%.2f", f->m + f->dm);
     }
-    if (x->f.b != 0) {
+    if (f->b != 0) {
         sprintf(result + strlen(result), "\\%.2f", f->m + f->dm + f->b);
     }
     return result;
@@ -179,3 +179,83 @@ trapezoidal_function *about_r(float8 l, float8 m, float8 n, float8 o) {
 trapezoidal_function *about(float8 *l, float8 *m, float8 *n, float8 *o) {
     return about_r(*l, *m, *n, *o);
 }
+
+/**
+ * Creates an extended trapezoidal function out of trapezoidal function, extension and operator
+ * @param ft pointer to trapezoidal function
+ * @param ext extension
+ * @param op operator
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext(trapezoidal_function *ft, float8 *ext, char op[4]) {
+    if (ft == NULL || ext == NULL || op == NULL) {
+        return NULL;
+    }
+    trapezoidal_function_extended *result = new_trapezoidal_function_extended();
+
+    result->ext = *ext;
+    trapezoidal_function_assign(ft, &result->f);
+    strncpy(result->op, op, 4);
+
+    return result;
+}
+
+/**
+ * Creates an extended trapezoidal function with equal operator
+ * @param ft pointer to trapezoidal function
+ * @param ext pointer to extension
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*=");
+};
+
+/**
+ * Creates an extended trapezoidal function with not equal operator
+ * @param ft pointer to trapezoidal function
+ * @param ext pointer to extension
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext_not_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*<>");
+};
+
+/**
+ * Creates an extended trapezoidal function with greater operator
+ * @param ft pointer to trapezoidal function
+ * @param ext pointer to extension
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext_greater(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*>");
+};
+
+/**
+ * Creates an extended trapezoidal function with greater or equal operator
+ * @param ft pointer to trapezoidal function
+ * @param ext pointer to extension
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext_greater_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*>=");
+};
+
+/**
+ * Creates an extended trapezoidal function with lower operator
+ * @param ft pointer to trapezoidal function
+ * @param ext pointer to extension
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext_lower(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*<");
+};
+
+/**
+ * Creates an extended trapezoidal function with lower or equal operator
+ * @param ft pointer to trapezoidal function
+ * @param ext pointer to extension
+ * @return a pointer to a new extended trapezoidal function (with an extension and operator)
+ */
+trapezoidal_function_extended *to_fext_lower_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*<=");
+};

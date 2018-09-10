@@ -1,6 +1,4 @@
-#include "postgres.h"
 #include <stdlib.h>
-
 #include "./general.h"
 
 // General functions, independent from fuzzy type

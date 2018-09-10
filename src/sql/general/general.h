@@ -1,6 +1,8 @@
 #ifndef GENERAL_H
 #define GENERAL_H
 
+#include "postgres.h"
+
 // Prototypes
 typedef struct {
     int8 bool_count, count;

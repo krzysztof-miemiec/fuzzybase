@@ -1,7 +1,7 @@
 #ifndef TRAPEZOIDAL_LINGUISTIC_FUNCTIONS_H
 #define TRAPEZOIDAL_LINGUISTIC_FUNCTIONS_H
 
-#include "./trapezoidal_function.h"
+#include "function.h"
 
 trapezoidal_function *almost_none();
 

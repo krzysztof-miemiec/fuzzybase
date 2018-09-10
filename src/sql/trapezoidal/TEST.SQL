@@ -1,6 +1,6 @@
 ----------------------TESTY-------------------------------------------------------------------
 --drop table g;
---create table g (a integer, b ftrapezium );
+--create table g (a integer, b trapezoidal_function );
 --insert into g values( 1, about(-81, -2, 3, 4 ) ) ;  
 --insert into g values( 1, about(10, 20, 30, 40 ) ) ;  
 --insert into g values( 3, about(5, 6, 7, 8 ) ) ;  

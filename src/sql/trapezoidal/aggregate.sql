@@ -2,26 +2,26 @@
 
 ----tworzenie funkcji agregujacej dodajacej liczby rozmyte SUM
 
-CREATE AGGREGATE sum( basetype = ftrapezium, stype = ftrapezium, sfunc = sum, initcond = '0/0~0\\0' ) ;
+CREATE AGGREGATE sum( basetype = trapezoidal_function, stype = trapezoidal_function, sfunc = sum, initcond = '0/0~0\\0' ) ;
 
 ----tworzenie funkcji agregujacej wyznaczajacej maksymalna liczbe rozmyta MAX
 
-CREATE OR REPLACE FUNCTION state_max( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
-AS '/fuzzy/ftrapezium/ftrapezium.so', 'state_max' LANGUAGE 'c' ;
-CREATE OR REPLACE FUNCTION toftrapezium( ftrapeziumext ) RETURNS ftrapezium
-AS '/fuzzy/ftrapezium/ftrapezium.so', 'ftrapeziumext_to_ftrapezium' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION state_max( trapezoidal_function_ext, trapezoidal_function ) RETURNS trapezoidal_function_ext
+AS './aggregate.so', 'state_max' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION totrapezoidal_function( trapezoidal_function_ext ) RETURNS trapezoidal_function
+AS './aggregate.so', 'trapezoidal_function_ext_to_trapezoidal_function' LANGUAGE 'c' ;
 
-CREATE AGGREGATE max( basetype = ftrapezium, stype = ftrapeziumext, sfunc = state_max,
-  finalfunc = toftrapezium, initcond = '0|0' ) ;
+CREATE AGGREGATE max( basetype = trapezoidal_function, stype = trapezoidal_function_ext, sfunc = state_max,
+  finalfunc = totrapezoidal_function, initcond = '0|0' ) ;
 
 ----tworzenie funkcji agregujacej wyznaczajacej minimalna liczbe rozmyta MIN
 
-CREATE OR REPLACE FUNCTION state_min( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
-AS '/fuzzy/ftrapezium/ftrapezium.so', 'state_min' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION state_min( trapezoidal_function_ext, trapezoidal_function ) RETURNS trapezoidal_function_ext
+AS './aggregate.so', 'state_min' LANGUAGE 'c' ;
 
 
-CREATE AGGREGATE min( basetype = ftrapezium, stype = ftrapeziumext, sfunc = state_min,
-  finalfunc = toftrapezium, initcond = '0|0' ) ;
+CREATE AGGREGATE min( basetype = trapezoidal_function, stype = trapezoidal_function_ext, sfunc = state_min,
+  finalfunc = totrapezoidal_function, initcond = '0|0' ) ;
 
 
 
@@ -30,29 +30,29 @@ CREATE AGGREGATE min( basetype = ftrapezium, stype = ftrapeziumext, sfunc = stat
 
 --funkcje dla operatora AVERAGE
 
-CREATE OR REPLACE FUNCTION final_avg( ftrapeziumext ) RETURNS ftrapezium
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'final_avg' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION final_avg( trapezoidal_function_ext ) RETURNS trapezoidal_function
+  AS './aggregate.so', 'final_avg' LANGUAGE 'c' ;
 
-CREATE OR REPLACE FUNCTION state_avg( ftrapeziumext, ftrapezium ) RETURNS ftrapeziumext
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'state_avg' LANGUAGE 'c' ;
+CREATE OR REPLACE FUNCTION state_avg( trapezoidal_function_ext, trapezoidal_function ) RETURNS trapezoidal_function_ext
+  AS './aggregate.so', 'state_avg' LANGUAGE 'c' ;
 
-CREATE AGGREGATE avg( basetype = ftrapezium, stype = ftrapeziumext, sfunc = state_avg, finalfunc = final_avg, initcond = '0|0/0~0\\0' ) ;
+CREATE AGGREGATE avg( basetype = trapezoidal_function, stype = trapezoidal_function_ext, sfunc = state_avg, finalfunc = final_avg, initcond = '0|0/0~0\\0' ) ;
 
 -- aggregaty odsetkowe
 CREATE OR REPLACE FUNCTION odsetek_prawie_zaden( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_prawie_zaden' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_prawie_zaden' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION odsetek_prawie_wszystkie( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_prawie_wszystkie' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_prawie_wszystkie' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION odsetek_okolo_jedna_czwarta( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_okolo_jedna_czwarta' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_okolo_jedna_czwarta' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION odsetek_okolo_jedna_trzecia( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_okolo_jedna_trzecia' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_okolo_jedna_trzecia' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION odsetek_okolo_polowa( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_okolo_polowa' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_okolo_polowa' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION odsetek_okolo_dwie_trzecie( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_okolo_dwie_trzecie' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_okolo_dwie_trzecie' LANGUAGE 'c' ;
 CREATE OR REPLACE FUNCTION odsetek_okolo_trzy_czwarte( twoint ) RETURNS float8 
-  AS '/fuzzy/ftrapezium/ftrapezium.so', 'odsetek_okolo_trzy_czwarte' LANGUAGE 'c' ;
+  AS '/fuzzy/trapezoidal_function/trapezoidal_function.so', 'odsetek_okolo_trzy_czwarte' LANGUAGE 'c' ;
 
 CREATE AGGREGATE prawie_zaden( BASETYPE = bool, sfunc = odsetek_sfunc, stype = twoint,
                               FINALFUNC = odsetek_prawie_zaden, INITCOND = '0,0' ) ;
