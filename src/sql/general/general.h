@@ -9,6 +9,8 @@ typedef struct {
     int8 bool_count, count;
 } twoint;
 
+twoint *new_twoint(void);
+
 float8 *min(float8 *x, float8 *y);
 
 float8 *max(float8 *x, float8 *y);
@@ -19,9 +21,9 @@ twoint *twoint_from_string(char *str);
 
 char *twoint_to_string(twoint *t);
 
-twoint *percentage_sfunc(twoint *state, bool next_data);
+twoint *state_percentage(twoint *state, bool next);
 
-float8 *percentage_final_func(twoint *last_state);
+float8 *final_percentage(twoint *last_state);
 
 
 // General functions, independent from fuzzy type
@@ -59,8 +61,12 @@ float8 *neg_dm(float8 *x) {
 
 // Percentage Aggregate - Extended type that stores summed values
 
+twoint *new_twoint(void) {
+    return (twoint *) palloc(sizeof(twoint));
+}
+
 twoint *twoint_from_string(char *str) {
-    twoint *result = (twoint *) palloc(sizeof(twoint));
+    twoint *result = new_twoint();
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat"
@@ -78,21 +84,21 @@ char *twoint_to_string(twoint *t) {
     return result;
 }
 
-twoint *percentage_sfunc(twoint *state, bool next_data) {
-    twoint *result = (twoint *) palloc(sizeof(twoint));
+twoint *state_percentage(twoint *state, bool next) {
+    twoint *result = new_twoint();
 
     result->bool_count = state->bool_count;
     result->count = state->count;
 
     result->count++;
-    if (next_data) {
+    if (next) {
         result->bool_count++;
     }
 
     return result;
 }
 
-float8 *percentage_final_func(twoint *last_state) {
+float8 *final_percentage(twoint *last_state) {
     float8 *result = NULL;
 
     if (last_state == NULL) {

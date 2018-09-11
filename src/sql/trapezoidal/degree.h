@@ -63,8 +63,9 @@ float8 *degreefr(trapezoidal_function *f, float8 *x) {
     if (x == NULL || f == NULL) {
         return NULL;
     }
-    *x = degree(*x, *f);
-    return x;
+    float8 *result = (float8 *) palloc(sizeof(float8));
+    *result = degree(*x, *f);
+    return result;
 };
 
 /**

@@ -2,6 +2,7 @@
 #define AGGREGATE_H
 
 #include "postgres.h"
+#include "../general/general.h"
 #include "./function.h"
 #include "./operators.h"
 #include "./degree.h"

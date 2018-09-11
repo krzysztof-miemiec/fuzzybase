@@ -1,3 +1,9 @@
+#include "postgres.h"
+#include "fmgr.h"
+#include "utils/builtins.h"
+
+PG_MODULE_MAGIC;
+
 #include "./general/utils.h"
 #include "./general/general.h"
 
