@@ -91,7 +91,6 @@ trapezoidal_function *final_avg(trapezoidal_function_extended *state) {
     return result;
 }
 
-//funkcja state dla funkcji agregujacej average
 /**
  * State function for AVG aggregate function
  * @param state pointer to an extended trapezoidal function

@@ -11,7 +11,7 @@
 --select id_oso, nazwisko, waga  from osoby;
 --select id_oso, nazwisko, waga, about(60, 81, 81, 100) ~= waga 
 --from osoby 
---where about(60, 81, 81, 100) *>= 0.1 = waga;
+--where about(60, 81, 81, 100) *>= 0.1=waga;
 
 --select * from osoby;
 --select okolo_polowa(id_oso < 6) from osoby;
