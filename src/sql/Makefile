@@ -1,11 +1,4 @@
-MODULES = general/general \
-  general/utils \
-  trapezoidal/function \
-  trapezoidal/operators \
-  trapezoidal/degree \
-  trapezoidal/defuzzy \
-  trapezoidal/aggregate \
-  trapezoidal/linguistic_functions
+MODULES = fuzzy
 
 DATA = general/general.sql \
   trapezoidal/function.sql \
@@ -16,5 +9,6 @@ DATA = general/general.sql \
   trapezoidal/linguistic_functions.sql
 
 PG_CONFIG = pg_config
+SHLIB_LINK = -L./general
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)

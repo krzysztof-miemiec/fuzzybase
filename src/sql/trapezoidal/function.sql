@@ -1,10 +1,10 @@
 -- Trapezoidal Function
 
 CREATE OR REPLACE FUNCTION trapezoidal_function_in(opaque) RETURNS trapezoidal_function
-  AS './function.so' LANGUAGE 'C';
+  AS '../fuzzy.so' LANGUAGE 'C';
 
 CREATE OR REPLACE FUNCTION trapezoidal_function_out(trapezoidal_function) RETURNS opaque
-  AS './function.so' LANGUAGE 'C';
+  AS '../fuzzy.so' LANGUAGE 'C';
 
 CREATE TYPE trapezoidal_function(
   internallength = 32,
@@ -17,10 +17,10 @@ CREATE TYPE trapezoidal_function(
 -- tworzenie typu trapezoidal_function_ext
 
 CREATE OR REPLACE FUNCTION trapezoidal_function_ext_in(opaque) RETURNS trapezoidal_function_ext
-  AS './function.so' LANGUAGE 'C';
+  AS '../fuzzy.so' LANGUAGE 'C';
 
 CREATE OR REPLACE FUNCTION trapezoidal_function_ext_out(trapezoidal_function_ext) RETURNS opaque
-  AS './function.so' LANGUAGE 'C';
+  AS '../fuzzy.so' LANGUAGE 'C';
 
 CREATE TYPE trapezoidal_function_ext(
   internallength = 44,
@@ -29,20 +29,20 @@ CREATE TYPE trapezoidal_function_ext(
 );
 
 CREATE OR REPLACE FUNCTION about(float8, float8, float8, float8) RETURNS trapezoidal_function
-  AS './function.so', 'about' LANGUAGE 'c';
+  AS '../fuzzy.so', 'about' LANGUAGE 'c';
 
 CREATE OR REPLACE FUNCTION to_fext_equal(trapezoidal_function, float8) RETURNS trapezoidal_function_ext
-  AS './function.so', 'to_fext_equal' LANGUAGE 'c';
+  AS '../fuzzy.so', 'to_fext_equal' LANGUAGE 'c';
 CREATE OR REPLACE FUNCTION to_fext_not_equal(trapezoidal_function, float8) RETURNS trapezoidal_function_ext
-  AS './function.so', 'to_fext_not_equal' LANGUAGE 'c';
+  AS '../fuzzy.so', 'to_fext_not_equal' LANGUAGE 'c';
 CREATE OR REPLACE FUNCTION to_fext_greater(trapezoidal_function, float8) RETURNS trapezoidal_function_ext
-  AS './function.so', 'to_fext_greater' LANGUAGE 'c';
+  AS '../fuzzy.so', 'to_fext_greater' LANGUAGE 'c';
 CREATE OR REPLACE FUNCTION to_fext_greater_equal(trapezoidal_function, float8) RETURNS trapezoidal_function_ext
-  AS './function.so', 'to_fext_greater_equal' LANGUAGE 'c';
+  AS '../fuzzy.so', 'to_fext_greater_equal' LANGUAGE 'c';
 CREATE OR REPLACE FUNCTION to_fext_lower(trapezoidal_function, float8) RETURNS trapezoidal_function_ext
-  AS './function.so', 'to_fext_lower' LANGUAGE 'c';
+  AS '../fuzzy.so', 'to_fext_lower' LANGUAGE 'c';
 CREATE OR REPLACE FUNCTION to_fext_lower_equal(trapezoidal_function, float8) RETURNS trapezoidal_function_ext
-  AS './function.so', 'to_fext_lower_equal' LANGUAGE 'c';
+  AS '../fuzzy.so', 'to_fext_lower_equal' LANGUAGE 'c';
 
 CREATE OPERATOR *= (leftarg = trapezoidal_function, rightarg = float8, procedure = to_fext_equal);
 CREATE OPERATOR *<> (leftarg = trapezoidal_function, rightarg = float8, procedure = to_fext_not_equal);
