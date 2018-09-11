@@ -3,41 +3,41 @@
 
 #include "function.h"
 
-trapezoidal_function *almost_none();
+trapezoidal_function *almost_none(void);
 
-trapezoidal_function *almost_all();
+trapezoidal_function *almost_all(void);
 
-trapezoidal_function *about_a_quarter();
+trapezoidal_function *about_a_quarter(void);
 
-trapezoidal_function *about_a_third();
+trapezoidal_function *about_a_third(void);
 
-trapezoidal_function *about_half();
+trapezoidal_function *about_half(void);
 
-trapezoidal_function *about_two_thirds();
+trapezoidal_function *about_two_thirds(void);
 
-trapezoidal_function *about_three_quarters();
+trapezoidal_function *about_three_quarters(void);
 
-trapezoidal_function *about_one();
+trapezoidal_function *about_one(void);
 
-trapezoidal_function *about_some();
+trapezoidal_function *about_some(void);
 
-trapezoidal_function *about_a_dozen();
+trapezoidal_function *about_a_dozen(void);
 
-trapezoidal_function *about_a_few_dozen();
+trapezoidal_function *about_a_few_dozen(void);
 
-trapezoidal_function *about_a_few_hundred();
+trapezoidal_function *about_a_few_hundred(void);
 
-trapezoidal_function *about_a_minute();
+trapezoidal_function *about_a_minute(void);
 
-trapezoidal_function *about_a_quarter_of_an_hour();
+trapezoidal_function *about_a_quarter_of_an_hour(void);
 
-trapezoidal_function *about_an_hour();
+trapezoidal_function *about_an_hour(void);
 
-trapezoidal_function *about_a_week();
+trapezoidal_function *about_a_week(void);
 
-trapezoidal_function *about_a_month();
+trapezoidal_function *about_a_month(void);
 
-trapezoidal_function *about_a_year();
+trapezoidal_function *about_a_year(void);
 
 
 text *seconds_to_str(trapezoidal_function *func);
@@ -99,17 +99,17 @@ trapezoidal_function *about_a_month() { return about_r(20, 28, 31, 39); }
 trapezoidal_function *about_a_year() { return about_r(160, 365, 366, 570); }
 
 text *seconds_to_str(trapezoidal_function *func) {
-    if (seconds == NULL) {
+    if (func == NULL) {
         return to_text("");
     }
 
-    if (is_equal(func, about_a_minute()) {
+    if (is_equal(func, about_a_minute())) {
         return to_text("about a minute");
     }
     if (is_equal(func, about_a_quarter_of_an_hour())) {
         return to_text("about a quarter of an hour");
     }
-    if (is_equal(sekundy, about_an_hour())) {
+    if (is_equal(func, about_an_hour())) {
         return to_text("about an hour");
     }
     return to_text(trapezoidal_function_out(func));
@@ -120,13 +120,13 @@ text *days_to_str(trapezoidal_function *func) {
         return to_text("");
     }
 
-    if (is_equal(func, okolo_tydzien())) {
+    if (is_equal(func, about_a_week())) {
         return to_text("about a week");
     }
-    if (is_equal(func, okolo_miesiac())) {
+    if (is_equal(func, about_a_month())) {
         return to_text("about a month");
     }
-    if (is_equal(func, okolo_rok())) {
+    if (is_equal(func, about_a_year())) {
         return to_text("about a year");
     }
 

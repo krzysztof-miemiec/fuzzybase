@@ -34,7 +34,7 @@ bool defuzzy(float8 degree, char op[4], float8 threshold) {
     if (strcmp(op, "*=") == 0) {
         return degree == threshold;
     }
-    if (op == "*<>") {
+    if (strcmp(op, "*<>") == 0) {
         return degree != threshold;
     }
     if (strcmp(op, "*<") == 0) {
@@ -96,7 +96,7 @@ bool defuzzy_r_fext(float8 *data, trapezoidal_function_extended *fext) {
  * @return Defuzzified numeric value
  */
 bool not_defuzzy_r_fext(float8 *data, trapezoidal_function_extended *fext) {
-    return not_defuzzy_fext_r(data, fext);
+    return not_defuzzy_fext_r(fext, data);
 }
 
 /**

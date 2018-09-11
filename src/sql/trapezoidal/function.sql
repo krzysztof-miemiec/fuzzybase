@@ -28,6 +28,10 @@ CREATE TYPE trapezoidal_function_ext(
   output = trapezoidal_function_ext_out
 );
 
+CREATE OR REPLACE FUNCTION to_trapezoidal_function(trapezoidal_function_ext) RETURNS trapezoidal_function
+  AS '../fuzzy.so', 'trapezoidal_function_ext_to_trapezoidal_function' LANGUAGE 'c';
+
+
 CREATE OR REPLACE FUNCTION about(float8, float8, float8, float8) RETURNS trapezoidal_function
   AS '../fuzzy.so', 'about' LANGUAGE 'c';
 

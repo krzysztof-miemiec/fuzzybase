@@ -97,7 +97,7 @@ float8 degreeftofft(trapezoidal_function x, trapezoidal_function y) {
             e(x.m - x.a, x.m, y.m + y.dm + y.b, y.m + y.dm),
             e(x.m + x.dm + x.b, x.m + x.dm, y.m - y.a, y.m),
             e(x.m + x.dm + x.b, x.m + x.dm, y.m + y.dm + y.b, y.m + y.dm)
-    );
+   );
 }
 
 /**

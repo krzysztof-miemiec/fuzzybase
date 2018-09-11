@@ -5,6 +5,7 @@
 #include "./function.h"
 #include "./operators.h"
 #include "./degree.h"
+#include "./linguistic_functions.h"
 
 trapezoidal_function_extended *state_max(trapezoidal_function_extended *state, trapezoidal_function *next_data);
 
@@ -14,6 +15,21 @@ trapezoidal_function *final_avg(trapezoidal_function_extended *state);
 
 trapezoidal_function_extended *state_avg(trapezoidal_function_extended *state, trapezoidal_function *next);
 
+float8 *percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw);
+
+float8 *percentage_almost_none(twoint *last_state);
+
+float8 *percentage_almost_all(twoint *last_state);
+
+float8 *percentage_about_a_quarter(twoint *last_state);
+
+float8 *percentage_about_a_third(twoint *last_state);
+
+float8 *percentage_about_half(twoint *last_state);
+
+float8 *percentage_about_two_thirds(twoint *last_state);
+
+float8 *percentage_about_three_quarters(twoint *last_state);
 
 /**
  * State function for MAX aggregate function
@@ -132,6 +148,5 @@ float8 *percentage_about_two_thirds(twoint *last_state) {
 float8 *percentage_about_three_quarters(twoint *last_state) {
     return percentage_universal_final_func(last_state, about_three_quarters());
 }
-
 
 #endif

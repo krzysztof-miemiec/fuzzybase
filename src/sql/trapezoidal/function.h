@@ -53,11 +53,11 @@ trapezoidal_function_extended *to_fext_lower(trapezoidal_function *ft, float8 *e
 trapezoidal_function_extended *to_fext_lower_equal(trapezoidal_function *ft, float8 *ext);
 
 
-trapezoidal_function *new_trapezoidal_function(void) {
+trapezoidal_function *new_trapezoidal_function() {
     return (trapezoidal_function *) palloc(sizeof(trapezoidal_function));
 }
 
-trapezoidal_function_extended *new_trapezoidal_function_extended(void) {
+trapezoidal_function_extended *new_trapezoidal_function_extended() {
     return (trapezoidal_function_extended *) palloc(sizeof(trapezoidal_function_extended));
 }
 
