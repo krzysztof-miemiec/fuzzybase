@@ -1,30 +1,30 @@
 -- Trapezoidal Function
 
+CREATE OR REPLACE FUNCTION trapezoidal_function_in(cstring) RETURNS trapezoidal_function
+  AS 'fuzzy', 'trapezoidal_function_in' LANGUAGE 'c' IMMUTABLE STRICT;
+
+CREATE OR REPLACE FUNCTION trapezoidal_function_out(trapezoidal_function) RETURNS cstring
+  AS 'fuzzy', 'trapezoidal_function_out' LANGUAGE 'c' IMMUTABLE STRICT;
+
 CREATE TYPE trapezoidal_function(
   internallength=32,
   input=trapezoidal_function_in,
   output=trapezoidal_function_out
 );
 
-CREATE OR REPLACE FUNCTION trapezoidal_function_in(opaque) RETURNS trapezoidal_function
-  AS 'fuzzy', 'trapezoidal_function_in' LANGUAGE 'c';
-
-CREATE OR REPLACE FUNCTION trapezoidal_function_out(trapezoidal_function) RETURNS opaque
-  AS 'fuzzy', 'trapezoidal_function_out' LANGUAGE 'c';
-
 -- Trapezoidal Function Extended
+
+CREATE OR REPLACE FUNCTION trapezoidal_function_ext_in(cstring) RETURNS trapezoidal_function_ext
+  AS 'fuzzy', 'trapezoidal_function_extended_in' LANGUAGE 'c' IMMUTABLE STRICT;
+
+CREATE OR REPLACE FUNCTION trapezoidal_function_ext_out(trapezoidal_function_ext) RETURNS cstring
+  AS 'fuzzy', 'trapezoidal_function_extended_out' LANGUAGE 'c' IMMUTABLE STRICT;
 
 CREATE TYPE trapezoidal_function_ext(
   internallength=44,
   input=trapezoidal_function_ext_in,
   output=trapezoidal_function_ext_out
 );
-
-CREATE OR REPLACE FUNCTION trapezoidal_function_ext_in(opaque) RETURNS trapezoidal_function_ext
-  AS 'fuzzy', 'trapezoidal_function_ext_in' LANGUAGE 'c';
-
-CREATE OR REPLACE FUNCTION trapezoidal_function_ext_out(trapezoidal_function_ext) RETURNS opaque
-  AS 'fuzzy', 'trapezoidal_function_ext_out' LANGUAGE 'c';
 
 -- Conversion of FEXT to TF
 CREATE OR REPLACE FUNCTION to_trapezoidal_function(trapezoidal_function_ext) RETURNS trapezoidal_function

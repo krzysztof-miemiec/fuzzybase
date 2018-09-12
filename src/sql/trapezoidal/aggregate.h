@@ -18,20 +18,6 @@ trapezoidal_function_extended *state_avg(trapezoidal_function_extended *state, t
 
 float8 *percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw);
 
-float8 *percentage_almost_none(twoint *last_state);
-
-float8 *percentage_almost_all(twoint *last_state);
-
-float8 *percentage_about_a_quarter(twoint *last_state);
-
-float8 *percentage_about_a_third(twoint *last_state);
-
-float8 *percentage_about_half(twoint *last_state);
-
-float8 *percentage_about_two_thirds(twoint *last_state);
-
-float8 *percentage_about_three_quarters(twoint *last_state);
-
 /**
  * State function for MAX aggregate function
  * @param state
@@ -51,6 +37,15 @@ trapezoidal_function_extended *state_max(trapezoidal_function_extended *state, t
 
     return state;
 };
+
+PG_FUNCTION_INFO_V1(pg_state_max);
+
+Datum pg_state_max(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *state = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    trapezoidal_function *next = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function_extended *result = state_max(state, next);
+    PG_RETURN_POINTER(result);
+}
 
 /**
  * State function for MIN aggregate function
@@ -72,6 +67,14 @@ trapezoidal_function_extended *state_min(trapezoidal_function_extended *state, t
     return state;
 };
 
+PG_FUNCTION_INFO_V1(pg_state_min);
+
+Datum pg_state_min(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *state = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    trapezoidal_function *next = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function_extended *result = state_min(state, next);
+    PG_RETURN_POINTER(result);
+}
 
 /**
  * Final function for AVG aggregate function
@@ -92,6 +95,14 @@ trapezoidal_function *final_avg(trapezoidal_function_extended *state) {
     return result;
 }
 
+PG_FUNCTION_INFO_V1(pg_final_avg);
+
+Datum pg_final_avg(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *state = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    trapezoidal_function *result = final_avg(state);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * State function for AVG aggregate function
  * @param state pointer to an extended trapezoidal function
@@ -105,6 +116,15 @@ trapezoidal_function_extended *state_avg(trapezoidal_function_extended *state, t
     f_sum_f(&result->f, next);
 
     return result;
+}
+
+PG_FUNCTION_INFO_V1(pg_state_avg);
+
+Datum pg_state_avg(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *state = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    trapezoidal_function *next = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function_extended *result = state_avg(state, next);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -121,32 +141,61 @@ float8 *percentage_universal_final_func(twoint *last_state, trapezoidal_function
     return degreefr(lingw, &percentage);
 }
 
-float8 *percentage_almost_none(twoint *last_state) {
-    return percentage_universal_final_func(last_state, almost_none());
+PG_FUNCTION_INFO_V1(pg_percentage_almost_none);
+
+Datum pg_percentage_almost_none(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, almost_none());
+    PG_RETURN_POINTER(result);
 }
 
-float8 *percentage_almost_all(twoint *last_state) {
-    return percentage_universal_final_func(last_state, almost_all());
+PG_FUNCTION_INFO_V1(pg_percentage_almost_all);
+
+Datum pg_percentage_almost_all(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, almost_all());
+    PG_RETURN_POINTER(result);
 }
 
-float8 *percentage_about_a_quarter(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_a_quarter());
+PG_FUNCTION_INFO_V1(pg_percentage_about_a_quarter);
+
+Datum pg_percentage_about_a_quarter(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, about_a_quarter());
+    PG_RETURN_POINTER(result);
 }
 
-float8 *percentage_about_a_third(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_a_third());
+PG_FUNCTION_INFO_V1(pg_percentage_about_a_third);
+
+Datum pg_percentage_about_a_third(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, about_a_third());
+    PG_RETURN_POINTER(result);
 }
 
-float8 *percentage_about_half(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_half());
+PG_FUNCTION_INFO_V1(pg_percentage_about_half);
+
+Datum pg_percentage_about_half(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, about_half());
+    PG_RETURN_POINTER(result);
 }
 
-float8 *percentage_about_two_thirds(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_two_thirds());
+
+PG_FUNCTION_INFO_V1(pg_percentage_about_two_thirds);
+
+Datum pg_percentage_about_two_thirds(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, about_two_thirds());
+    PG_RETURN_POINTER(result);
 }
 
-float8 *percentage_about_three_quarters(twoint *last_state) {
-    return percentage_universal_final_func(last_state, about_three_quarters());
+PG_FUNCTION_INFO_V1(pg_percentage_about_three_quarters);
+
+Datum pg_percentage_about_three_quarters(PG_FUNCTION_ARGS) {
+    twoint *state = (twoint *) PG_GETARG_POINTER(0);
+    float8 *result = percentage_universal_final_func(state, about_three_quarters());
+    PG_RETURN_POINTER(result);
 }
 
 #endif

@@ -8,7 +8,7 @@ SHLIB_LINK = -L./general
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
 
-fuzzy-0.0.1.sql:
+fuzzy.sql:
 	cat \
 	general/extension.sql \
 	general/general.sql \
@@ -19,5 +19,5 @@ fuzzy-0.0.1.sql:
 	trapezoidal/aggregate.sql \
 	trapezoidal/linguistic_functions.sql > fuzzy--0.0.1.sql
 
-all: fuzzy-0.0.1.sql
-.PHONY: fuzzy-0.0.1.sql
+all: fuzzy.sql
+.PHONY: fuzzy.sql

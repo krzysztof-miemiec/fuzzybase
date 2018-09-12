@@ -1,11 +1,16 @@
 ----------------------TESTY-------------------------------------------------------------------
 --drop table g;
---create table g (a integer, b trapezoidal_function);
---insert into g values(1, about(-81, -2, 3, 4));
---insert into g values(1, about(10, 20, 30, 40));
---insert into g values(3, about(5, 6, 7, 8));
---insert into g values(3, about(1, 2, 3, 4));
---insert into g values(5, about(1, 2, 3, 4));
+
+create table ti (a integer, b twoint);
+insert into ti values(1, '1,20');
+insert into ti values(1, '7,-3');
+
+create table g (a integer, b trapezoidal_function);
+insert into g values(1, about(-81, -2, 3, 4));
+insert into g values(1, about(10, 20, 30, 40));
+insert into g values(3, about(5, 6, 7, 8));
+insert into g values(3, about(1, 2, 3, 4));
+insert into g values(5, about(1, 2, 3, 4));
 
 
 --select id_oso, nazwisko, waga  from osoby;

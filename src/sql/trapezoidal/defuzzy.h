@@ -66,6 +66,15 @@ bool defuzzy_fext_r(trapezoidal_function_extended *fext, float8 *data) {
     return defuzzy(degree(*data, fext->f), fext->op, fext->ext);
 }
 
+PG_FUNCTION_INFO_V1(pg_defuzzy_fext_r);
+
+Datum pg_defuzzy_fext_r(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    float8 *data = (float8 *) PG_GETARG_POINTER(1);
+    bool result = defuzzy_fext_r(fext, data);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Defuzzifies a numeric value passed to an extended trapezoidal function and negates it
  * @param fext pointer to extended trapezoidal function
@@ -79,6 +88,15 @@ bool not_defuzzy_fext_r(trapezoidal_function_extended *fext, float8 *data) {
     return !defuzzy_fext_r(fext, data);
 }
 
+PG_FUNCTION_INFO_V1(pg_not_defuzzy_fext_r);
+
+Datum pg_not_defuzzy_fext_r(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    float8 *data = (float8 *) PG_GETARG_POINTER(1);
+    bool result = not_defuzzy_fext_r(fext, data);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Defuzzifies a numeric value passed to an extended trapezoidal function
  * @param data pointer to numeric value
@@ -89,6 +107,15 @@ bool defuzzy_r_fext(float8 *data, trapezoidal_function_extended *fext) {
     return defuzzy_fext_r(fext, data);
 }
 
+PG_FUNCTION_INFO_V1(pg_defuzzy_r_fext);
+
+Datum pg_defuzzy_r_fext(PG_FUNCTION_ARGS) {
+    float8 *data = (float8 *) PG_GETARG_POINTER(0);
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(1);
+    bool result = defuzzy_r_fext(data, fext);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Defuzzifies a numeric value passed to an extended trapezoidal function and negates it
  * @param data pointer to numeric value
@@ -97,6 +124,15 @@ bool defuzzy_r_fext(float8 *data, trapezoidal_function_extended *fext) {
  */
 bool not_defuzzy_r_fext(float8 *data, trapezoidal_function_extended *fext) {
     return not_defuzzy_fext_r(fext, data);
+}
+
+PG_FUNCTION_INFO_V1(pg_not_defuzzy_r_fext);
+
+Datum pg_not_defuzzy_r_fext(PG_FUNCTION_ARGS) {
+    float8 *data = (float8 *) PG_GETARG_POINTER(0);
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(1);
+    bool result = defuzzy_r_fext(data, fext);
+    PG_RETURN_BOOL(result);
 }
 
 /**
@@ -112,6 +148,15 @@ bool defuzzy_fext_ft(trapezoidal_function_extended *fext, trapezoidal_function *
     return defuzzy(degreeftofft(fext->f, *ft), fext->op, fext->ext);
 }
 
+PG_FUNCTION_INFO_V1(pg_defuzzy_fext_ft);
+
+Datum pg_defuzzy_fext_ft(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = defuzzy_fext_ft(fext, ft);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Defuzzifies a trapezoidal function value passed to an extended trapezoidal function and negates it
  * @param fext pointer to extended trapezoidal function
@@ -125,6 +170,15 @@ bool not_defuzzy_fext_ft(trapezoidal_function_extended *fext, trapezoidal_functi
     return !defuzzy_fext_ft(fext, ft);
 }
 
+PG_FUNCTION_INFO_V1(pg_not_defuzzy_fext_ft);
+
+Datum pg_not_defuzzy_fext_ft(PG_FUNCTION_ARGS) {
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = not_defuzzy_fext_ft(fext, ft);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Defuzzifies a trapezoidal function value passed to an extended trapezoidal function
  * @param ft pointer to trapezoidal function
@@ -135,6 +189,15 @@ bool defuzzy_ft_fext(trapezoidal_function *ft, trapezoidal_function_extended *fe
     return defuzzy_fext_ft(fext, ft);
 }
 
+PG_FUNCTION_INFO_V1(pg_defuzzy_ft_fext);
+
+Datum pg_defuzzy_ft_fext(PG_FUNCTION_ARGS) {
+    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(1);
+    bool result = defuzzy_ft_fext(ft, fext);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Defuzzifies a trapezoidal function value passed to an extended trapezoidal function and negates it
  * @param ft pointer to trapezoidal function
@@ -143,6 +206,15 @@ bool defuzzy_ft_fext(trapezoidal_function *ft, trapezoidal_function_extended *fe
  */
 bool not_defuzzy_ft_fext(trapezoidal_function *ft, trapezoidal_function_extended *fext) {
     return not_defuzzy_fext_ft(fext, ft);
+}
+
+PG_FUNCTION_INFO_V1(pg_not_defuzzy_ft_fext);
+
+Datum pg_not_defuzzy_ft_fext(PG_FUNCTION_ARGS) {
+    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function_extended *fext = (trapezoidal_function_extended *) PG_GETARG_POINTER(1);
+    bool result = not_defuzzy_ft_fext(ft, fext);
+    PG_RETURN_BOOL(result);
 }
 
 #endif

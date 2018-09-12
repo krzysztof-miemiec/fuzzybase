@@ -1,37 +1,41 @@
 -- Zadeh operators
 
 CREATE OR REPLACE FUNCTION max(float8, float8) RETURNS float8
-  AS 'fuzzy', 'max' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_max' LANGUAGE 'c';
 
 CREATE OPERATOR ||| (LEFTARG=float8, RIGHTARG=float8, PROCEDURE=max);
 
 
 CREATE OR REPLACE FUNCTION min(float8, float8) RETURNS float8
-  AS 'fuzzy', 'min' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_min' LANGUAGE 'c';
 
 CREATE OPERATOR &&& (LEFTARG=float8, RIGHTARG=float8, PROCEDURE=min);
 
 
 CREATE OR REPLACE FUNCTION negdm(float8) RETURNS float8
-  AS 'fuzzy', 'neg_dm' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_neg_dm' LANGUAGE 'c';
 
 CREATE OPERATOR ~ (RIGHTARG=float8, PROCEDURE=negdm);
 
 -- Percentage
 
-CREATE OR REPLACE FUNCTION twoint_from_string(opaque) RETURNS twoint
-  AS 'fuzzy', 'twoint_from_string' LANGUAGE 'c';
+CREATE OR REPLACE FUNCTION twoint_in(cstring) RETURNS twoint
+  AS 'fuzzy', 'pg_twoint_in' LANGUAGE 'c' IMMUTABLE STRICT;
 
-CREATE OR REPLACE FUNCTION twoint_to_string(opaque) RETURNS opaque
-  AS 'fuzzy', 'twoint_to_string' LANGUAGE 'c';
+CREATE OR REPLACE FUNCTION twoint_out(twoint) RETURNS cstring
+  AS 'fuzzy', 'pg_twoint_out' LANGUAGE 'c' IMMUTABLE STRICT;
 
-CREATE TYPE twoint(internallength=16, input=twoint_from_string, output=twoint_to_string);
+CREATE TYPE twoint(
+  internallength=16,
+  input=twoint_in,
+  output=twoint_out
+);
 
 CREATE OR REPLACE FUNCTION state_percentage (twoint, bool) RETURNS twoint
-  AS 'fuzzy', 'state_percentage' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_state_percentage' LANGUAGE 'c';
 
 CREATE OR REPLACE FUNCTION final_percentage (twoint) RETURNS float8
-  AS 'fuzzy', 'final_percentage' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_final_percentage' LANGUAGE 'c';
 
 CREATE AGGREGATE percentage(BASETYPE=bool, sfunc=state_percentage, stype=twoint,
   FINALFUNC=final_percentage, INITCOND='0,0');

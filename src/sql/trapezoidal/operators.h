@@ -47,7 +47,6 @@ bool not_equal(trapezoidal_function *a, trapezoidal_function *b);
 
 int trapezoidal_function_abs_cmp(trapezoidal_function *a, trapezoidal_function *b);
 
-
 /**
  * Negates the trapezoidal function (-f)
  *
@@ -68,6 +67,14 @@ trapezoidal_function *minus_f(trapezoidal_function *f) {
     return f;
 }
 
+PG_FUNCTION_INFO_V1(pg_minus_f);
+
+Datum pg_minus_f(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *result = minus_f(f);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Adds a number to a trapezoidal function
  *
@@ -84,6 +91,15 @@ trapezoidal_function *f_sum_r(trapezoidal_function *f, float8 *r) {
     return f;
 }
 
+PG_FUNCTION_INFO_V1(pg_f_sum_r);
+
+Datum pg_f_sum_r(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    float8 *r = (float8 *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_sum_r(f, r);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Adds a trapezoidal function to a number
  *
@@ -97,6 +113,15 @@ trapezoidal_function *r_sum_f(float8 *r, trapezoidal_function *f) {
     }
     return f_sum_r(f, r);
 };
+
+PG_FUNCTION_INFO_V1(pg_r_sum_f);
+
+Datum pg_r_sum_f(PG_FUNCTION_ARGS) {
+    float8 *r = (float8 *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = r_sum_f(r, f);
+    PG_RETURN_POINTER(result);
+}
 
 /**
  * Subtracts a number from a trapezoidal function
@@ -113,6 +138,15 @@ trapezoidal_function *f_sub_r(trapezoidal_function *f, float8 *r) {
     return f;
 };
 
+PG_FUNCTION_INFO_V1(pg_f_sub_r);
+
+Datum pg_f_sub_r(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    float8 *r = (float8 *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_sub_r(f, r);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Subtracts a trapezoidal function from a number
  *
@@ -125,6 +159,15 @@ trapezoidal_function *r_sub_f(float8 *r, trapezoidal_function *f) {
         return NULL;
     }
     return minus_f(f_sub_r(f, r));
+}
+
+PG_FUNCTION_INFO_V1(pg_r_sub_f);
+
+Datum pg_r_sub_f(PG_FUNCTION_ARGS) {
+    float8 *r = (float8 *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = r_sub_f(r, f);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -146,6 +189,15 @@ trapezoidal_function *f_sum_f(trapezoidal_function *x, trapezoidal_function *y) 
     return x;
 }
 
+PG_FUNCTION_INFO_V1(pg_f_sum_f);
+
+Datum pg_f_sum_f(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_sum_f(f, f2);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Subtracts trapezoidal function from other trapezoidal function
  * @param x left-hand side function
@@ -163,6 +215,15 @@ trapezoidal_function *f_sub_f(trapezoidal_function *x, trapezoidal_function *y) 
     x->b -= y->b;
 
     return x;
+}
+
+PG_FUNCTION_INFO_V1(pg_f_sub_f);
+
+Datum pg_f_sub_f(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_sub_f(f, f2);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -184,6 +245,15 @@ trapezoidal_function *f_mul_r(trapezoidal_function *f, float8 *r) {
     return f;
 }
 
+PG_FUNCTION_INFO_V1(pg_f_mul_r);
+
+Datum pg_f_mul_r(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    float8 *r = (float8 *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_mul_r(f, r);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Multiplies trapezoidal function by a number
  * @param r left-hand side number
@@ -195,6 +265,15 @@ trapezoidal_function *r_mul_f(float8 *r, trapezoidal_function *f) {
         return NULL;
     }
     return f_mul_r(f, r);
+}
+
+PG_FUNCTION_INFO_V1(pg_r_mul_f);
+
+Datum pg_r_mul_f(PG_FUNCTION_ARGS) {
+    float8 *r = (float8 *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = r_mul_f(r, f);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -216,6 +295,15 @@ trapezoidal_function *f_div_r(trapezoidal_function *f, float8 *r) {
     return f;
 }
 
+PG_FUNCTION_INFO_V1(pg_f_div_r);
+
+Datum pg_f_div_r(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    float8 *r = (float8 *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_div_r(f, r);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Divides a number by trapezoidal function
  * @param r left-hand side number
@@ -233,6 +321,15 @@ trapezoidal_function *r_div_f(float8 *r, trapezoidal_function *f) {
     f->b = *r / f->b;
 
     return f;
+}
+
+PG_FUNCTION_INFO_V1(pg_r_div_f);
+
+Datum pg_r_div_f(PG_FUNCTION_ARGS) {
+    float8 *r = (float8 *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = r_div_f(r, f);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -263,6 +360,15 @@ trapezoidal_function *f_mul_f(trapezoidal_function *a, trapezoidal_function *b) 
     f->b = (ao * bo) - f->dm;
 
     return f;
+}
+
+PG_FUNCTION_INFO_V1(pg_f_mul_f);
+
+Datum pg_f_mul_f(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_mul_f(f, f2);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -296,6 +402,15 @@ trapezoidal_function *f_div_f(trapezoidal_function *a, trapezoidal_function *b) 
     return f;
 }
 
+PG_FUNCTION_INFO_V1(pg_f_div_f);
+
+Datum pg_f_div_f(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = f_div_f(f, f2);
+    PG_RETURN_POINTER(result);
+}
+
 /**
  * Finds the trapezoidal function with smaller value
  * @param a left-hand side function
@@ -310,6 +425,15 @@ trapezoidal_function *trapezoidal_function_min(trapezoidal_function *a, trapezoi
         return a;
     }
     return b;
+}
+
+PG_FUNCTION_INFO_V1(pg_trapezoidal_function_min);
+
+Datum pg_trapezoidal_function_min(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = trapezoidal_function_min(f, f2);
+    PG_RETURN_POINTER(result);
 }
 
 /**
@@ -328,6 +452,14 @@ trapezoidal_function *trapezoidal_function_max(trapezoidal_function *a, trapezoi
     return b;
 }
 
+PG_FUNCTION_INFO_V1(pg_trapezoidal_function_max);
+
+Datum pg_trapezoidal_function_max(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    trapezoidal_function *result = trapezoidal_function_max(f, f2);
+    PG_RETURN_POINTER(result);
+}
 
 /**
  * Compares two trapezoidal functions
@@ -340,6 +472,15 @@ bool is_equal(trapezoidal_function *a, trapezoidal_function *b) {
         return false;
     }
     return (a->a == b->a) && (a->m == b->m) && (a->dm == b->dm) && (a->b == b->b);
+}
+
+PG_FUNCTION_INFO_V1(pg_is_equal);
+
+Datum pg_is_equal(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = is_equal(f, f2);
+    PG_RETURN_BOOL(result);
 }
 
 /**
@@ -355,6 +496,15 @@ bool is_lower(trapezoidal_function *a, trapezoidal_function *b) {
     return (a->m < b->m);
 }
 
+PG_FUNCTION_INFO_V1(pg_is_lower);
+
+Datum pg_is_lower(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = is_lower(f, f2);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Compares two trapezoidal functions
  * @param a left-hand side function
@@ -366,6 +516,15 @@ bool is_greater(trapezoidal_function *a, trapezoidal_function *b) {
         return false;
     }
     return (a->m + a->dm > b->m + b->dm);
+}
+
+PG_FUNCTION_INFO_V1(pg_is_greater);
+
+Datum pg_is_greater(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = is_greater(f, f2);
+    PG_RETURN_BOOL(result);
 }
 
 /**
@@ -381,6 +540,15 @@ bool is_greater_equal(trapezoidal_function *a, trapezoidal_function *b) {
     return is_greater(a, b) || is_equal(a, b);
 }
 
+PG_FUNCTION_INFO_V1(pg_is_greater_equal);
+
+Datum pg_is_greater_equal(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = is_greater_equal(f, f2);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Compares two trapezoidal functions
  * @param a left-hand side function
@@ -392,6 +560,15 @@ bool is_lower_equal(trapezoidal_function *a, trapezoidal_function *b) {
         return false;
     }
     return is_lower(a, b) || is_equal(a, b);
+}
+
+PG_FUNCTION_INFO_V1(pg_is_lower_equal);
+
+Datum pg_is_lower_equal(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = is_lower_equal(f, f2);
+    PG_RETURN_BOOL(result);
 }
 
 /**
@@ -407,6 +584,15 @@ bool not_equal(trapezoidal_function *a, trapezoidal_function *b) {
     return (a->a != b->a) || (a->m != b->m) || (a->dm != b->dm) || (a->b != b->b);
 }
 
+PG_FUNCTION_INFO_V1(pg_not_equal);
+
+Datum pg_not_equal(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    bool result = not_equal(f, f2);
+    PG_RETURN_BOOL(result);
+}
+
 /**
  * Compares two trapezoidal functions
  * @param a left-hand side function
@@ -419,6 +605,15 @@ int trapezoidal_function_abs_cmp(trapezoidal_function *a, trapezoidal_function *
            : is_greater(a, b)
              ? 1
              : 0;
+}
+
+PG_FUNCTION_INFO_V1(pg_trapezoidal_function_abs_cmp);
+
+Datum pg_trapezoidal_function_abs_cmp(PG_FUNCTION_ARGS) {
+    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
+    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
+    int result = trapezoidal_function_abs_cmp(f, f2);
+    PG_RETURN_INT16(result);
 }
 
 #endif
