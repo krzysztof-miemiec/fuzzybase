@@ -4,6 +4,7 @@
 #include "postgres.h"
 #include <stdlib.h>
 #include "../general/utils.h"
+#include "../general/extension.h"
 
 // Prototypes
 typedef struct {
@@ -24,13 +25,19 @@ void trapezoidal_function_clear(trapezoidal_function *f);
 
 void trapezoidal_function_assign(trapezoidal_function *s, trapezoidal_function *d);
 
-trapezoidal_function *trapezoidal_function_from_string(char *str);
+trapezoidal_function *trapezoidal_function_in(char *str);
 
-char *trapezoidal_function_to_string(trapezoidal_function *t);
+char *trapezoidal_function_out(trapezoidal_function *t);
+
+trapezoidal_function_extended *trapezoidal_function_extended_in(char *str);
+
+char *trapezoidal_function_extended_out(trapezoidal_function_extended *t);
 
 trapezoidal_function *about_r(float8 l, float8 m, float8 n, float8 o);
 
 trapezoidal_function_extended *to_fext(trapezoidal_function *ft, float8 *ext, char op[4]);
+
+trapezoidal_function *trapezoidal_function_ext_to_trapezoidal_function(trapezoidal_function_extended *last_state);
 
 trapezoidal_function *new_trapezoidal_function() {
     return (trapezoidal_function *) palloc(sizeof(trapezoidal_function));
@@ -39,6 +46,18 @@ trapezoidal_function *new_trapezoidal_function() {
 trapezoidal_function_extended *new_trapezoidal_function_extended() {
     return (trapezoidal_function_extended *) palloc(sizeof(trapezoidal_function_extended));
 }
+
+trapezoidal_function_extended *to_fext_equal(trapezoidal_function *ft, float8 *ext);
+
+trapezoidal_function_extended *to_fext_not_equal(trapezoidal_function *ft, float8 *ext);
+
+trapezoidal_function_extended *to_fext_greater(trapezoidal_function *ft, float8 *ext);
+
+trapezoidal_function_extended *to_fext_greater_equal(trapezoidal_function *ft, float8 *ext);
+
+trapezoidal_function_extended *to_fext_lower(trapezoidal_function *ft, float8 *ext);
+
+trapezoidal_function_extended *to_fext_lower_equal(trapezoidal_function *ft, float8 *ext);
 
 /**
  * Resets the structure.
@@ -67,7 +86,7 @@ void trapezoidal_function_assign(trapezoidal_function *s, trapezoidal_function *
     }
 }
 
-trapezoidal_function *trapezoidal_function_from_string(char *str) {
+trapezoidal_function *trapezoidal_function_in(char *str) {
     float8 l, m, n, o;
     trapezoidal_function *result = new_trapezoidal_function();
     int slashPosition = charpos(str, '/');
@@ -112,7 +131,9 @@ trapezoidal_function *trapezoidal_function_from_string(char *str) {
     return result;
 }
 
-char *trapezoidal_function_to_string(trapezoidal_function *f) {
+PG_FUNC_1(trapezoidal_function_in, trapezoidal_function*, POINTER, char*, CSTRING);
+
+char *trapezoidal_function_out(trapezoidal_function *f) {
     char *result = (char *) palloc(512);
 
     strcpy(result, "");
@@ -132,52 +153,24 @@ char *trapezoidal_function_to_string(trapezoidal_function *f) {
     return result;
 }
 
-/**
- * Converts the trapezoidal function string representation to a structure
- * @param str Input string in l/m~n\o format
- * @return trapezoidal function
- */
-PG_FUNCTION_INFO_V1(trapezoidal_function_in);
-
-Datum trapezoidal_function_in(PG_FUNCTION_ARGS) {
-    char *str = PG_GETARG_CSTRING(0);
-    trapezoidal_function *result = trapezoidal_function_from_string(str);
-    PG_RETURN_POINTER(result);
-}
-
-
-/**
- * Converts a trapezoidal function record to it's string representation
- *
- * @param f trapezoidal function
- * @return Trapezoidal function string in l/m~n\o format
- */
-PG_FUNCTION_INFO_V1(trapezoidal_function_out);
-
-Datum trapezoidal_function_out(PG_FUNCTION_ARGS) {
-    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    char *result = trapezoidal_function_to_string(f);
-    PG_RETURN_CSTRING(result);
-}
+PG_FUNC_1(trapezoidal_function_out, char*, CSTRING, trapezoidal_function*, POINTER);
 
 /**
  * Converts the extended trapezoidal function string representation to a structure
  * @param str Input string in ext|l/m~n\o format
  * @return Extended trapezoidal function
  */
-PG_FUNCTION_INFO_V1(trapezoidal_function_extended_in);
-
-Datum trapezoidal_function_extended_in(PG_FUNCTION_ARGS) {
-    char *str = PG_GETARG_CSTRING(0);
-
+trapezoidal_function_extended *trapezoidal_function_extended_in(char *str) {
     trapezoidal_function_extended *result = new_trapezoidal_function_extended();
     sscanf(str, "%lf", &result->ext);
-    trapezoidal_function *f = trapezoidal_function_from_string(str + charpos(str, '|') + 1);
+    trapezoidal_function *f = trapezoidal_function_in(str + charpos(str, '|') + 1);
     trapezoidal_function_assign(&result->f, f);
     pfree(f);
 
-    PG_RETURN_POINTER(result);
+    return result;
 }
+
+PG_FUNC_1(trapezoidal_function_extended_in, trapezoidal_function_extended*, POINTER, char*, CSTRING);
 
 /**
  * Converts an extended trapezoidal function to it's string representation
@@ -185,16 +178,14 @@ Datum trapezoidal_function_extended_in(PG_FUNCTION_ARGS) {
  * @param f trapezoidal function
  * @return Trapezoidal function string in l/m~n\o op ext format
  */
-PG_FUNCTION_INFO_V1(trapezoidal_function_extended_out);
-
-Datum trapezoidal_function_extended_out(PG_FUNCTION_ARGS) {
-    trapezoidal_function_extended *x = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
-
-    char *result = trapezoidal_function_to_string(&x->f);
+char *trapezoidal_function_extended_out(trapezoidal_function_extended *x) {
+    char *result = trapezoidal_function_out(&x->f);
     sprintf(result + strlen(result), " %s %.2f", x->op, x->ext);
 
-    PG_RETURN_CSTRING(result);
+    return result;
 }
+
+PG_FUNC_1(trapezoidal_function_extended_out, char*, CSTRING, trapezoidal_function_extended*, POINTER);
 
 /**
  * trapezoidal_function *trapezoidal_function_ext_to_trapezoidal_function(trapezoidal_function_extended *last_state)
@@ -202,16 +193,15 @@ Datum trapezoidal_function_extended_out(PG_FUNCTION_ARGS) {
  * @param last_state
  * @return trapezoidal function
  */
-PG_FUNCTION_INFO_V1(trapezoidal_function_ext_to_trapezoidal_function);
-
-Datum trapezoidal_function_ext_to_trapezoidal_function(PG_FUNCTION_ARGS) {
-    trapezoidal_function_extended *last_state = (trapezoidal_function_extended *) PG_GETARG_POINTER(0);
+trapezoidal_function *trapezoidal_function_ext_to_trapezoidal_function(trapezoidal_function_extended *last_state) {
     if (last_state == NULL) {
-        PG_RETURN_NULL();
+        return NULL;
     }
-    trapezoidal_function *result = &(last_state->f);
-    PG_RETURN_POINTER(result);
+    return &(last_state->f);
 };
+
+PG_FUNC_1(trapezoidal_function_ext_to_trapezoidal_function, trapezoidal_function*, POINTER,
+          trapezoidal_function_extended*, POINTER);
 
 /**
  * Converts parameters to trapezoidal function
@@ -273,15 +263,11 @@ trapezoidal_function_extended *to_fext(trapezoidal_function *ft, float8 *ext, ch
  * @param ext pointer to extension
  * @return a pointer to a new extended trapezoidal function (with an extension and operator)
  */
-
-PG_FUNCTION_INFO_V1(to_fext_equal);
-
-Datum to_fext_equal(PG_FUNCTION_ARGS) {
-    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *ext = (float8 *) PG_GETARG_POINTER(1);
-    trapezoidal_function_extended *result = to_fext(ft, ext, "*=");
-    PG_RETURN_POINTER(result);
+trapezoidal_function_extended *to_fext_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*=");
 };
+
+PG_FUNC_2(to_fext_equal, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER, float8 *, POINTER);
 
 /**
  * Creates an extended trapezoidal function with not equal operator
@@ -289,14 +275,12 @@ Datum to_fext_equal(PG_FUNCTION_ARGS) {
  * @param ext pointer to extension
  * @return a pointer to a new extended trapezoidal function (with an extension and operator)
  */
-PG_FUNCTION_INFO_V1(to_fext_not_equal);
-
-Datum to_fext_not_equal(PG_FUNCTION_ARGS) {
-    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *ext = (float8 *) PG_GETARG_POINTER(1);
-    trapezoidal_function_extended *result = to_fext(ft, ext, "*<>");
-    PG_RETURN_POINTER(result);
+trapezoidal_function_extended *to_fext_not_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*<>");
 };
+
+PG_FUNC_2(to_fext_not_equal, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER, float8 *,
+          POINTER);
 
 /**
  * Creates an extended trapezoidal function with greater operator
@@ -304,14 +288,11 @@ Datum to_fext_not_equal(PG_FUNCTION_ARGS) {
  * @param ext pointer to extension
  * @return a pointer to a new extended trapezoidal function (with an extension and operator)
  */
-PG_FUNCTION_INFO_V1(to_fext_greater);
-
-Datum to_fext_greater(PG_FUNCTION_ARGS) {
-    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *ext = (float8 *) PG_GETARG_POINTER(1);
-    trapezoidal_function_extended *result = to_fext(ft, ext, "*>");
-    PG_RETURN_POINTER(result);
+trapezoidal_function_extended *to_fext_greater(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*>");
 };
+
+PG_FUNC_2(to_fext_greater, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER, float8 *, POINTER);
 
 /**
  * Creates an extended trapezoidal function with greater or equal operator
@@ -319,14 +300,12 @@ Datum to_fext_greater(PG_FUNCTION_ARGS) {
  * @param ext pointer to extension
  * @return a pointer to a new extended trapezoidal function (with an extension and operator)
  */
-PG_FUNCTION_INFO_V1(to_fext_greater_equal);
-
-Datum to_fext_greater_equal(PG_FUNCTION_ARGS) {
-    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *ext = (float8 *) PG_GETARG_POINTER(1);
-    trapezoidal_function_extended *result = to_fext(ft, ext, "*>=");
-    PG_RETURN_POINTER(result);
+trapezoidal_function_extended *to_fext_greater_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*>=");
 };
+
+PG_FUNC_2(to_fext_greater_equal, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER, float8 *,
+          POINTER);
 
 /**
  * Creates an extended trapezoidal function with lower operator
@@ -334,14 +313,11 @@ Datum to_fext_greater_equal(PG_FUNCTION_ARGS) {
  * @param ext pointer to extension
  * @return a pointer to a new extended trapezoidal function (with an extension and operator)
  */
-PG_FUNCTION_INFO_V1(to_fext_lower);
-
-Datum to_fext_lower(PG_FUNCTION_ARGS) {
-    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *ext = (float8 *) PG_GETARG_POINTER(1);
-    trapezoidal_function_extended *result = to_fext(ft, ext, "*<");
-    PG_RETURN_POINTER(result);
+trapezoidal_function_extended *to_fext_lower(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*<");
 };
+
+PG_FUNC_2(to_fext_lower, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER, float8 *, POINTER);
 
 /**
  * Creates an extended trapezoidal function with lower or equal operator
@@ -349,13 +325,11 @@ Datum to_fext_lower(PG_FUNCTION_ARGS) {
  * @param ext pointer to extension
  * @return a pointer to a new extended trapezoidal function (with an extension and operator)
  */
-PG_FUNCTION_INFO_V1(to_fext_lower_equal);
-
-Datum to_fext_lower_equal(PG_FUNCTION_ARGS) {
-    trapezoidal_function *ft = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *ext = (float8 *) PG_GETARG_POINTER(1);
-    trapezoidal_function_extended *result = to_fext(ft, ext, "*<=");
-    PG_RETURN_POINTER(result);
+trapezoidal_function_extended *to_fext_lower_equal(trapezoidal_function *ft, float8 *ext) {
+    return to_fext(ft, ext, "*<=");
 };
+
+PG_FUNC_2(to_fext_lower_equal, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER, float8 *,
+          POINTER);
 
 #endif

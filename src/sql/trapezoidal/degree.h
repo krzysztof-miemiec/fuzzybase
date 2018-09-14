@@ -3,13 +3,19 @@
 
 #include "postgres.h"
 #include "../general/utils.h"
+#include "../general/extension.h"
 #include "function.h"
 
 float8 degree(float8 x, trapezoidal_function f);
+
 float8 *degreerf(float8 *x, trapezoidal_function *f);
+
 float8 *degreefr(trapezoidal_function *f, float8 *x);
+
 float e(float xD1, float xG1, float xD2, float xG2);
+
 float8 degreeftofft(trapezoidal_function x, trapezoidal_function y);
+
 float8 *degreeff(trapezoidal_function *x, trapezoidal_function *y);
 
 /**
@@ -53,14 +59,7 @@ float8 *degreerf(float8 *x, trapezoidal_function *f) {
     return result;
 };
 
-PG_FUNCTION_INFO_V1(pg_degreerf);
-
-Datum pg_degreerf(PG_FUNCTION_ARGS) {
-    float8 *r = (float8 *) PG_GETARG_POINTER(0);
-    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(1);
-    float8* result = degreerf(r, f);
-    PG_RETURN_POINTER(result);
-}
+PG_FUNC_2(degreerf, float8 *, POINTER, float8 *, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Calculates the degree of membership of value x to function f
@@ -77,14 +76,7 @@ float8 *degreefr(trapezoidal_function *f, float8 *x) {
     return result;
 };
 
-PG_FUNCTION_INFO_V1(pg_degreefr);
-
-Datum pg_degreefr(PG_FUNCTION_ARGS) {
-    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    float8 *r = (float8 *) PG_GETARG_POINTER(1);
-    float8* result = degreefr(f, r);
-    PG_RETURN_POINTER(result);
-}
+PG_FUNC_2(degreefr, float8 *, POINTER, trapezoidal_function*, POINTER, float8 *, POINTER);
 
 /**
  * Calculates the degree of membership basing on edges of two trapezoidal functions
@@ -116,7 +108,7 @@ float8 degreeftofft(trapezoidal_function x, trapezoidal_function y) {
             e(x.m - x.a, x.m, y.m + y.dm + y.b, y.m + y.dm),
             e(x.m + x.dm + x.b, x.m + x.dm, y.m - y.a, y.m),
             e(x.m + x.dm + x.b, x.m + x.dm, y.m + y.dm + y.b, y.m + y.dm)
-   );
+    );
 }
 
 /**
@@ -135,13 +127,6 @@ float8 *degreeff(trapezoidal_function *x, trapezoidal_function *y) {
     return result;
 }
 
-PG_FUNCTION_INFO_V1(pg_degreeff);
-
-Datum pg_degreeff(PG_FUNCTION_ARGS) {
-    trapezoidal_function *f = (trapezoidal_function *) PG_GETARG_POINTER(0);
-    trapezoidal_function *f2 = (trapezoidal_function *) PG_GETARG_POINTER(1);
-    float8* result = degreeff(f, f2);
-    PG_RETURN_POINTER(result);
-}
+PG_FUNC_2(degreeff, float8 *, POINTER, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 #endif
