@@ -8,15 +8,15 @@
 
 float8 degree(float8 x, trapezoidal_function f);
 
-float8 *degreerf(float8 *x, trapezoidal_function *f);
+float8 degreerf(float8 x, trapezoidal_function *f);
 
-float8 *degreefr(trapezoidal_function *f, float8 *x);
+float8 degreefr(trapezoidal_function *f, float8 x);
 
 float e(float xD1, float xG1, float xD2, float xG2);
 
 float8 degreeftofft(trapezoidal_function x, trapezoidal_function y);
 
-float8 *degreeff(trapezoidal_function *x, trapezoidal_function *y);
+float8 degreeff(trapezoidal_function *x, trapezoidal_function *y);
 
 /**
  * Calculates the degree of membership of value x to function f
@@ -49,17 +49,14 @@ float8 degree(float8 x, trapezoidal_function f) {
  * @param f pointer to a trapezoidal function
  * @return pointer to the degree of membership of value x to function f
  */
-float8 *degreerf(float8 *x, trapezoidal_function *f) {
-    if (x == NULL || f == NULL) {
-        return NULL;
+float8 degreerf(float8 x, trapezoidal_function *f) {
+    if (f == NULL) {
+        return 0;
     }
-
-    float8 *result = (float8 *) palloc(sizeof(float8));
-    *result = degree(*x, *f);
-    return result;
+    return degree(x, *f);
 };
 
-PG_FUNC_2(degreerf, float8 *, POINTER, float8 *, POINTER, trapezoidal_function*, POINTER);
+PG_FUNC_2(degreerf, float8, FLOAT8, float8, FLOAT8, trapezoidal_function*, POINTER);
 
 /**
  * Calculates the degree of membership of value x to function f
@@ -67,16 +64,14 @@ PG_FUNC_2(degreerf, float8 *, POINTER, float8 *, POINTER, trapezoidal_function*,
  * @param x pointer to a numeric value
  * @return pointer to a numeric value, with overridden value of the degree of membership of value x to function f
  */
-float8 *degreefr(trapezoidal_function *f, float8 *x) {
-    if (x == NULL || f == NULL) {
-        return NULL;
+float8 degreefr(trapezoidal_function *f, float8 x) {
+    if (f == NULL) {
+        return 0;
     }
-    float8 *result = (float8 *) palloc(sizeof(float8));
-    *result = degree(*x, *f);
-    return result;
+    return degree(x, *f);
 };
 
-PG_FUNC_2(degreefr, float8 *, POINTER, trapezoidal_function*, POINTER, float8 *, POINTER);
+PG_FUNC_2(degreefr, float8, FLOAT8, trapezoidal_function*, POINTER, float8, FLOAT8);
 
 /**
  * Calculates the degree of membership basing on edges of two trapezoidal functions
@@ -117,16 +112,14 @@ float8 degreeftofft(trapezoidal_function x, trapezoidal_function y) {
  * @param y pointer to trapezoidal function
  * @return f pointer to the degree of membership of function x to function y
  */
-float8 *degreeff(trapezoidal_function *x, trapezoidal_function *y) {
+float8 degreeff(trapezoidal_function *x, trapezoidal_function *y) {
     if (x == NULL || y == NULL) {
-        return NULL;
+        return 0;
     }
 
-    float8 *result = (float8 *) palloc(sizeof(float8));
-    *result = degreeftofft(*x, *y);
-    return result;
+    return degreeftofft(*x, *y);
 }
 
-PG_FUNC_2(degreeff, float8 *, POINTER, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
+PG_FUNC_2(degreeff, float8, FLOAT8, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 #endif

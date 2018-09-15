@@ -1,6 +1,10 @@
 #ifndef EXTENSION_H
 #define EXTENSION_H
 
+#include "postgres.h"
+#include "fmgr.h"
+#include "utils/builtins.h"
+
 #define PG_FUNC_0(NAME, RETURN_TYPE, PG_RETURN_TYPE) \
 PG_FUNCTION_INFO_V1(pg_ ## NAME);\
 Datum pg_ ## NAME(PG_FUNCTION_ARGS) {\

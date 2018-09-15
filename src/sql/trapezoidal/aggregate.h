@@ -16,21 +16,21 @@ trapezoidal_function *final_avg(trapezoidal_function_extended *state);
 
 trapezoidal_function_extended *state_avg(trapezoidal_function_extended *state, trapezoidal_function *next);
 
-float8 *percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw);
+float8 percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw);
 
-float8 *percentage_almost_none(twoint *last_state);
+float8 percentage_almost_none(twoint *last_state);
 
-float8 *percentage_almost_all(twoint *last_state);
+float8 percentage_almost_all(twoint *last_state);
 
-float8 *percentage_about_a_quarter(twoint *last_state);
+float8 percentage_about_a_quarter(twoint *last_state);
 
-float8 *percentage_about_a_third(twoint *last_state);
+float8 percentage_about_a_third(twoint *last_state);
 
-float8 *percentage_about_half(twoint *last_state);
+float8 percentage_about_half(twoint *last_state);
 
-float8 *percentage_about_two_thirds(twoint *last_state);
+float8 percentage_about_two_thirds(twoint *last_state);
 
-float8 *percentage_about_three_quarters(twoint *last_state);
+float8 percentage_about_three_quarters(twoint *last_state);
 
 /**
  * State function for MAX aggregate function
@@ -123,56 +123,56 @@ PG_FUNC_2(state_avg, trapezoidal_function_extended*, POINTER, trapezoidal_functi
  * @param tf pointer to lingwistic trapezoidal function
  * @return pointer to the degree of membership
  */
-float8 *percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw) {
+float8 percentage_universal_final_func(twoint *last_state, trapezoidal_function *lingw) {
     if (last_state == NULL || lingw == NULL) {
-        return NULL;
+        return 0;
     }
     float8 percentage = (float8) last_state->bool_count / last_state->count;
-    return degreefr(lingw, &percentage);
+    return degreefr(lingw, percentage);
 }
 
-float8 *percentage_almost_none(twoint *last_state) {
+float8 percentage_almost_none(twoint *last_state) {
     return percentage_universal_final_func(last_state, almost_none());
 }
 
-PG_FUNC_1(percentage_almost_none, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_almost_none, float8, FLOAT8, twoint*, POINTER);
 
-float8 *percentage_almost_all(twoint *last_state) {
+float8 percentage_almost_all(twoint *last_state) {
     return percentage_universal_final_func(last_state, almost_all());
 }
 
-PG_FUNC_1(percentage_almost_all, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_almost_all, float8, FLOAT8, twoint*, POINTER);
 
 
-float8 *percentage_about_a_quarter(twoint *last_state) {
+float8 percentage_about_a_quarter(twoint *last_state) {
     return percentage_universal_final_func(last_state, about_a_quarter());
 }
 
-PG_FUNC_1(percentage_about_a_quarter, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_about_a_quarter, float8, FLOAT8, twoint*, POINTER);
 
-float8 *percentage_about_a_third(twoint *last_state) {
+float8 percentage_about_a_third(twoint *last_state) {
     return percentage_universal_final_func(last_state, about_a_third());
 }
 
-PG_FUNC_1(percentage_about_a_third, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_about_a_third, float8, FLOAT8, twoint*, POINTER);
 
-float8 *percentage_about_half(twoint *last_state) {
+float8 percentage_about_half(twoint *last_state) {
     return percentage_universal_final_func(last_state, about_half());
 }
 
-PG_FUNC_1(percentage_about_half, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_about_half, float8, FLOAT8, twoint*, POINTER);
 
-float8 *percentage_about_two_thirds(twoint *last_state) {
+float8 percentage_about_two_thirds(twoint *last_state) {
     return percentage_universal_final_func(last_state, about_two_thirds());
 }
 
-PG_FUNC_1(percentage_about_two_thirds, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_about_two_thirds, float8, FLOAT8, twoint*, POINTER);
 
 
-float8 *percentage_about_three_quarters(twoint *last_state) {
+float8 percentage_about_three_quarters(twoint *last_state) {
     return percentage_universal_final_func(last_state, about_three_quarters());
 }
 
-PG_FUNC_1(percentage_about_three_quarters, float8 *, POINTER, twoint*, POINTER);
+PG_FUNC_1(percentage_about_three_quarters, float8, FLOAT8, twoint*, POINTER);
 
 #endif

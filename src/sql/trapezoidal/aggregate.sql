@@ -26,19 +26,19 @@ CREATE AGGREGATE avg(BASETYPE=trapezoidal_function, STYPE=trapezoidal_function_e
 
 -- Percentage aggregate functions
 CREATE OR REPLACE FUNCTION percentage_almost_none(twoint) RETURNS float8
-  AS 'fuzzy', 'pg_percentage_almost_none' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_almost_none' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OR REPLACE FUNCTION percentage_almost_all(twoint) RETURNS float8 
-  AS 'fuzzy', 'pg_percentage_almost_all' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_almost_all' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OR REPLACE FUNCTION percentage_about_a_quarter(twoint) RETURNS float8 
-  AS 'fuzzy', 'pg_percentage_about_a_quarter' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_about_a_quarter' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OR REPLACE FUNCTION percentage_about_a_third(twoint) RETURNS float8 
-  AS 'fuzzy', 'pg_percentage_about_a_third' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_about_a_third' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OR REPLACE FUNCTION percentage_about_half(twoint) RETURNS float8 
-  AS 'fuzzy', 'pg_percentage_about_half' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_about_half' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OR REPLACE FUNCTION percentage_about_two_thirds(twoint) RETURNS float8 
-  AS 'fuzzy', 'pg_percentage_about_two_thirds' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_about_two_thirds' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OR REPLACE FUNCTION percentage_about_three_quarters(twoint) RETURNS float8 
-  AS 'fuzzy', 'pg_percentage_about_three_quarters' LANGUAGE 'c';
+  AS 'fuzzy', 'pg_percentage_about_three_quarters' LANGUAGE 'c' IMMUTABLE STRICT;
 
 CREATE AGGREGATE almost_none(BASETYPE=bool, SFUNC=state_percentage, STYPE=twoint,
   FINALFUNC=percentage_almost_none, INITCOND='0,0');

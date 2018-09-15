@@ -12,11 +12,11 @@ typedef struct {
 
 twoint *new_twoint(void);
 
-float8 *min(float8 *x, float8 *y);
+float8 min(float8 x, float8 y);
 
-float8 *max(float8 *x, float8 *y);
+float8 max(float8 x, float8 y);
 
-float8 *neg_dm(float8 *x);
+float8 neg_dm(float8 x);
 
 twoint *twoint_in(char *str);
 
@@ -24,47 +24,27 @@ char *twoint_out(twoint *t);
 
 twoint *state_percentage(twoint *state, bool next);
 
-float8 *final_percentage(twoint *last_state);
-
-
-// General functions, independent from fuzzy type
+float8 final_percentage(twoint *last_state);
 
 // Zadeh operators
 
-float8 *min(float8 *x, float8 *y) {
-    if ((x == NULL) || (y == NULL)) {
-        return NULL;
-    }
-    if (*x < *y) {
-        return x;
-    }
-    return y;
+float8 min(float8 x, float8 y) {
+    return x<y ? x : y;
 }
 
-PG_FUNC_2(min, float8 *, POINTER, float8 *, POINTER, float8 *, POINTER);
+PG_FUNC_2(min, float8, FLOAT8, float8, FLOAT8, float8, FLOAT8);
 
-float8 *max(float8 *x, float8 *y) {
-    if ((x == NULL) || (y == NULL)) {
-        return NULL;
-    }
-    if (*x < *y)
-        return y;
-    else
-        return x;
+float8 max(float8 x, float8 y) {
+    return x<y ? y : x;
 }
 
-PG_FUNC_2(max, float8 *, POINTER, float8 *, POINTER, float8 *, POINTER);
+PG_FUNC_2(max, float8, FLOAT8, float8, FLOAT8, float8, FLOAT8);
 
-float8 *neg_dm(float8 *x) {
-    if (x == NULL) {
-        return NULL;
-    } else {
-        *x = 1 - *x;
-        return (x);
-    };
+float8 neg_dm(float8 x) {
+    return 1 - x;
 }
 
-PG_FUNC_1(neg_dm, float8 *, POINTER, float8 *, POINTER);
+PG_FUNC_1(neg_dm, float8, FLOAT8, float8, FLOAT8);
 
 // Percentage Aggregate - Extended type that stores summed values
 
@@ -111,18 +91,10 @@ twoint *state_percentage(twoint *state, bool next) {
 
 PG_FUNC_2(state_percentage, twoint *, POINTER, twoint *, POINTER, bool, BOOL);
 
-float8 *final_percentage(twoint *last_state) {
-    float8 *result = NULL;
-
-    if (last_state == NULL) {
-        return NULL;
-    }
-
-    result = (float8 *) palloc(8);
-    *result = (float8)(last_state->bool_count / last_state->count);
-
-    return result;
+float8 final_percentage(twoint *last_state) {
+    return (float8) (last_state->bool_count) / last_state->count;
 }
-PG_FUNC_1(final_percentage, float8 *, POINTER, twoint *, POINTER);
+
+PG_FUNC_1(final_percentage, float8, FLOAT8, twoint *, POINTER);
 
 #endif
