@@ -52,8 +52,7 @@ trapezoidal_function_extended *state_max(trapezoidal_function_extended *state, t
     return state;
 };
 
-PG_FUNC_2(state_max, trapezoidal_function_extended*, POINTER, trapezoidal_function_extended*, POINTER,
-          trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(state_max, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * State function for MIN aggregate function
@@ -75,8 +74,7 @@ trapezoidal_function_extended *state_min(trapezoidal_function_extended *state, t
     return state;
 };
 
-PG_FUNC_2(state_min, trapezoidal_function_extended*, POINTER, trapezoidal_function_extended*, POINTER,
-          trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(state_min, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Final function for AVG aggregate function
@@ -114,8 +112,7 @@ trapezoidal_function_extended *state_avg(trapezoidal_function_extended *state, t
     return result;
 }
 
-PG_FUNC_2(state_avg, trapezoidal_function_extended*, POINTER, trapezoidal_function_extended*, POINTER,
-          trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(state_avg, trapezoidal_function_extended*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Percentage final function

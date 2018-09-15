@@ -89,7 +89,7 @@ twoint *state_percentage(twoint *state, bool next) {
     return result;
 }
 
-PG_FUNC_2(state_percentage, twoint *, POINTER, twoint *, POINTER, bool, BOOL);
+PG_FUNC_2_POINTER(state_percentage, twoint *, POINTER, bool, BOOL);
 
 float8 final_percentage(twoint *last_state) {
     return (float8) (last_state->bool_count) / last_state->count;

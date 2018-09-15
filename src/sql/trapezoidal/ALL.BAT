@@ -6,7 +6,7 @@ psql strzelcy -f /fuzzy/trapezoidal_function/degree.sql
 psql strzelcy -f /fuzzy/trapezoidal_function/aggregates.sql
 psql strzelcy -f /fuzzy/trapezoidal_function/any_all_in.sql
 psql strzelcy -f /fuzzy/trapezoidal_function/lingw.sql
-#psql strzelcy -f /fuzzy/trapezoidal_function/test.sql
+#psql strzelcy -f /fuzzy/trapezoidal_function/fuzzy_test.sql
 
 
 

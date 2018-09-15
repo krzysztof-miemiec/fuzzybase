@@ -1,5 +1,6 @@
 EXTENSION = fuzzy
 MODULES = fuzzy
+REGRESS = fuzzy_test
 
 DATA = fuzzy--0.0.1.sql
 SQL_FILES = general/extension.sql general/general.sql trapezoidal/function.sql trapezoidal/operators.sql \
@@ -16,8 +17,7 @@ fuzzy.sql:
 
 all: fuzzy.sql
 
-everything: clean all install
-	psql -d test -f test.sql
+everything: clean all install installcheck
 
 .PHONY: fuzzy.sql everything
 

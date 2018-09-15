@@ -87,7 +87,7 @@ trapezoidal_function *f_sum_r(trapezoidal_function *f, float8 r) {
     return result;
 }
 
-PG_FUNC_2(f_sum_r, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, float8, FLOAT8);
+PG_FUNC_2_POINTER(f_sum_r, trapezoidal_function*, POINTER, float8, FLOAT8);
 
 /**
  * Adds a trapezoidal function to a number
@@ -100,7 +100,7 @@ trapezoidal_function *r_sum_f(float8 r, trapezoidal_function *f) {
     return f_sum_r(f, r);
 };
 
-PG_FUNC_2(r_sum_f, trapezoidal_function*, POINTER, float8, FLOAT8, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(r_sum_f, float8, FLOAT8, trapezoidal_function*, POINTER);
 
 /**
  * Subtracts a number from a trapezoidal function
@@ -119,7 +119,7 @@ trapezoidal_function *f_sub_r(trapezoidal_function *f, float8 r) {
     return result;
 };
 
-PG_FUNC_2(f_sub_r, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, float8, FLOAT8);
+PG_FUNC_2_POINTER(f_sub_r, trapezoidal_function*, POINTER, float8, FLOAT8);
 
 /**
  * Subtracts a trapezoidal function from a number
@@ -132,7 +132,7 @@ trapezoidal_function *r_sub_f(float8 r, trapezoidal_function *f) {
     return minus_f(f_sub_r(f, r));
 }
 
-PG_FUNC_2(r_sub_f, trapezoidal_function*, POINTER, float8, FLOAT8, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(r_sub_f, float8, FLOAT8, trapezoidal_function*, POINTER);
 
 /**
  * Sums two trapezoidal functions
@@ -141,7 +141,7 @@ PG_FUNC_2(r_sub_f, trapezoidal_function*, POINTER, float8, FLOAT8, trapezoidal_f
  * @return x=x+y
  */
 trapezoidal_function *f_sum_f(trapezoidal_function *x, trapezoidal_function *y) {
-    if ((x == NULL) || (y == NULL)) {
+    if (x == NULL || y == NULL) {
         return NULL;
     }
     trapezoidal_function *result = new_trapezoidal_function();
@@ -154,7 +154,7 @@ trapezoidal_function *f_sum_f(trapezoidal_function *x, trapezoidal_function *y) 
     return result;
 }
 
-PG_FUNC_2(f_sum_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(f_sum_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Subtracts trapezoidal function from other trapezoidal function
@@ -163,7 +163,7 @@ PG_FUNC_2(f_sum_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTE
  * @return x-y
  */
 trapezoidal_function *f_sub_f(trapezoidal_function *x, trapezoidal_function *y) {
-    if ((x == NULL) || (y == NULL)) {
+    if (x == NULL || y == NULL) {
         return NULL;
     }
     trapezoidal_function *result = new_trapezoidal_function();
@@ -176,7 +176,7 @@ trapezoidal_function *f_sub_f(trapezoidal_function *x, trapezoidal_function *y) 
     return result;
 }
 
-PG_FUNC_2(f_sub_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(f_sub_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Multiplies trapezoidal function by a number
@@ -198,7 +198,7 @@ trapezoidal_function *f_mul_r(trapezoidal_function *f, float8 r) {
     return result;
 }
 
-PG_FUNC_2(f_mul_r, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, float8, FLOAT8);
+PG_FUNC_2_POINTER(f_mul_r, trapezoidal_function*, POINTER, float8, FLOAT8);
 
 /**
  * Multiplies trapezoidal function by a number
@@ -210,7 +210,7 @@ trapezoidal_function *r_mul_f(float8 r, trapezoidal_function *f) {
     return f_mul_r(f, r);
 }
 
-PG_FUNC_2(r_mul_f, trapezoidal_function*, POINTER, float8, FLOAT8, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(r_mul_f, float8, FLOAT8, trapezoidal_function*, POINTER);
 
 /**
  * Divides trapezoidal function by a number
@@ -232,7 +232,7 @@ trapezoidal_function *f_div_r(trapezoidal_function *f, float8 r) {
     return result;
 }
 
-PG_FUNC_2(f_div_r, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, float8, FLOAT8);
+PG_FUNC_2_POINTER(f_div_r, trapezoidal_function*, POINTER, float8, FLOAT8);
 
 /**
  * Divides a number by trapezoidal function
@@ -241,7 +241,7 @@ PG_FUNC_2(f_div_r, trapezoidal_function*, POINTER, trapezoidal_function*, POINTE
  * @return f*r
  */
 trapezoidal_function *r_div_f(float8 r, trapezoidal_function *f) {
-    if (f == NULL || r == 0) {
+    if (f == NULL || f->a == 0 || f->m == 0 || f->dm == 0 || f->b == 0) {
         return NULL;
     }
     trapezoidal_function *result = new_trapezoidal_function();
@@ -254,7 +254,7 @@ trapezoidal_function *r_div_f(float8 r, trapezoidal_function *f) {
     return result;
 }
 
-PG_FUNC_2(r_div_f, trapezoidal_function*, POINTER, float8, FLOAT8, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(r_div_f, float8, FLOAT8, trapezoidal_function*, POINTER);
 
 
 /**
@@ -264,7 +264,7 @@ PG_FUNC_2(r_div_f, trapezoidal_function*, POINTER, float8, FLOAT8, trapezoidal_f
  * @return a*b
  */
 trapezoidal_function *f_mul_f(trapezoidal_function *a, trapezoidal_function *b) {
-    if ((a == NULL) || (b == NULL)) {
+    if (a == NULL || b == NULL) {
         return NULL;
     }
 
@@ -287,7 +287,7 @@ trapezoidal_function *f_mul_f(trapezoidal_function *a, trapezoidal_function *b) 
     return f;
 }
 
-PG_FUNC_2(f_mul_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(f_mul_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Divides trapezoidal function by another function
@@ -296,6 +296,10 @@ PG_FUNC_2(f_mul_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTE
  * @return a/b
  */
 trapezoidal_function *f_div_f(trapezoidal_function *a, trapezoidal_function *b) {
+    if (a == NULL || b == NULL) {
+        return NULL;
+    }
+
     float8 al, an, ao, bl, bn, bo;
 
     al = a->m - a->a;
@@ -306,7 +310,7 @@ trapezoidal_function *f_div_f(trapezoidal_function *a, trapezoidal_function *b) 
     bn = b->m + b->dm;
     bo = bn + b->b;
 
-    if (a == NULL || b == NULL || bl == 0 || b->m == 0 || bn == 0 || bo == 0) {
+    if (bl == 0 || b->m == 0 || bn == 0 || bo == 0) {
         return NULL;
     }
 
@@ -320,7 +324,7 @@ trapezoidal_function *f_div_f(trapezoidal_function *a, trapezoidal_function *b) 
     return f;
 }
 
-PG_FUNC_2(f_div_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(f_div_f, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Finds the trapezoidal function with smaller value
@@ -338,8 +342,7 @@ trapezoidal_function *trapezoidal_function_min(trapezoidal_function *a, trapezoi
     return b;
 }
 
-PG_FUNC_2(trapezoidal_function_min, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER,
-          trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(trapezoidal_function_min, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Finds the trapezoidal function with bigger value
@@ -357,8 +360,7 @@ trapezoidal_function *trapezoidal_function_max(trapezoidal_function *a, trapezoi
     return b;
 }
 
-PG_FUNC_2(trapezoidal_function_max, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER,
-          trapezoidal_function*, POINTER);
+PG_FUNC_2_POINTER(trapezoidal_function_max, trapezoidal_function*, POINTER, trapezoidal_function*, POINTER);
 
 /**
  * Compares two trapezoidal functions
