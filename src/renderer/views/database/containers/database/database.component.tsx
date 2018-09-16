@@ -17,7 +17,8 @@ import {
   getQuery,
   getTables,
   postgresQuery,
-  removeDatabase, setQuery
+  removeDatabase,
+  setQuery
 } from '../../../../../common/db/store/app';
 import { setDatabase } from '../../../../../common/db/store/db.actions';
 import { PATHS } from '../../../../app.paths';
@@ -84,8 +85,10 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
   };
 
   onCreateQuery = () => {
-    const {actions, connection} = this.props;
-    actions.setQuery(connection.connectionId, uuid(), 'x');
+    const { actions, history, connection } = this.props;
+    const queryId = uuid();
+    actions.setQuery(connection.connectionId, queryId, '');
+    history.replace(PATHS.QUERY(connection.clientId, connection.connectionId, queryId));
   };
 
   onShowQuery = (query: DatabaseQueryState) => {

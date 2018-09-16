@@ -8,6 +8,7 @@ export const R = {
     sidebar: '#333333',
     white: '#FFF',
     gray: '#646464',
+    semiLightGray: '#808080',
     lightGray: '#AEAEAE',
     inputBackground: '#EEEEEE',
   },

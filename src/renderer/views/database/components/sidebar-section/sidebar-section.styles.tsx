@@ -1,5 +1,5 @@
-import { createStyles } from '@material-ui/core/es';
 import { R } from '../../../../../common/resources';
+import { createStyles } from '../../../../app.styles';
 
 export const styles = createStyles({
   container: {
@@ -42,8 +42,12 @@ export const styles = createStyles({
     '&:hover': {
       backgroundColor: R.color.gray,
     },
+    minHeight: '1.25em',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+  },
+  elementHint: {
+    color: R.color.semiLightGray,
   },
 });

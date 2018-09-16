@@ -13,6 +13,7 @@ export const DatabaseQueries: React.SFC<Props> = ({
 }) => (
   <SidebarSection
     title="Queries"
+    hint="New query"
     mapItem={(query: DatabaseQueryState) => ({ id: query.id, name: query.query })}
     items={queries}
     onAdd={onAdd}
