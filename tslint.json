@@ -86,7 +86,8 @@
           "arrays": "always",
           "functions": "never"
         },
-        "singleline": "never"
+        "singleline": "never",
+        "esSpecCompliant": true
       }
     ],
     "triple-equals": [

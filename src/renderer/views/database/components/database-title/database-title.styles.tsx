@@ -1,11 +1,7 @@
-import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../../common/resources';
+import { createStyles } from '../../../../app.styles';
 
-type Classes =
-  | 'container'
-  | 'title';
-
-export const styles = (): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
     display: 'flex',
     flexFlow: 'column',

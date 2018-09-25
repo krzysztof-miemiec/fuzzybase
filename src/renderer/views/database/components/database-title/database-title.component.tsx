@@ -1,7 +1,6 @@
-import { Menu, MenuItem, Typography, withStyles } from '@material-ui/core';
+import { Menu, MenuItem, Typography } from '@material-ui/core';
 import React from 'react';
 import { DatabaseState } from '../../../../../common/db/store/app';
-import { StyleProps } from '../../../../utils/styles.util';
 import { styles } from './database-title.styles';
 
 interface Props {
@@ -12,8 +11,8 @@ interface State {
   menuAnchor?: any;
 }
 
-export class DatabaseTitleComponent extends React.Component<Props & StyleProps<typeof styles>, State> {
-  constructor(props: Props & StyleProps<typeof styles>) {
+export class DatabaseTitle extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {};
   }
@@ -28,16 +27,16 @@ export class DatabaseTitleComponent extends React.Component<Props & StyleProps<t
   };
 
   render() {
-    const { classes, database } = this.props;
+    const { database } = this.props;
     const { menuAnchor } = this.state;
     return (
       <>
         <div
-          className={classes.container}
+          className={styles.container}
           onClick={this.onTitleClick}
         >
           <div>
-            <Typography className={classes.title}>
+            <Typography className={styles.title}>
               {database.name}
             </Typography>
           </div>
@@ -62,5 +61,3 @@ export class DatabaseTitleComponent extends React.Component<Props & StyleProps<t
     );
   }
 }
-
-export const DatabaseTitle = withStyles(styles)<Props>(DatabaseTitleComponent);

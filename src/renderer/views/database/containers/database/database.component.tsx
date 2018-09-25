@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router';
-import uuid from 'uuid/v4';
 import {
+  closeQuery,
   connectToPostgres,
-  DatabaseQueryState,
   DatabaseState,
-  DatabaseTable,
   getConnection,
   getDatabase,
   getDatabaseConnections,
@@ -18,7 +16,8 @@ import {
   getTables,
   postgresQuery,
   removeDatabase,
-  setQuery
+  setQuery,
+  Table
 } from '../../../../../common/db/store/app';
 import { setDatabase } from '../../../../../common/db/store/db.actions';
 import { PATHS } from '../../../../app.paths';
@@ -60,6 +59,7 @@ const mapDispatchToProps = mapActions({
   connectToPostgres,
   postgresQuery,
   setQuery,
+  closeQuery,
   removeDatabase,
 });
 
@@ -84,23 +84,12 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
     }
   };
 
-  onCreateQuery = () => {
-    const { actions, history, connection } = this.props;
-    const queryId = uuid();
-    actions.setQuery(connection.connectionId, queryId, '');
+  navigateToQuery = (queryId: string) => {
+    const { history, connection } = this.props;
     history.replace(PATHS.QUERY(connection.clientId, connection.connectionId, queryId));
   };
 
-  onShowQuery = (query: DatabaseQueryState) => {
-    const { history, connection } = this.props;
-    history.replace(PATHS.QUERY(connection.clientId, connection.connectionId, query.id));
-  };
-
-  onAddTable = () => {
-    // TODO navigate to new table view
-  };
-
-  onTableClick = (_: DatabaseTable) => {
+  onTableClick = (_: Table) => {
     // TODO navigate to table view
   };
 
@@ -135,13 +124,11 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
             <DatabaseTitle database={database} />
             <div className={styles.sidebarContent}>
               <DatabaseQueries
-                queries={Object.values(connection.queries)}
-                onAdd={this.onCreateQuery}
-                onQueryClick={this.onShowQuery}
+                navigateToQuery={this.navigateToQuery}
+                connection={connection}
               />
               <DatabaseTables
                 tables={tables}
-                onAdd={this.onAddTable}
                 onTableClick={this.onTableClick}
               />
             </div>

@@ -1,10 +1,9 @@
-import { withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
+import { View } from '../../../../shared/components/view';
 import { AppState } from '../../../../store';
 import { mapActions } from '../../../../utils/redux.util';
 import { select } from '../../../../utils/selector.util';
-import { StyleProps } from '../../../../utils/styles.util';
 import { getLayoutState, isDrawerOpen } from '../../store';
 import { closeDrawer, openDrawer } from '../../store/layout.actions';
 import { Drawer } from '../drawer/drawer.component';
@@ -21,16 +20,15 @@ const mapDispatchToProps = mapActions({
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const LayoutComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
-  classes, children,
+const LayoutComponent: React.SFC<Props> = ({
+  children,
 }) => (
-  <div className={classes.container}>
+  <View style={styles.container}>
     <Drawer />
-
-    <div className={classes.content}>
+    <View style={styles.content}>
       {children}
-    </div>
-  </div>
+    </View>
+  </View>
 );
 
-export const Layout = connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LayoutComponent));
+export const Layout = connect(mapStateToProps, mapDispatchToProps)(LayoutComponent);

@@ -1,12 +1,11 @@
-import { Button, IconButton, Snackbar as MaterialSnackbar, withStyles } from '@material-ui/core';
+import { Button, IconButton, Snackbar as MaterialSnackbar } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapActions } from '../../../../utils/redux.util';
-import { StyleProps } from '../../../../utils/styles.util';
 import { SnackbarState } from '../../store';
 import { hideSnackbar } from '../../store/layout.actions';
-import { styles } from '../layout/layout.styles';
+import { styles } from './snackbar.styles';
 
 interface ComponentProps {
   snackbar: SnackbarState;
@@ -18,15 +17,15 @@ const mapDispatchToProps = mapActions({
 
 type Props = ComponentProps & typeof mapDispatchToProps;
 
-const SnackbarComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
-  snackbar: { id, isOpen, message, action, actionTitle }, dispatch, actions, classes,
+const SnackbarComponent: React.SFC<Props> = ({
+  snackbar: { id, isOpen, message, action, actionTitle }, dispatch, actions,
 }) => (
   <MaterialSnackbar
     open={isOpen}
     ContentProps={{
       'aria-describedby': 'message-id',
     }}
-    className={classes.snackbar}
+    className={styles.snackbar}
     message={<span id="message-id">{message}</span>}
     action={[
       action && <Button
@@ -50,5 +49,5 @@ const SnackbarComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
 );
 
 export const Snackbar = connect(null, mapDispatchToProps)(
-  withStyles(styles)(SnackbarComponent)
+  SnackbarComponent
 );

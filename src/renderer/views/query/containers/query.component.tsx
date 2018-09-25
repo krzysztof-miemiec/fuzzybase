@@ -1,4 +1,5 @@
 import { debounce } from 'lodash';
+import { FieldDef } from 'pg';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -8,8 +9,18 @@ import { CodeInput } from '../../../shared/components/code-input';
 import { AppState } from '../../../store';
 import { mapActions } from '../../../utils/redux.util';
 import { select } from '../../../utils/selector.util';
-import { ResultsDom } from '../components/results-dom';
+import { ResultsCanvas } from '../components/results-canvas';
 import { styles } from './query.styles';
+
+const ERROR_HEADER: FieldDef = {
+  columnID: 0,
+  tableID: 0,
+  format: '',
+  dataTypeID: 0,
+  dataTypeModifier: 0,
+  dataTypeSize: 4,
+  name: 'Error',
+};
 
 type RouteProps = RouteComponentProps<{ connectionId: string, queryId: string }>;
 
@@ -29,39 +40,44 @@ const mapDispatchToProps = mapActions({
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteProps;
 
-interface KeyValue {
-  key: string;
-  value: any;
-}
-
 interface State {
   code: string;
-  headers: KeyValue[];
-  data: KeyValue[][];
+  headers: FieldDef[];
+  data: any[][];
 }
-
-const convertRowToData = (row: object): KeyValue[] => Object.entries(row).map(([key, value]) => ({ key, value }));
 
 class QueryComponent extends React.PureComponent<Props, State> {
   delayedSetQuery = debounce((code: string) => {
     const { connection, query, actions } = this.props;
     actions.setQuery(connection.connectionId, query.id, code);
   }, 500);
-  state: State = { code: '', headers: [], data: [] };
+
+  constructor(props: Props) {
+    super(props);
+    this.state = { code: '', headers: [], data: [], ...this.getStateUpdate() };
+  }
+
+  getStateUpdate = (oldProps?: Props) => {
+    const state: State = {} as State;
+    const { query: oldQuery = undefined } = oldProps || {};
+    const { query } = this.props;
+    const value = query && (query.error || query.result);
+    const oldValue = oldQuery && (oldQuery.error || oldQuery.result);
+
+    if (value && value !== oldValue) {
+      state.data = ((query.result && query.result.rows) || [[query.error]]) || [];
+      state.headers = query.result && query.result.fields || [ERROR_HEADER];
+    }
+
+    if ((oldQuery && oldQuery.id) !== (query && query.id)) {
+      state.code = query ? query.query : '';
+    }
+
+    return state;
+  };
 
   componentDidUpdate(oldProps: Props) {
-    const { query: oldQuery } = oldProps;
-    const { query } = this.props;
-    if ((query.error || query.result) !== (oldQuery.error || oldQuery.result)) {
-      const rows = ((query.result && query.result.rows) || [{ error: query.error }]) || [{}];
-      const headers = query.result && query.result.fields.map(field => ({
-        key: field.columnID.toString(), value: field.name,
-      })) || [{ key: 'error', value: 'Error' }];
-      this.setState({ headers, data: rows.map(convertRowToData) });
-    }
-    if ((oldQuery && oldQuery.id) !== (query && query.id)) {
-      this.setState({ code: query ? query.query : '' });
-    }
+    this.setState(this.getStateUpdate(oldProps));
   }
 
   componentWillUnmount() {
@@ -91,7 +107,6 @@ class QueryComponent extends React.PureComponent<Props, State> {
         </div>
       );
     }
-    console.log(data);
     return (
       <div className={styles.container}>
         <CodeInput
@@ -102,7 +117,7 @@ class QueryComponent extends React.PureComponent<Props, State> {
         />
         <div className={styles.tableContainer}>
           {data && (
-            <ResultsDom headers={headers} data={data} />
+            <ResultsCanvas headers={headers} data={data} />
           )}
         </div>
       </div>

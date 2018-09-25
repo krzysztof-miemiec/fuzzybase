@@ -1,4 +1,5 @@
-import { Persist } from '../../../renderer/utils/persist.util';
+import { FieldDef } from 'pg';
+import { PersistedState } from 'redux-persist/es/types';
 
 export enum ConnectionStatus {
   CONNECTED = 'CONNECTED',
@@ -34,13 +35,23 @@ export interface PostgresClientConfiguration {
   connectionString?: string;
 }
 
-export interface DatabaseTable {
+export interface Column {
+  index: number;
   name: string;
-  fields: any[];
+  'default': any;
+  nullable: boolean;
+  dataType: string;
+}
+
+export interface Table {
+  name: string;
+  schema: string;
+  fields: Column[];
 }
 
 export interface DatabaseMetadata {
-  tables: DatabaseTable[];
+  tables: { [key: string]: Table };
+  user: string;
 }
 
 export interface DatabaseState {
@@ -58,14 +69,13 @@ export interface PostgresResponse {
   command: string;
   rowCount: number;
   oid: any;
-  fields: { name: string, columnID: number }[];
-  rows: object[];
+  fields: FieldDef[];
+  rows: any[][];
 }
 
-export interface DbState {
+export interface DbState extends PersistedState {
   databases: DatabaseState[];
   connections: Record<string, DatabaseConnectionState>;
-  _persist?: Persist;
 }
 
 export const initialState: DbState = {

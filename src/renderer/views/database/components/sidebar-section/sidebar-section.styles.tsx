@@ -30,24 +30,39 @@ export const styles = createStyles({
     fontWeight: 700,
   },
   icon: {
-    color: R.color.lightGray,
     fontSize: 20,
+    flex: '0 0 auto',
+    color: R.color.semiLightGray,
+    '&:hover': {
+      color: R.color.white,
+    },
   },
   element: {
+    display: 'flex',
+    justifyContent: 'center',
     paddingTop: R.dimen.spacing,
     paddingBottom: R.dimen.spacing,
     paddingRight: R.dimen.spacing * 2,
     paddingLeft: R.dimen.spacing * 2,
-    color: R.color.lightGray,
     '&:hover': {
       backgroundColor: R.color.gray,
+      '& $elementIcon': {
+        visibility: 'visible',
+      },
     },
+  },
+  elementText: {
+    flex: 1,
+    color: R.color.lightGray,
     minHeight: '1.25em',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  elementHint: {
+  elementTextHint: {
     color: R.color.semiLightGray,
+  },
+  elementIcon: {
+    visibility: 'hidden',
   },
 });

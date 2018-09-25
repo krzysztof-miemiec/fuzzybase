@@ -1,12 +1,7 @@
-import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../common/resources';
+import { createStyles } from '../../../app.styles';
 
-type Classes =
-  | 'container'
-  | 'input'
-  | 'label'
-  | 'description';
-export const styles = (): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
     backgroundColor: R.color.inputBackground,
     color: R.color.gray,

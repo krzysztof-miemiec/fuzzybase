@@ -49,7 +49,10 @@ export class PostgresConnection {
     if (!this.isConnected) {
       throw new Error('Client is not connected to database.');
     }
-    return this.client.query(queryString).then(result => {
+    return this.client.query({
+      text: queryString,
+      rowMode: 'array',
+    }).then(result => {
       this.dispatch(postgresQueryResult(this.connectionId, id, result, undefined));
     }).catch(error => {
       this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));

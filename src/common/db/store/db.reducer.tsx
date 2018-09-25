@@ -1,3 +1,4 @@
+import { defaultTo } from 'lodash';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import { defaultPersistConfig } from '../../../renderer/utils/persist.util';
 import { select } from '../../../renderer/utils/selector.util';
@@ -41,6 +42,14 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
             query: action.query,
           },
         },
+      };
+    }
+    case DB_ACTIONS.CLOSE_QUERY: {
+      const queries = { ...state.queries };
+      delete queries[action.queryId];
+      return {
+        ...state,
+        queries,
       };
     }
     case DB_ACTIONS.QUERY: {
@@ -93,18 +102,19 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
       }
       return { ...state, databases };
     }
-    case DB_ACTIONS.SET_TABLES_METADATA: {
+    case DB_ACTIONS.SET_METADATA: {
       const databaseIndex = select(state, getDatabaseIndex(action.databaseId));
       if (databaseIndex < 0) {
         return state;
       }
       const databases = [...state.databases];
       const database = databases[databaseIndex];
+      const { user, tables } = database.meta;
       databases[databaseIndex] = {
         ...database,
         meta: {
-          ...database.meta,
-          tables: action.tables,
+          tables: defaultTo(action.tables, tables),
+          user: defaultTo(action.user, user),
         },
       };
       return { ...state, databases };
@@ -117,6 +127,7 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
     case DB_ACTIONS.CONNECTION_STATUS_CHANGED:
     case DB_ACTIONS.QUERY:
     case DB_ACTIONS.SET_QUERY:
+    case DB_ACTIONS.CLOSE_QUERY:
     case DB_ACTIONS.QUERY_RESULT: {
       const connection = connectionReducer(state.connections[action.connectionId], action);
       const connections = { ...state.connections };

@@ -3,12 +3,19 @@ import { createStyles, draggable } from '../../../../app.styles';
 
 export const styles = createStyles({
   container: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
     display: 'flex',
-    zIndex: 1,
-    overflow: 'hidden',
+    flexDirection: 'column-reverse',
+  },
+  snackbar: {
     position: 'relative',
-    height: '100%',
-    width: '100%',
+    padding: R.dimen.spacing,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    left: 0,
+    transform: 'none',
   },
   content: {
     flexGrow: 1,

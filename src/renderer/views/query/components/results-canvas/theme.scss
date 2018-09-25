@@ -1,0 +1,8 @@
+$icons-path: '~ag-grid-community/src/styles/material-icons/';
+
+$cell-horizontal-padding: 6px;
+$row-height: 16px;
+$virtual-item-height: 20px;
+
+@import '~ag-grid-community/src/styles/ag-grid';
+@import '~ag-grid-community/src/styles/ag-theme-material';

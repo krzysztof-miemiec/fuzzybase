@@ -1,28 +1,26 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import React from 'react';
 import uuid from 'uuid/v4';
+import { ResultsComponent } from '../results/results.component';
 import { styles } from './results-dom.styles';
 
-interface Props {
-  headers: { key: string, value: any }[];
-  data: { key: string, value: any }[][];
-}
+const INDEX_KEY = `index-${uuid()}`;
 
-export class ResultsDom extends React.PureComponent<Props> {
+export class ResultsDom extends ResultsComponent {
 
-  renderRow = (row: { key: string, value: any }[], index: number) => {
+  renderRow = (row: any[], index: number) => {
     return (
       <TableRow key={index}>
-        <TableCell key="index">{index}</TableCell>
+        <TableCell key={INDEX_KEY}>{index}</TableCell>
         {row.map(this.renderCell)}
       </TableRow>
     );
   };
 
-  renderCell = (cell: { key: string, value: any }) => {
+  renderCell = (value: any, index: number) => {
     return (
-      <TableCell key={cell.key}>
-        {cell.value}
+      <TableCell key={index}>
+        {`${value}`}
       </TableCell>
     );
   };
@@ -35,8 +33,8 @@ export class ResultsDom extends React.PureComponent<Props> {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell key={`index-${uuid()}`} />
-              {headers.map(this.renderCell)}
+              <TableCell key={INDEX_KEY} />
+              {headers.map((header, index) => this.renderCell(header.name, index))}
             </TableRow>
           </TableHead>
           <TableBody>

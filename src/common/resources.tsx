@@ -1,3 +1,4 @@
+import { Color } from '../renderer/utils/color.util';
 import { Config } from './config';
 
 export const R = {
@@ -8,9 +9,10 @@ export const R = {
     sidebar: '#333333',
     white: '#FFF',
     gray: '#646464',
-    semiLightGray: '#808080',
+    semiLightGray: Color.hexToRGB('#AEAEAE', .4),
     lightGray: '#AEAEAE',
     inputBackground: '#EEEEEE',
+    background: '#FAFAFA',
   },
   dimen: {
     corner: 3,

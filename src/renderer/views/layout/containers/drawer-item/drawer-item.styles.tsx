@@ -1,20 +1,16 @@
-import { StyleRules } from '@material-ui/core/styles';
 import { R } from '../../../../../common/resources';
+import { createStyles } from '../../../../app.styles';
 
-type Classes =
-  | 'container'
-  | 'iconContainer'
-  | 'icon'
-  | 'text';
-
-export const styles = (): StyleRules<Classes> => ({
+export const styles = createStyles({
   container: {
     display: 'flex',
     margin: R.dimen.spacing,
     alignItems: 'center',
     flexDirection: 'column',
-    '&:hover $iconContainer': {
-      backgroundColor: R.color.lightGray,
+    '&:hover': {
+      '& $iconContainer': {
+        backgroundColor: R.color.lightGray,
+      },
     },
   },
   iconContainer: {

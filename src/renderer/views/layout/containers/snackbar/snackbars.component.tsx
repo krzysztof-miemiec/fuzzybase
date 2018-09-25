@@ -1,12 +1,10 @@
-import { withStyles } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../../../store/index';
+import { AppState } from '../../../../store';
 import { select } from '../../../../utils/selector.util';
-import { StyleProps } from '../../../../utils/styles.util';
-import { getLayoutState, getSnackbarsState } from '../../store/index';
-import { styles } from '../layout/layout.styles';
+import { getLayoutState, getSnackbarsState } from '../../store';
 import { Snackbar } from './snackbar.component';
+import { styles } from './snackbar.styles';
 
 const mapStateToProps = (state: AppState) => ({
   snackbars: select(state, getLayoutState, getSnackbarsState),
@@ -14,14 +12,14 @@ const mapStateToProps = (state: AppState) => ({
 
 type Props = ReturnType<typeof mapStateToProps>;
 
-const SnackbarsComponent: React.SFC<Props & StyleProps<typeof styles>> = ({
-  snackbars, classes,
+const SnackbarsComponent: React.SFC<Props> = ({
+  snackbars,
 }) => (
-  <div className={classes.snackbarContainer}>
+  <div className={styles.container}>
     {snackbars.map(snackbar => (
       <Snackbar key={snackbar.id} snackbar={snackbar} />
     ))}
   </div>
 );
 
-export const Snackbars = connect(mapStateToProps)(withStyles(styles)(SnackbarsComponent));
+export const Snackbars = connect(mapStateToProps)(SnackbarsComponent);

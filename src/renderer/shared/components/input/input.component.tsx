@@ -1,7 +1,6 @@
-import { FormControl, FormHelperText, Input, InputLabel, withStyles } from '@material-ui/core';
+import { FormControl, FormHelperText, Input, InputLabel } from '@material-ui/core';
 import classNames from 'classnames';
 import React, { ChangeEvent } from 'react';
-import { StyleProps } from '../../../utils/styles.util';
 import { styles } from './input.styles';
 
 type ValueType = Array<string | number> | string | number;
@@ -26,8 +25,8 @@ interface State {
 const validate = (validator: ((value: ValueType) => string) | undefined, value: ValueType) =>
   validator ? validator(value) : '';
 
-class FormInputComponent extends React.PureComponent<Props & StyleProps<typeof styles>, State> {
-  constructor(props: Props & StyleProps<typeof styles>) {
+export class FormInput extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
     super(props);
     const value = props.form[props.id] || '';
     this.state = {
@@ -56,7 +55,7 @@ class FormInputComponent extends React.PureComponent<Props & StyleProps<typeof s
   };
 
   render() {
-    const { id, label, rowsMax, type, className, classes } = this.props;
+    const { id, label, rowsMax, type, className } = this.props;
     const { errorText, value } = this.state;
 
     return (
@@ -68,7 +67,7 @@ class FormInputComponent extends React.PureComponent<Props & StyleProps<typeof s
         <InputLabel
           htmlFor={`${id}-input`}
           shrink={true}
-          className={classes.label}
+          className={styles.label}
         >
           {label}
         </InputLabel>
@@ -76,13 +75,13 @@ class FormInputComponent extends React.PureComponent<Props & StyleProps<typeof s
           id={`${id}-input`}
           value={value}
           type={type}
-          className={classes.input}
+          className={styles.input}
           rowsMax={rowsMax}
           onChange={this.onChange}
         />
         <FormHelperText
           id={`${id}-input__description`}
-          className={classes.description}
+          className={styles.description}
         >
           {errorText}
         </FormHelperText>
@@ -90,5 +89,3 @@ class FormInputComponent extends React.PureComponent<Props & StyleProps<typeof s
     );
   }
 }
-
-export const FormInput = withStyles(styles)<Props>(FormInputComponent);

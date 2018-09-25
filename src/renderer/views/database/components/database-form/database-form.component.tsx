@@ -1,11 +1,11 @@
-import { Button, Typography, withStyles } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import React from 'react';
 import { DatabaseState } from '../../../../../common/db/store/app';
 import { createDatabaseState } from '../../../../../common/db/store/db.utils';
 import { DialogFrame } from '../../../../shared/components/frame';
 import { FormInput } from '../../../../shared/components/input';
+import { View } from '../../../../shared/components/view';
 import { i18n } from '../../../../utils/i18n.util';
-import { StyleProps } from '../../../../utils/styles.util';
 import { styles } from './database-form.styles';
 
 interface Props {
@@ -20,8 +20,8 @@ interface State {
 
 const getDatabase = (database: DatabaseState) => database ? { ...database } : createDatabaseState();
 
-export class DatabaseFormComponent extends React.Component<Props & StyleProps<typeof styles>, State> {
-  constructor(props: Props & StyleProps<typeof styles>) {
+export class DatabaseForm extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       database: getDatabase(props.database),
@@ -44,16 +44,16 @@ export class DatabaseFormComponent extends React.Component<Props & StyleProps<ty
   };
 
   renderFooter = () => {
-    const { classes, onCancel } = this.props;
+    const { onCancel } = this.props;
     return (
       <Typography variant="caption">
-        Or <span className={classes.link} onClick={onCancel}>Cancel</span> if you don't want to create connection now.
+        Or <span className={styles.link} onClick={onCancel}>Cancel</span> if you don't want to create connection now.
       </Typography>
     );
   };
 
   render() {
-    const { classes, database: sourceDatabase } = this.props;
+    const { database: sourceDatabase } = this.props;
     const { database } = this.state;
     return database ? (
       <DialogFrame
@@ -82,7 +82,7 @@ export class DatabaseFormComponent extends React.Component<Props & StyleProps<ty
           rowsMax={5}
           normalize={value => Number.parseInt(value, 10) || ''}
           validator={value => !value ? 'Port must be defined' : ''}
-          className={classes.inputShort}
+          className={styles.inputShort}
           onValueChange={this.onValueChange}
         />
         <FormInput
@@ -92,7 +92,7 @@ export class DatabaseFormComponent extends React.Component<Props & StyleProps<ty
           label={i18n.t('database.database')}
           onValueChange={this.onValueChange}
         />
-        <div className={classes.divider} />
+        <View style={styles.divider} />
         <FormInput
           form={database}
           id="username"
@@ -118,5 +118,3 @@ export class DatabaseFormComponent extends React.Component<Props & StyleProps<ty
     );
   }
 }
-
-export const DatabaseForm = withStyles(styles)<Props>(DatabaseFormComponent);
