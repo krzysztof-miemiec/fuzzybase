@@ -8,7 +8,7 @@ export type StyleProp = string | CSSProperties | (string | CSSProperties)[];
 type DivProps = Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'style'>;
 
 export interface ViewProps extends DivProps {
-  style: StyleProp;
+  style?: StyleProp;
 }
 
 const isCSSProperties = (element: string | CSSProperties): element is CSSProperties => !isString(element);

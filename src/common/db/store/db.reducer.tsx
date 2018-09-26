@@ -1,4 +1,5 @@
 import { defaultTo } from 'lodash';
+import { Reducer } from 'redux';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import { defaultPersistConfig } from '../../../renderer/utils/persist.util';
 import { select } from '../../../renderer/utils/selector.util';
@@ -151,4 +152,4 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
   }
 };
 
-export const reducer = persistReducer(persistConfig, baseReducer);
+export const reducer: Reducer<DbState> = persistReducer(persistConfig, baseReducer) as any;

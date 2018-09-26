@@ -1,9 +1,6 @@
-import { Button } from '@material-ui/core';
 import React from 'react';
 import { Controlled } from 'react-codemirror2';
 import { styles } from './code-input.styles';
-
-import Send from '@material-ui/icons/send';
 
 interface Props {
   className?: string;
@@ -37,7 +34,7 @@ export class CodeInput extends React.PureComponent<Props> {
   }
 
   render() {
-    const { className, text, onTextChanged, onSendTriggered } = this.props;
+    const { className, text, onTextChanged } = this.props;
 
     return (
       <div className={className}>
@@ -58,9 +55,6 @@ export class CodeInput extends React.PureComponent<Props> {
               }
             }}
           />
-          <Button variant="flat" className={styles.button} onClick={onSendTriggered}>
-            <Send color="inherit" fontSize="inherit" />
-          </Button>
         </div>
       </div>
     );

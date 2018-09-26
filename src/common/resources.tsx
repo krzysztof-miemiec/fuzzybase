@@ -22,7 +22,7 @@ export const R = {
     drawerIcon: 28,
     sidebarWidth: 230,
     headerHeight: 64,
-    toolbarHeight: 56,
+    toolbarHeight: 64,
     titleBarPadding: Config.IS_MAC ? 24 : 0,
   },
   fontSize: {

@@ -1,4 +1,4 @@
 # Fuzzy extension
 comment = 'Extension adding fuzzy elements possible to use in queries'
-default_version = '0.0.1'
+default_version = '0.0.2'
 relocatable = true

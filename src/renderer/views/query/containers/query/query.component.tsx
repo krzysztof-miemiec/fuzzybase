@@ -3,13 +3,13 @@ import { FieldDef } from 'pg';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { postgresQuery, setQuery } from '../../../../common/db/store/db.actions';
-import { getConnection, getDatabasesState, getQuery } from '../../../../common/db/store/db.selectors';
-import { CodeInput } from '../../../shared/components/code-input';
-import { AppState } from '../../../store';
-import { mapActions } from '../../../utils/redux.util';
-import { select } from '../../../utils/selector.util';
-import { ResultsCanvas } from '../components/results-canvas';
+import { postgresQuery, setQuery } from '../../../../../common/db/store/db.actions';
+import { getConnection, getDatabasesState, getQuery } from '../../../../../common/db/store/db.selectors';
+import { AppState } from '../../../../store';
+import { mapActions } from '../../../../utils/redux.util';
+import { select } from '../../../../utils/selector.util';
+import { CodeInput } from '../../components/code-input';
+import { ResultsVirtual } from '../../components/results-virtual';
 import { styles } from './query.styles';
 
 const ERROR_HEADER: FieldDef = {
@@ -117,7 +117,7 @@ class QueryComponent extends React.PureComponent<Props, State> {
         />
         <div className={styles.tableContainer}>
           {data && (
-            <ResultsCanvas headers={headers} data={data} />
+            <ResultsVirtual headers={headers} data={data} />
           )}
         </div>
       </div>

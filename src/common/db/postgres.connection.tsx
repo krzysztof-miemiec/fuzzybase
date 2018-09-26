@@ -53,7 +53,9 @@ export class PostgresConnection {
       text: queryString,
       rowMode: 'array',
     }).then(result => {
-      this.dispatch(postgresQueryResult(this.connectionId, id, result, undefined));
+      this.dispatch(postgresQueryResult(
+        this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result, undefined
+      ));
     }).catch(error => {
       this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));
     });

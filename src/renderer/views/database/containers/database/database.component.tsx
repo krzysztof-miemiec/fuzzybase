@@ -1,6 +1,7 @@
+import { Toolbar } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, RouteComponentProps } from 'react-router';
+import { Route, RouteComponentProps, Switch } from 'react-router';
 import {
   closeQuery,
   connectToPostgres,
@@ -24,7 +25,8 @@ import { PATHS } from '../../../../app.paths';
 import { AppState } from '../../../../store';
 import { mapActions } from '../../../../utils/redux.util';
 import { select } from '../../../../utils/selector.util';
-import { Query } from '../../../query/containers/query.component';
+import { Query } from '../../../query/containers/query';
+import { QueryToolbar } from '../../../query/containers/query-toolbar';
 import { DatabaseConnect } from '../../components/database-connect';
 import { DatabaseForm } from '../../components/database-form';
 import { DatabaseQueries } from '../../components/database-queries';
@@ -133,9 +135,15 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
               />
             </div>
           </div>
-          <div className={styles.toolbar} />
+          <Toolbar className={styles.toolbar}>
+            <Switch>
+              <Route path={PATHS.QUERY()} component={QueryToolbar} />
+            </Switch>
+          </Toolbar>
           <div className={styles.content}>
-            <Route path={PATHS.QUERY(':databaseId', ':connectionId', ':queryId')} component={Query} />
+            <Switch>
+              <Route path={PATHS.QUERY()} component={Query} />
+            </Switch>
           </div>
         </div>
       ) : (

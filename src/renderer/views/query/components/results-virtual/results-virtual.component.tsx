@@ -2,11 +2,11 @@ import { AgGridReact } from 'ag-grid-react';
 import React from 'react';
 import { View } from '../../../../shared/components/view';
 import { ResultsComponent } from '../results/results.component';
-import { styles } from './results-canvas.styles';
+import { styles } from './results-virtual.styles';
 
 import './theme.scss';
 
-export class ResultsCanvas extends ResultsComponent {
+export class ResultsVirtual extends ResultsComponent {
 
   render() {
     const { headers, data } = this.props;
@@ -24,7 +24,7 @@ export class ResultsCanvas extends ResultsComponent {
 
     console.time('Render');
     const result = (
-      <View style={[styles.container, 'ag-theme-material']}>
+      <View style={[styles.container, 'ag-theme-fresh']}>
         <AgGridReact
           enableSorting={true}
           enableFilter={true}
