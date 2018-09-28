@@ -11,7 +11,7 @@ export const styles = createStyles({
   },
   queryField: {
     gridRow: 1,
-    minHeight: 60,
+    minHeight: 160,
   },
   tableContainer: {
     position: 'relative',

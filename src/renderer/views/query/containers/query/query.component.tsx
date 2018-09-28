@@ -64,9 +64,9 @@ class QueryComponent extends React.PureComponent<Props, State> {
     const value = query && (query.error || query.result);
     const oldValue = oldQuery && (oldQuery.error || oldQuery.result);
 
-    if (value && value !== oldValue) {
-      state.data = ((query.result && query.result.rows) || [[query.error]]) || [];
-      state.headers = query.result && query.result.fields || [ERROR_HEADER];
+    if (value !== oldValue) {
+      state.data = (query.result && query.result.rows) || [[query.error]];
+      state.headers = (query.result && query.result.fields) || (query.error && [ERROR_HEADER]);
     }
 
     if ((oldQuery && oldQuery.id) !== (query && query.id)) {

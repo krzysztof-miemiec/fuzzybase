@@ -40,7 +40,8 @@ export class DatabaseQueriesComponent extends React.PureComponent<Props> {
     return (
       <SidebarSection
         title="Queries"
-        hint="New query"
+        hint="Empty query"
+        addTooltipDescription="Create new query"
         mapItem={(query: DatabaseQueryState) => ({ id: query.id, name: query.query })}
         items={Object.values(connection.queries)}
         onAddClick={this.onAddClick}

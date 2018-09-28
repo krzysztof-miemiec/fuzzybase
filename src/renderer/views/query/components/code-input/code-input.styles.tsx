@@ -2,14 +2,14 @@ import { createStyles } from '../../../../app.styles';
 
 export const styles = createStyles({
   container: {
-    display: 'flex',
-    flexFlow: 'row nowrap',
+    position: 'relative',
   },
   input: {
-    flex: '1 0 auto',
-    maxHeight: 200,
-    display: 'grid',
-    background: 'transparent',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     fontSize: 13,
   },
 });

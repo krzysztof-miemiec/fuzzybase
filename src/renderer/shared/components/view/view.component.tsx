@@ -1,6 +1,5 @@
 import { isArray, isString } from 'lodash';
-import { CSSProperties } from 'react';
-import React  from 'react';
+import React, { CSSProperties } from 'react';
 import { Omit } from 'react-redux';
 
 export type StyleProp = string | CSSProperties | (string | CSSProperties)[];
@@ -8,12 +7,13 @@ export type StyleProp = string | CSSProperties | (string | CSSProperties)[];
 type DivProps = Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'style'>;
 
 export interface ViewProps extends DivProps {
+  divRef?: (ref: any) => void;
   style?: StyleProp;
 }
 
 const isCSSProperties = (element: string | CSSProperties): element is CSSProperties => !isString(element);
 
-export const View: React.SFC<ViewProps> = ({ style, ...props }) => {
+export const View: React.SFC<ViewProps> = ({ style, divRef, ...props }) => {
   let className: any;
   let styles: any;
   if (isString(style)) {
@@ -25,6 +25,6 @@ export const View: React.SFC<ViewProps> = ({ style, ...props }) => {
     styles = style;
   }
   return (
-    <div {...props as any} className={className} style={styles} />
+    <div {...props as any} className={className} style={styles} ref={divRef} />
   );
 };
