@@ -1,14 +1,5 @@
 CREATE EXTENSION fuzzy;
 
-CREATE TABLE test_twoints(a INT, b TWOINT);
-INSERT INTO test_twoints VALUES (1, '1,20'), (1, '7,-3');
-
-CREATE TABLE test_zadeh(a FLOAT8, b FLOAT8);
-INSERT INTO test_zadeh VALUES (0, .3), (.4, .9), (.6, .2), (1, 1), (NULL, 0.5), (0.5, NULL);
-SELECT ~a AS neg_a FROM test_zadeh;
-SELECT a|||b AS a_or_b FROM test_zadeh;
-SELECT a&&&b AS a_and_b FROM test_zadeh;
-
 CREATE TABLE test_functions(a INT, b TRAPEZOIDAL_FUNCTION);
 INSERT INTO test_functions VALUES
   (1, '0.2/0.4~0.6\0.8'),
@@ -51,7 +42,7 @@ SELECT b*2 AS b_mul_two, 2*b AS two_mul_b FROM test_functions;
 -- DIV
 SELECT b/2 AS b_div_two, 2/b AS two_div_b FROM test_functions;
 -- NEG
-SELECT -b*2 AS neg_b FROM test_functions;
+SELECT -b AS neg_b FROM test_functions;
 -- Division by zero (should return null)
 SELECT 0/b AS zero_div_b, b/0 AS b_div_zero FROM test_functions;
 -- Complex expression that should be evaluated to b
@@ -102,3 +93,5 @@ SELECT
   FROM test_functions_ext;
 
 SELECT about_one();
+
+DROP EXTENSION fuzzy CASCADE;

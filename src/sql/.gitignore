@@ -4,3 +4,4 @@ fuzzy--*.sql
 cmake-build-debug
 *.log.txt
 *.log
+results/*.out

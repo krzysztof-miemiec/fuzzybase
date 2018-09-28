@@ -1,6 +1,6 @@
 EXTENSION = fuzzy
 MODULES = fuzzy
-REGRESS = fuzzy_test
+REGRESS = logic_test functions_test helpers_test
 
 DATA = fuzzy--0.0.2.sql
 SQL_FILES = general/extension.sql general/general.sql trapezoidal/function.sql trapezoidal/operators.sql \
