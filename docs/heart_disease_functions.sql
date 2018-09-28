@@ -29,12 +29,27 @@ SELECT
          END AS chest_pain,
        get_fuzzy_name('blood_pressure', trestbps) AS rest_blood_pressure,
        get_fuzzy_name('total_cholesterol', chol) AS cholesterol,
-       fbs,
-       restecg,
-       get_fuzzy_name('heart_rate', thalach) AS exhr,
-       oldpeak,
-       slope,
-       ca,
-       thal,
-       num AS disease
-FROM heart_disease;
+       CASE fbs
+         WHEN TRUE THEN 'above 120mg/dl'
+         ELSE 'normal'
+       END AS sugar_level,
+       CASE restecg
+         WHEN 0 THEN 'normal'
+         WHEN 1 THEN 'ST-T wave abnormality'
+         WHEN 2 THEN 'hypertrophy'
+         END AS rest_ecg,
+       get_fuzzy_name('heart_rate', thalach) AS excercise_heart_rate,
+       oldpeak AS st_depression,
+       slope AS st_slope,
+       ca AS fluoroscopy_vessels,
+       CASE thal
+         WHEN 3 THEN 'normal'
+         WHEN 6 THEN 'fixed defect'
+         WHEN 7 THEN 'reversible'
+         END AS thal,
+       CASE num
+        WHEN 0 THEN 'healthy'
+        ELSE 'disease'
+       END AS disease
+FROM heart_disease
+WHERE trestbps~=get_fuzzy_function('blood_pressure', 'normal');

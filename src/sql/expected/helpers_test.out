@@ -22,15 +22,10 @@ UNION SELECT add_fuzzy_function('heart_rate', '300/400~1200', 'impossible');
 
 -- Creation and selection
 SELECT x, get_fuzzy_name('heart_rate', x) FROM generate_series(10, 220, 50) AS x;
-  x  | get_fuzzy_name 
------+----------------
-  10 | very low
-  60 | low
- 110 | normal
- 160 | high
- 210 | very high
-(5 rows)
-
+ERROR:  function get_fuzzy_name(unknown, integer) does not exist
+LINE 1: SELECT x, get_fuzzy_name('heart_rate', x) FROM generate_seri...
+                  ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
 -- Deletion
 SELECT delete_fuzzy_function('heart_rate', 'normal');
  delete_fuzzy_function 
@@ -63,8 +58,10 @@ SELECT delete_fuzzy_type('heart_rate');
 (1 row)
 
 SELECT * FROM get_fuzzy_type_functions('heart_rate');
-ERROR:  The type does not exist.
-CONTEXT:  PL/pgSQL function get_fuzzy_type_functions(character varying) line 7 at RAISE
+ERROR:  Can't find specified fuzzy type. The type "heart_rate" does not exist.
+HINT:  Check if you specified the correct fuzzy type name. See available types by SELECT * FROM get_fuzzy_types();
+CONTEXT:  PL/pgSQL function get_fuzzy_type(character varying) line 7 at RAISE
+PL/pgSQL function get_fuzzy_type_functions(character varying) line 5 at assignment
 -- Creation of a single type
 SELECT add_fuzzy_type('cholesterol');
  add_fuzzy_type 
@@ -89,5 +86,24 @@ SELECT * FROM get_fuzzy_types();
  cholesterol | {NULL}
  heart_rate  | {low,normal,high}
 (2 rows)
+
+-- Getter for a specific function
+SELECT * FROM get_fuzzy_function('heart_rate', 'high');
+     get_fuzzy_function      
+-----------------------------
+ 120.00/130.00~160.00\190.00
+(1 row)
+
+SELECT 'heart_rate'|>'high';
+          ?column?           
+-----------------------------
+ 120.00/130.00~160.00\190.00
+(1 row)
+
+SELECT  130~>'heart_rate';
+ ?column? 
+----------
+ high
+(1 row)
 
 DROP EXTENSION fuzzy CASCADE;

@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS fuzzy.functions (
   UNIQUE (type, name)
 );
 
+-- Add Fuzzy type
 DROP FUNCTION IF EXISTS add_fuzzy_type(
   type_name VARCHAR(64)
 );
@@ -22,6 +23,25 @@ CREATE OR REPLACE FUNCTION add_fuzzy_type(
   INSERT INTO fuzzy.types (name) VALUES (type_name) ON CONFLICT DO NOTHING;
   SELECT id FROM fuzzy.types WHERE name=type_name;
 $$ LANGUAGE sql VOLATILE;
+
+-- Get fuzzy type by name
+DROP FUNCTION IF EXISTS get_fuzzy_type(
+  type_name VARCHAR(64)
+);
+CREATE OR REPLACE FUNCTION get_fuzzy_type(
+  type_name VARCHAR(64)
+) RETURNS fuzzy.types.id%TYPE AS $$
+DECLARE
+  type_id fuzzy.types.id%TYPE;
+BEGIN
+  type_id := (SELECT id FROM fuzzy.types WHERE name=type_name);
+  IF type_id IS NULL THEN
+    RAISE EXCEPTION 'Can''t find specified fuzzy type. The type "%" does not exist.', type_name
+      USING HINT = 'Check if you specified the correct fuzzy type name. See available types by SELECT * FROM get_fuzzy_types();';
+  END IF;
+  RETURN type_id;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE STRICT;
 
 -- Add fuzzy function
 DROP FUNCTION IF EXISTS add_fuzzy_function(
@@ -59,10 +79,7 @@ CREATE FUNCTION delete_fuzzy_function(
 DECLARE
   type_id fuzzy.types.id%TYPE;
 BEGIN
-  type_id := (SELECT id FROM fuzzy.types WHERE name=type_name);
-  IF type_id IS NULL THEN
-    RAISE EXCEPTION 'The type does not exist.';
-  END IF;
+  type_id := get_fuzzy_type(type_name);
   DELETE FROM fuzzy.functions WHERE type=type_id AND name=range_name;
   RETURN (type_id, range_name);
 END;
@@ -80,10 +97,7 @@ CREATE FUNCTION delete_fuzzy_function(
 DECLARE
   type_id fuzzy.types.id%TYPE;
 BEGIN
-  type_id := (SELECT id FROM fuzzy.types WHERE name=type_name);
-  IF type_id IS NULL THEN
-    RAISE EXCEPTION 'The type does not exist.';
-  END IF;
+  type_id := get_fuzzy_type(type_name);
   DELETE FROM fuzzy.functions WHERE type=type_id AND fun=func;
   RETURN (type_id, func);
 END;
@@ -99,10 +113,7 @@ CREATE FUNCTION delete_fuzzy_type(
 DECLARE
   type_id fuzzy.types.id%TYPE;
 BEGIN
-  type_id := (SELECT id FROM fuzzy.types WHERE name=type_name);
-  IF type_id IS NULL THEN
-    RAISE EXCEPTION 'The type does not exist.';
-  END IF;
+  type_id := get_fuzzy_type(type_name);
   DELETE FROM fuzzy.types CASCADE WHERE id=type_id;
   RETURN type_name;
 END;
@@ -121,10 +132,7 @@ CREATE FUNCTION get_fuzzy_type_functions(
 DECLARE
   type_id fuzzy.types.id%TYPE;
 BEGIN
-  type_id := (SELECT id FROM fuzzy.types WHERE fuzzy.types.name=type_name);
-  IF type_id IS NULL THEN
-    RAISE EXCEPTION 'The type does not exist.';
-  END IF;
+  type_id := get_fuzzy_type(type_name);
   RETURN QUERY SELECT fun, name FROM fuzzy.functions WHERE fuzzy.functions.type=type_id;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE STRICT;
@@ -135,18 +143,16 @@ DROP FUNCTION IF EXISTS get_fuzzy_name(
   input FLOAT8
 );
 CREATE FUNCTION get_fuzzy_name(
-  type_name VARCHAR(64),
-  input FLOAT8
+  input FLOAT8,
+  type_name VARCHAR(64)
+
 ) RETURNS VARCHAR(64) AS $$
 DECLARE
   type_id fuzzy.types.id%TYPE;
   deg FLOAT8;
   result_name VARCHAR(64);
 BEGIN
-  type_id := (SELECT id FROM fuzzy.types WHERE name=type_name);
-  IF type_id IS NULL THEN
-    RAISE EXCEPTION 'The type does not exist.';
-  END IF;
+  type_id := get_fuzzy_type(type_name);
   SELECT
       degree(input, fun) AS d, name
     INTO
@@ -160,6 +166,37 @@ BEGIN
   RETURN result_name;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE STRICT;
+
+CREATE OPERATOR ~> (
+  PROCEDURE = get_fuzzy_name,
+  LEFTARG = FLOAT8,
+  RIGHTARG = VARCHAR(64)
+);
+
+-- Get fuzzy function
+DROP FUNCTION IF EXISTS get_fuzzy_function(
+  type_name VARCHAR(64),
+  function_name VARCHAR(64)
+);
+CREATE FUNCTION get_fuzzy_function(
+  type_name VARCHAR(64),
+  function_name VARCHAR(64)
+) RETURNS TRAPEZOIDAL_FUNCTION AS $$
+DECLARE
+  type_id fuzzy.types.id%TYPE;
+BEGIN
+  type_id := get_fuzzy_type(type_name);
+  RETURN (SELECT fun
+          FROM fuzzy.functions
+          WHERE type = type_id AND function_name = name);
+END;
+$$ LANGUAGE plpgsql IMMUTABLE STRICT;
+
+CREATE OPERATOR |> (
+  PROCEDURE = get_fuzzy_function,
+  LEFTARG = VARCHAR(64),
+  RIGHTARG = VARCHAR(64)
+);
 
 -- Get all fuzzy types
 DROP FUNCTION IF EXISTS get_fuzzy_types();

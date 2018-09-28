@@ -31,4 +31,9 @@ UNION SELECT add_fuzzy_function('heart_rate', '120/130~160\190', 'high');
 -- Selection of all types
 SELECT * FROM get_fuzzy_types();
 
+-- Getter for a specific function
+SELECT * FROM get_fuzzy_function('heart_rate', 'high');
+SELECT 'heart_rate'|>'high';
+SELECT  130~>'heart_rate';
+
 DROP EXTENSION fuzzy CASCADE;
