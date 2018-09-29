@@ -1,938 +1,952 @@
-
-CREATE TABLE IF NOT EXISTS heart_disease(
-   source   VARCHAR(13) NOT NULL
-  ,age      INTEGER  NOT NULL
-  ,sex      BOOLEAN  NOT NULL
-  ,cp       INTEGER  NOT NULL
-  ,trestbps INTEGER 
-  ,chol     INTEGER 
-  ,fbs      BOOLEAN
-  ,restecg  INTEGER 
-  ,thalach  INTEGER 
-  ,exang    BOOLEAN
-  ,oldpeak  NUMERIC(4,1)
-  ,slope    INTEGER 
-  ,ca       INTEGER 
-  ,thal     INTEGER 
-  ,num      INTEGER  NOT NULL
+CREATE TABLE IF NOT EXISTS heart_disease (
+  source   VARCHAR(13) NOT NULL,
+  age      INTEGER     NOT NULL,
+  sex      BOOLEAN     NOT NULL,
+  cp       INTEGER     NOT NULL,
+  trestbps INTEGER,
+  chol     INTEGER,
+  fbs      BOOLEAN,
+  restecg  INTEGER,
+  thalach  INTEGER,
+  exang    BOOLEAN,
+  oldpeak  NUMERIC(4, 1),
+  slope    INTEGER,
+  ca       INTEGER,
+  thal     INTEGER,
+  num      INTEGER     NOT NULL
 );
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,TRUE,1,145,233,TRUE,2,150,FALSE,2.3,3,0,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,TRUE,4,160,286,FALSE,2,108,TRUE,1.5,2,3,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,TRUE,4,120,229,FALSE,2,129,TRUE,2.6,2,2,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',37,TRUE,3,130,250,FALSE,0,187,FALSE,3.5,3,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,FALSE,2,130,204,FALSE,2,172,FALSE,1.4,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,2,120,236,FALSE,0,178,FALSE,0.8,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,4,140,268,FALSE,2,160,FALSE,3.6,3,2,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,FALSE,4,120,354,FALSE,0,163,TRUE,0.6,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,TRUE,4,130,254,FALSE,2,147,FALSE,1.4,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,TRUE,4,140,203,TRUE,2,155,TRUE,3.1,3,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,140,192,FALSE,0,148,FALSE,0.4,2,0,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,FALSE,2,140,294,FALSE,2,153,FALSE,1.3,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,3,130,256,TRUE,2,142,TRUE,0.6,2,1,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,2,120,263,FALSE,0,173,FALSE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,3,172,199,TRUE,0,162,FALSE,0.5,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,3,150,168,FALSE,0,174,FALSE,1.6,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,TRUE,2,110,229,FALSE,0,168,FALSE,1,3,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,4,140,239,FALSE,0,160,FALSE,1.2,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,FALSE,3,130,275,FALSE,0,139,FALSE,0.2,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',49,TRUE,2,130,266,FALSE,0,171,FALSE,0.6,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,1,110,211,FALSE,2,144,TRUE,1.8,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,FALSE,1,150,283,TRUE,2,162,FALSE,1,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,2,120,284,FALSE,2,160,FALSE,1.8,2,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,3,132,224,FALSE,2,173,FALSE,3.2,1,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,4,130,206,FALSE,2,132,TRUE,2.4,2,2,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,FALSE,3,120,219,FALSE,0,158,FALSE,1.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,FALSE,3,120,340,FALSE,0,172,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,FALSE,1,150,226,FALSE,0,114,FALSE,2.6,3,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,TRUE,4,150,247,FALSE,0,171,FALSE,1.5,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',40,TRUE,4,110,167,FALSE,2,114,TRUE,2,2,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',69,FALSE,1,140,239,FALSE,0,151,FALSE,1.8,1,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,4,117,230,TRUE,0,160,TRUE,1.4,1,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,3,140,335,FALSE,0,158,FALSE,0,1,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,4,135,234,FALSE,0,161,FALSE,0.5,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,3,130,233,FALSE,0,179,TRUE,0.4,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,TRUE,4,140,226,FALSE,0,178,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,TRUE,4,120,177,FALSE,2,120,TRUE,2.5,2,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,150,276,FALSE,2,112,TRUE,0.6,2,1,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,TRUE,4,132,353,FALSE,0,132,TRUE,1.2,2,1,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,TRUE,3,150,243,TRUE,0,137,TRUE,1,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,FALSE,4,150,225,FALSE,2,114,FALSE,1,2,3,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',40,TRUE,1,140,199,FALSE,0,178,TRUE,1.4,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',71,FALSE,2,160,302,FALSE,0,162,FALSE,0.4,1,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,3,150,212,TRUE,0,157,FALSE,1.6,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,FALSE,4,130,330,FALSE,2,169,FALSE,0,1,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,3,112,230,FALSE,2,165,FALSE,2.5,2,1,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,3,110,175,FALSE,0,123,FALSE,0.6,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,TRUE,4,150,243,FALSE,2,128,FALSE,2.6,2,0,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,FALSE,3,140,417,TRUE,2,157,FALSE,0.8,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,TRUE,3,130,197,TRUE,2,152,FALSE,1.2,3,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,FALSE,2,105,198,FALSE,0,168,FALSE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,TRUE,4,120,177,FALSE,0,140,FALSE,0.4,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,4,112,290,FALSE,2,153,FALSE,0,1,1,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,2,130,219,FALSE,2,188,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,4,130,253,FALSE,0,144,TRUE,1.4,1,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,4,124,266,FALSE,2,109,TRUE,2.2,2,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,TRUE,3,140,233,FALSE,0,163,FALSE,0.6,2,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,TRUE,4,110,172,FALSE,2,158,FALSE,0,1,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,3,125,273,FALSE,2,152,FALSE,0.5,3,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,1,125,213,FALSE,2,125,TRUE,1.4,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,FALSE,4,130,305,FALSE,0,142,TRUE,1.2,2,0,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,FALSE,3,142,177,FALSE,2,160,TRUE,1.4,3,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,128,216,FALSE,2,131,TRUE,2.2,2,3,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,FALSE,3,135,304,TRUE,0,170,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,4,120,188,FALSE,0,113,FALSE,1.4,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,4,145,282,FALSE,2,142,TRUE,2.8,2,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,3,140,185,FALSE,2,155,FALSE,3,2,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,3,150,232,FALSE,2,165,FALSE,1.6,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,4,170,326,FALSE,2,140,TRUE,3.4,3,0,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,TRUE,3,150,231,FALSE,0,147,FALSE,3.6,2,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,FALSE,3,155,269,FALSE,0,148,FALSE,0.8,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,TRUE,4,125,254,TRUE,0,163,FALSE,0.2,2,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,TRUE,4,120,267,FALSE,0,99,TRUE,1.8,2,2,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,TRUE,4,110,248,FALSE,2,158,FALSE,0.6,1,2,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,4,110,197,FALSE,2,177,FALSE,0,1,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,FALSE,3,160,360,FALSE,2,151,FALSE,0.8,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,4,125,258,FALSE,2,141,TRUE,2.8,2,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,FALSE,3,140,308,FALSE,2,142,FALSE,1.5,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,TRUE,2,130,245,FALSE,2,180,FALSE,0.2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,150,270,FALSE,2,111,TRUE,0.8,1,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,TRUE,4,104,208,FALSE,2,148,TRUE,3,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,FALSE,4,130,264,FALSE,2,143,FALSE,0.4,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',39,TRUE,3,140,321,FALSE,2,182,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',68,TRUE,3,180,274,TRUE,2,150,TRUE,1.6,2,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,2,120,325,FALSE,0,172,FALSE,0.2,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,3,140,235,FALSE,2,180,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',47,TRUE,3,138,257,FALSE,2,156,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,FALSE,3,128,216,FALSE,2,115,FALSE,0,1,0,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,FALSE,4,138,234,FALSE,2,160,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,FALSE,3,130,256,FALSE,2,149,FALSE,0.5,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,TRUE,4,120,302,FALSE,2,151,FALSE,0.4,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,4,160,164,FALSE,2,145,FALSE,6.2,3,3,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,TRUE,3,130,231,FALSE,0,146,FALSE,1.8,2,3,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,FALSE,3,108,141,FALSE,0,175,FALSE,0.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,FALSE,3,135,252,FALSE,2,172,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,4,128,255,FALSE,0,161,TRUE,0,1,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,4,110,239,FALSE,2,142,TRUE,1.2,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,FALSE,4,150,258,FALSE,2,157,FALSE,2.6,2,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,2,134,201,FALSE,0,158,FALSE,0.8,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,TRUE,4,122,222,FALSE,2,186,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,TRUE,4,115,260,FALSE,2,185,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',34,TRUE,1,118,182,FALSE,2,174,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,FALSE,4,128,303,FALSE,2,159,FALSE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',71,FALSE,3,110,265,TRUE,2,130,FALSE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',49,TRUE,3,120,188,FALSE,0,139,FALSE,2,2,3,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,2,108,309,FALSE,0,156,FALSE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,4,140,177,FALSE,0,162,TRUE,0,1,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,3,128,229,FALSE,2,150,FALSE,0.4,2,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,TRUE,4,120,260,FALSE,0,140,TRUE,3.6,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',39,TRUE,4,118,219,FALSE,0,140,FALSE,1.2,2,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,FALSE,4,145,307,FALSE,2,146,TRUE,1,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,4,125,249,TRUE,2,144,TRUE,1.2,2,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,1,118,186,FALSE,2,190,FALSE,0,2,0,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,FALSE,4,132,341,TRUE,2,136,TRUE,3,2,0,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,3,130,263,FALSE,0,97,FALSE,1.2,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,TRUE,2,135,203,FALSE,0,132,FALSE,0,2,0,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,3,140,211,TRUE,2,165,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',35,FALSE,4,138,183,FALSE,0,182,FALSE,1.4,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,TRUE,4,130,330,TRUE,2,132,TRUE,1.8,1,3,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,TRUE,4,135,254,FALSE,2,127,FALSE,2.8,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,TRUE,4,130,256,TRUE,2,150,TRUE,0,1,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,FALSE,4,150,407,FALSE,2,154,FALSE,4,2,3,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,3,100,222,FALSE,0,143,TRUE,1.2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,TRUE,4,140,217,FALSE,0,111,TRUE,5.6,3,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',65,TRUE,1,138,282,TRUE,2,174,FALSE,1.4,2,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,FALSE,2,130,234,FALSE,2,175,FALSE,0.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,FALSE,4,200,288,TRUE,2,133,TRUE,4,3,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,4,110,239,FALSE,0,126,TRUE,2.8,2,1,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,2,120,220,FALSE,0,170,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,4,124,209,FALSE,0,163,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,3,120,258,FALSE,2,147,FALSE,0.4,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,3,94,227,FALSE,0,154,TRUE,0,1,1,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',29,TRUE,2,130,204,FALSE,2,202,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,4,140,261,FALSE,2,186,TRUE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,FALSE,3,122,213,FALSE,0,165,FALSE,0.2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,FALSE,2,135,250,FALSE,2,161,FALSE,1.4,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',70,TRUE,4,145,174,FALSE,0,125,TRUE,2.6,3,0,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,TRUE,2,120,281,FALSE,2,103,FALSE,1.4,2,1,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',35,TRUE,4,120,198,FALSE,0,130,TRUE,1.6,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,3,125,245,TRUE,2,166,FALSE,2.4,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,2,140,221,FALSE,0,164,TRUE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,1,170,288,FALSE,2,159,FALSE,0.2,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,2,128,205,TRUE,0,184,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,3,125,309,FALSE,0,131,TRUE,1.8,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,3,105,240,FALSE,2,154,TRUE,0.6,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',47,TRUE,3,108,243,FALSE,0,152,FALSE,0,1,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,165,289,TRUE,2,124,FALSE,1,2,3,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,TRUE,3,112,250,FALSE,0,179,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,TRUE,2,128,308,FALSE,2,170,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,FALSE,3,102,318,FALSE,0,160,FALSE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,1,152,298,TRUE,0,178,FALSE,1.2,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,FALSE,4,102,265,FALSE,2,122,FALSE,0.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,FALSE,3,115,564,FALSE,2,160,FALSE,1.6,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,TRUE,4,160,289,FALSE,2,145,TRUE,0.8,2,1,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,4,120,246,FALSE,2,96,TRUE,2.2,3,1,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',70,TRUE,4,130,322,FALSE,2,109,FALSE,2.4,2,3,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,4,140,299,FALSE,0,173,TRUE,1.6,1,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,125,300,FALSE,2,171,FALSE,0,1,2,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,TRUE,4,140,293,FALSE,2,170,FALSE,1.2,2,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',68,TRUE,3,118,277,FALSE,0,151,FALSE,1,1,1,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,TRUE,2,101,197,TRUE,0,156,FALSE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',77,TRUE,4,125,304,FALSE,2,162,TRUE,0,1,3,3,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,FALSE,3,110,214,FALSE,0,158,FALSE,1.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,FALSE,4,100,248,FALSE,2,122,FALSE,1,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,TRUE,3,124,255,TRUE,0,175,FALSE,0,1,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,132,207,FALSE,0,168,TRUE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,3,138,223,FALSE,0,169,FALSE,0,1,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,FALSE,2,132,288,TRUE,2,159,TRUE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',35,TRUE,4,126,282,FALSE,2,156,TRUE,0,1,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,FALSE,2,112,160,FALSE,0,138,FALSE,0,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',70,TRUE,3,160,269,FALSE,0,112,TRUE,2.9,2,1,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,TRUE,4,142,226,FALSE,2,111,TRUE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,FALSE,4,174,249,FALSE,0,143,TRUE,0,2,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,4,140,394,FALSE,2,157,FALSE,1.2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,4,145,212,FALSE,2,132,FALSE,2,2,2,6,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,152,274,FALSE,0,88,TRUE,1.2,2,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,4,108,233,TRUE,0,147,FALSE,0.1,1,3,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,4,132,184,FALSE,2,105,TRUE,2.1,2,1,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,TRUE,3,130,315,FALSE,0,162,FALSE,1.9,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,TRUE,3,130,246,TRUE,2,173,FALSE,0,1,3,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',48,TRUE,4,124,274,FALSE,2,166,FALSE,0.5,2,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,FALSE,4,134,409,FALSE,2,150,TRUE,1.9,2,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,TRUE,1,148,244,FALSE,2,178,FALSE,0.8,1,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,1,178,270,FALSE,2,145,FALSE,4.2,3,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,FALSE,4,158,305,FALSE,2,161,FALSE,0,1,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,FALSE,2,140,195,FALSE,0,179,FALSE,0,1,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,TRUE,3,120,240,TRUE,0,194,FALSE,0.8,3,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,TRUE,2,160,246,FALSE,0,120,TRUE,0,2,3,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,2,192,283,FALSE,2,195,FALSE,0,1,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',69,TRUE,3,140,254,FALSE,2,146,FALSE,2,2,3,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,TRUE,3,129,196,FALSE,0,163,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,TRUE,4,140,298,FALSE,0,122,TRUE,4.2,2,3,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,TRUE,4,132,247,TRUE,2,143,TRUE,0.1,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,4,138,294,TRUE,0,106,FALSE,1.9,2,3,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',68,FALSE,3,120,211,FALSE,2,115,FALSE,1.5,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,TRUE,4,100,299,FALSE,2,125,TRUE,0.9,2,2,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',69,TRUE,1,160,234,TRUE,2,131,FALSE,0.1,2,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,FALSE,4,138,236,FALSE,2,152,TRUE,0.2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,FALSE,2,120,244,FALSE,0,162,FALSE,1.1,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,1,160,273,FALSE,2,125,FALSE,0,1,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,FALSE,4,110,254,FALSE,2,159,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,FALSE,4,180,325,FALSE,0,154,TRUE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,3,150,126,TRUE,0,173,FALSE,0.2,1,1,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,FALSE,3,140,313,FALSE,0,133,FALSE,0.2,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,TRUE,4,110,211,FALSE,0,161,FALSE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,TRUE,4,142,309,FALSE,2,147,TRUE,0,2,3,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,128,259,FALSE,2,130,TRUE,3,2,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',50,TRUE,4,144,200,FALSE,2,126,TRUE,0.9,2,0,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,TRUE,2,130,262,FALSE,0,155,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,FALSE,4,150,244,FALSE,0,154,TRUE,1.4,2,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',37,FALSE,3,120,215,FALSE,0,170,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',38,TRUE,1,120,231,FALSE,0,182,TRUE,3.8,2,0,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,TRUE,3,130,214,FALSE,2,168,FALSE,2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,FALSE,4,178,228,TRUE,0,165,TRUE,1,2,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,4,112,230,FALSE,0,160,FALSE,0,1,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,1,120,193,FALSE,2,162,FALSE,1.9,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,FALSE,2,105,204,FALSE,0,172,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,FALSE,4,138,243,FALSE,2,152,TRUE,0,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,FALSE,4,130,303,FALSE,0,122,FALSE,2,2,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,4,138,271,FALSE,2,182,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,FALSE,3,112,268,FALSE,2,172,TRUE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,FALSE,3,108,267,FALSE,2,167,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',39,FALSE,3,94,199,FALSE,0,179,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',53,TRUE,4,123,282,FALSE,0,95,TRUE,2,2,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,FALSE,4,108,269,FALSE,0,169,TRUE,1.8,2,2,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',34,FALSE,2,118,210,FALSE,0,192,FALSE,0.7,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',47,TRUE,4,112,204,FALSE,0,143,FALSE,0.1,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,FALSE,3,152,277,FALSE,0,172,FALSE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,4,110,206,FALSE,2,108,TRUE,0,2,1,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,TRUE,4,112,212,FALSE,2,132,TRUE,0.1,1,1,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,FALSE,3,136,196,FALSE,2,169,FALSE,0.1,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,FALSE,4,180,327,FALSE,1,117,TRUE,3.4,2,0,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',49,TRUE,3,118,149,FALSE,2,126,FALSE,0.8,1,3,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',74,FALSE,2,120,269,FALSE,2,121,TRUE,0.2,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,FALSE,3,160,201,FALSE,0,163,FALSE,0,1,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',54,TRUE,4,122,286,FALSE,2,116,TRUE,3.2,2,2,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,4,130,283,TRUE,2,103,TRUE,1.6,3,0,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,TRUE,4,120,249,FALSE,2,144,FALSE,0.8,1,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',49,FALSE,2,134,271,FALSE,0,162,FALSE,0,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,TRUE,2,120,295,FALSE,0,162,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,TRUE,2,110,235,FALSE,0,153,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,FALSE,2,126,306,FALSE,0,163,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',49,FALSE,4,130,269,FALSE,0,163,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,TRUE,1,134,234,FALSE,0,145,FALSE,2.6,2,2,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,FALSE,3,120,178,TRUE,0,96,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,TRUE,4,120,237,FALSE,0,71,FALSE,1,2,0,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,100,234,FALSE,0,156,FALSE,0.1,1,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',47,TRUE,4,110,275,FALSE,2,118,TRUE,1,2,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,4,125,212,FALSE,0,168,FALSE,1,1,2,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',62,TRUE,2,128,208,TRUE,2,140,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,110,201,FALSE,0,126,TRUE,1.5,2,0,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,146,218,FALSE,0,105,FALSE,2,2,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,4,128,263,FALSE,0,105,TRUE,0.2,2,1,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',51,FALSE,3,120,295,FALSE,2,157,FALSE,0.6,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',43,TRUE,4,115,303,FALSE,0,181,FALSE,1.2,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,FALSE,3,120,209,FALSE,0,173,FALSE,0,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,FALSE,4,106,223,FALSE,0,142,FALSE,0.3,1,2,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',76,FALSE,3,140,197,FALSE,1,116,FALSE,1.1,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',70,TRUE,2,156,245,FALSE,2,143,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,2,124,261,FALSE,0,141,FALSE,0.3,1,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,FALSE,3,118,242,FALSE,0,149,FALSE,0.3,2,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,FALSE,2,136,319,TRUE,2,152,FALSE,0,1,2,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',60,FALSE,1,150,240,FALSE,0,171,FALSE,0.9,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,3,120,226,FALSE,0,169,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,TRUE,4,138,166,FALSE,2,125,TRUE,3.6,2,1,3,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,TRUE,4,136,315,FALSE,0,125,TRUE,1.8,2,0,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',52,TRUE,4,128,204,TRUE,0,156,TRUE,1,2,0,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,3,126,218,TRUE,0,134,FALSE,2.2,2,1,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',40,TRUE,4,152,223,FALSE,0,181,FALSE,0,1,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',42,TRUE,3,130,180,FALSE,0,150,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,TRUE,4,140,207,FALSE,2,138,TRUE,1.9,1,1,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,TRUE,4,160,228,FALSE,2,138,FALSE,2.3,1,0,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',46,TRUE,4,140,311,FALSE,0,120,TRUE,1.8,2,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',71,FALSE,4,112,149,FALSE,0,125,FALSE,1.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,1,134,204,FALSE,0,162,FALSE,0.8,1,2,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',64,TRUE,1,170,227,FALSE,2,155,FALSE,0.6,2,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',66,FALSE,3,146,278,FALSE,2,152,FALSE,0,2,1,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',39,FALSE,3,138,220,FALSE,0,152,FALSE,0,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,2,154,232,FALSE,2,164,FALSE,0,1,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,FALSE,4,130,197,FALSE,0,131,FALSE,0.6,2,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,110,335,FALSE,0,143,TRUE,3,2,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',47,TRUE,3,130,253,FALSE,0,179,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,FALSE,4,128,205,FALSE,1,130,TRUE,2,2,1,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',35,TRUE,2,122,192,FALSE,0,174,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',61,TRUE,4,148,203,FALSE,0,161,FALSE,0,1,1,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,4,114,318,FALSE,1,140,FALSE,4.4,3,3,6,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,FALSE,4,170,225,TRUE,2,146,TRUE,2.8,2,2,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',58,TRUE,2,125,220,FALSE,0,144,FALSE,0.4,2,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,2,130,221,FALSE,2,163,FALSE,0,1,0,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',56,TRUE,2,120,240,FALSE,0,169,FALSE,0,3,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',67,TRUE,3,152,212,FALSE,2,150,FALSE,0.8,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',55,FALSE,2,132,342,FALSE,0,166,FALSE,1.2,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',44,TRUE,4,120,169,FALSE,0,144,TRUE,2.8,3,0,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,TRUE,4,140,187,FALSE,2,144,TRUE,4,1,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',63,FALSE,4,124,197,FALSE,0,136,TRUE,0,2,0,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',41,TRUE,2,120,157,FALSE,0,182,FALSE,0,1,0,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',59,TRUE,4,164,176,TRUE,2,90,FALSE,1,2,2,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,FALSE,4,140,241,FALSE,0,123,TRUE,0.2,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',45,TRUE,1,110,264,FALSE,0,132,FALSE,1.2,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',68,TRUE,4,144,193,TRUE,0,141,FALSE,3.4,2,2,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,TRUE,4,130,131,FALSE,0,115,TRUE,1.2,2,1,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',57,FALSE,2,130,236,FALSE,2,174,FALSE,0,2,1,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('cleveland',38,TRUE,3,138,175,FALSE,0,173,FALSE,0,1,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,140,260,FALSE,1,112,TRUE,3,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',44,TRUE,4,130,209,FALSE,1,127,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,132,218,FALSE,1,140,TRUE,1.5,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,142,228,FALSE,1,149,TRUE,2.5,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',66,TRUE,3,110,213,TRUE,2,99,TRUE,1.3,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',66,TRUE,3,120,0,FALSE,1,120,FALSE,-0.5,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',65,TRUE,4,150,236,TRUE,1,105,TRUE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,3,180,0,FALSE,1,140,TRUE,1.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,3,120,0,NULL,0,141,TRUE,2,1,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,2,160,267,TRUE,1,157,FALSE,0.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,2,126,166,FALSE,1,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,140,0,FALSE,1,117,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,110,0,FALSE,0,120,TRUE,0.5,2,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,3,NULL,0,FALSE,2,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,128,0,TRUE,1,148,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,120,220,FALSE,1,86,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,170,177,FALSE,0,84,TRUE,2.5,3,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',46,TRUE,4,110,236,FALSE,0,125,TRUE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,126,0,FALSE,1,120,FALSE,1.5,3,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,152,0,FALSE,1,118,TRUE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,116,0,FALSE,0,124,FALSE,1,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,120,0,TRUE,1,106,FALSE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,3,130,0,FALSE,1,111,TRUE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',74,TRUE,3,NULL,0,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',52,TRUE,3,128,0,FALSE,1,180,FALSE,3,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,4,130,0,TRUE,1,129,FALSE,1,2,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,TRUE,4,NULL,0,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,130,186,TRUE,1,140,TRUE,0.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,4,120,100,FALSE,0,120,TRUE,1.5,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,3,NULL,228,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,TRUE,4,NULL,0,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',77,TRUE,4,124,171,FALSE,1,110,TRUE,2,1,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,160,230,TRUE,0,105,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,3,0,0,FALSE,0,155,FALSE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',52,TRUE,3,122,0,FALSE,0,110,TRUE,2,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,144,0,FALSE,1,122,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,NULL,281,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,120,0,FALSE,0,133,TRUE,2,1,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,NULL,203,TRUE,0,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,154,0,FALSE,1,131,TRUE,1.5,NULL,0,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,3,120,0,FALSE,0,80,TRUE,0,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',40,TRUE,4,125,0,TRUE,0,165,FALSE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,4,NULL,0,TRUE,1,86,FALSE,1.5,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',41,TRUE,4,104,0,FALSE,1,111,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,NULL,277,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,136,0,FALSE,0,84,TRUE,0,NULL,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,122,233,FALSE,0,117,TRUE,1.3,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,TRUE,4,128,0,FALSE,0,107,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,3,NULL,0,FALSE,0,128,TRUE,2,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',42,TRUE,3,134,240,NULL,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,3,120,0,FALSE,1,125,TRUE,2.5,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,FALSE,2,NULL,0,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,152,153,FALSE,1,97,TRUE,1.6,1,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,2,124,224,TRUE,0,161,FALSE,2,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',53,TRUE,4,126,0,FALSE,0,106,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',68,TRUE,4,138,0,FALSE,0,130,TRUE,3,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',53,TRUE,4,154,0,NULL,1,140,TRUE,1.5,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,3,NULL,316,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,2,NULL,0,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,178,0,TRUE,2,120,TRUE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,TRUE,4,NULL,218,TRUE,2,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,4,110,0,NULL,0,108,TRUE,2,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,130,311,NULL,1,148,TRUE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,3,170,0,FALSE,2,123,TRUE,2.5,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,2,126,0,TRUE,0,110,TRUE,2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,3,140,0,NULL,1,118,FALSE,2.5,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',67,TRUE,1,142,270,TRUE,0,125,FALSE,2.5,1,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,120,0,FALSE,2,106,TRUE,1.5,3,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',65,TRUE,4,NULL,0,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,2,NULL,217,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,2,110,214,TRUE,1,180,FALSE,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,140,214,FALSE,1,144,TRUE,2,2,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',65,TRUE,1,NULL,252,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,TRUE,4,136,220,FALSE,0,140,TRUE,3,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',72,TRUE,3,120,214,FALSE,0,102,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',75,TRUE,4,170,203,TRUE,1,108,FALSE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',49,TRUE,1,130,0,FALSE,1,145,FALSE,3,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,TRUE,3,NULL,339,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,142,216,FALSE,0,110,TRUE,2.5,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,FALSE,4,142,276,FALSE,0,140,TRUE,1,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,132,458,TRUE,0,69,FALSE,1,3,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,4,146,241,FALSE,0,148,TRUE,3,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',67,TRUE,4,160,384,TRUE,1,130,TRUE,0,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,135,297,FALSE,0,130,TRUE,1,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',65,TRUE,4,136,248,FALSE,0,140,TRUE,4,3,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,130,308,FALSE,0,138,TRUE,2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,4,140,208,FALSE,1,140,TRUE,2,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,TRUE,4,NULL,227,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,158,210,TRUE,0,112,TRUE,3,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,3,NULL,245,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',75,TRUE,4,136,225,FALSE,0,112,TRUE,3,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',40,TRUE,3,106,240,FALSE,0,80,TRUE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',67,TRUE,4,120,0,TRUE,0,150,FALSE,1.5,3,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,110,198,FALSE,0,110,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,NULL,195,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,160,267,TRUE,1,88,TRUE,2,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',35,TRUE,3,NULL,161,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,1,112,258,FALSE,1,150,TRUE,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',43,TRUE,4,122,0,FALSE,0,120,FALSE,0.5,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,3,130,0,TRUE,1,160,FALSE,3,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',68,TRUE,3,150,195,TRUE,0,132,FALSE,0,NULL,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',65,TRUE,4,150,235,FALSE,0,120,TRUE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',48,TRUE,3,102,0,NULL,1,110,TRUE,1,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,96,305,FALSE,1,121,TRUE,1,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,130,223,FALSE,1,128,FALSE,0.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,4,120,282,FALSE,1,135,TRUE,4,3,NULL,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',50,TRUE,4,144,349,FALSE,2,120,TRUE,1,1,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,124,NULL,FALSE,0,117,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,150,160,FALSE,1,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',45,TRUE,3,NULL,236,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',65,TRUE,4,NULL,312,FALSE,2,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,2,NULL,283,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',49,TRUE,3,NULL,142,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',72,TRUE,4,NULL,211,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',50,TRUE,4,NULL,218,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,NULL,306,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,116,186,TRUE,1,102,FALSE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,4,110,252,FALSE,1,140,TRUE,2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,125,222,FALSE,0,135,TRUE,2.5,3,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,4,NULL,0,FALSE,2,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,3,NULL,0,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',74,TRUE,4,150,258,TRUE,1,130,TRUE,4,3,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,TRUE,4,130,202,TRUE,0,112,TRUE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,110,197,FALSE,2,100,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,3,NULL,204,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',76,TRUE,3,104,NULL,FALSE,2,120,FALSE,3.5,3,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,FALSE,4,138,274,FALSE,0,105,TRUE,1.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',70,TRUE,4,170,192,FALSE,1,129,TRUE,3,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,FALSE,2,140,298,TRUE,0,120,TRUE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',48,TRUE,4,NULL,272,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',48,TRUE,3,132,220,TRUE,1,162,FALSE,0,NULL,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,1,142,200,TRUE,1,100,FALSE,1.5,3,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',66,TRUE,4,112,261,FALSE,0,140,FALSE,1.5,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',68,TRUE,1,NULL,181,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,172,260,FALSE,0,73,FALSE,2,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,3,120,220,FALSE,2,86,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',71,TRUE,3,NULL,221,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',74,TRUE,1,NULL,216,TRUE,0,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',53,TRUE,3,155,175,TRUE,1,160,FALSE,NULL,NULL,NULL,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,3,150,219,FALSE,1,118,TRUE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',75,TRUE,4,160,310,TRUE,0,112,TRUE,2,3,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,3,NULL,208,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,3,NULL,232,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,134,273,FALSE,0,102,TRUE,4,3,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,TRUE,3,NULL,203,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,TRUE,2,NULL,182,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',59,TRUE,4,140,274,FALSE,0,154,TRUE,2,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,NULL,204,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,144,270,TRUE,1,160,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,4,NULL,292,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',41,TRUE,4,150,171,FALSE,0,128,TRUE,1.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',71,TRUE,4,130,221,FALSE,1,115,TRUE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',38,TRUE,4,110,289,FALSE,0,105,TRUE,1.5,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,158,217,FALSE,0,110,TRUE,2.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,4,128,223,FALSE,1,119,TRUE,2,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,4,NULL,NULL,TRUE,0,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,150,193,FALSE,1,135,TRUE,0.5,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',72,TRUE,4,160,NULL,TRUE,2,130,FALSE,1.5,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,4,NULL,210,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,4,NULL,282,TRUE,0,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,NULL,170,FALSE,1,120,TRUE,3,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',67,TRUE,4,NULL,369,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,156,173,FALSE,2,119,TRUE,3,3,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,4,NULL,289,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,TRUE,4,NULL,NULL,TRUE,2,NULL,NULL,NULL,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',48,TRUE,4,140,NULL,FALSE,0,159,TRUE,1.5,1,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,4,122,216,TRUE,2,84,TRUE,0,NULL,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',69,TRUE,3,NULL,271,FALSE,2,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,NULL,244,TRUE,1,NULL,NULL,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,2,180,285,TRUE,1,120,FALSE,0.8,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',53,TRUE,4,124,243,FALSE,0,122,TRUE,2,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',37,TRUE,3,118,240,FALSE,2,165,FALSE,1,2,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',67,TRUE,4,140,219,FALSE,1,122,TRUE,2,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',74,TRUE,3,140,237,TRUE,0,94,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',63,TRUE,2,NULL,165,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,100,213,FALSE,1,110,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,4,190,287,TRUE,2,150,TRUE,2,3,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',64,TRUE,4,130,258,TRUE,2,130,FALSE,0,NULL,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,160,256,TRUE,2,113,TRUE,1,1,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',60,TRUE,4,130,186,TRUE,2,140,TRUE,0.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,122,264,FALSE,2,100,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,3,NULL,NULL,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,120,226,FALSE,2,127,TRUE,1.7,3,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',56,TRUE,4,130,203,TRUE,0,98,FALSE,1.5,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',57,TRUE,4,130,207,FALSE,1,96,TRUE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,3,NULL,284,FALSE,0,NULL,NULL,NULL,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',61,TRUE,3,120,337,FALSE,0,98,TRUE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,3,150,219,FALSE,1,118,TRUE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',74,TRUE,4,155,310,FALSE,0,112,TRUE,1.5,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',68,TRUE,3,134,254,TRUE,0,151,TRUE,0,NULL,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',51,FALSE,4,114,258,TRUE,2,96,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,160,254,TRUE,1,108,TRUE,3,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',53,TRUE,4,144,300,TRUE,1,128,TRUE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,4,158,170,FALSE,1,138,TRUE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',46,TRUE,4,134,310,FALSE,0,126,FALSE,0,NULL,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',54,FALSE,4,127,333,TRUE,1,154,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,1,NULL,139,FALSE,1,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',55,TRUE,4,122,223,TRUE,1,100,FALSE,0,NULL,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',58,TRUE,4,NULL,385,TRUE,2,NULL,NULL,NULL,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('long_beach_va',62,TRUE,2,120,254,FALSE,2,93,TRUE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,TRUE,2,140,289,FALSE,0,172,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,FALSE,3,160,180,FALSE,0,156,FALSE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,TRUE,2,130,283,FALSE,1,98,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,4,138,214,FALSE,0,108,TRUE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,3,150,NULL,FALSE,0,122,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,3,120,339,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,FALSE,2,130,237,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,2,110,208,FALSE,0,142,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,TRUE,4,140,207,FALSE,0,130,TRUE,1.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,2,120,284,FALSE,0,120,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,FALSE,3,130,211,FALSE,0,142,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,2,136,164,FALSE,1,99,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,2,120,204,FALSE,0,145,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,140,234,FALSE,0,140,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,FALSE,3,115,211,FALSE,1,137,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,120,273,FALSE,0,150,FALSE,1.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,TRUE,4,110,196,FALSE,0,166,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,2,120,201,FALSE,0,165,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',60,TRUE,4,100,248,FALSE,0,125,FALSE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',36,TRUE,2,120,267,FALSE,0,160,FALSE,3,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,1,100,223,FALSE,0,142,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,TRUE,2,120,184,FALSE,0,142,FALSE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,FALSE,2,124,201,FALSE,0,164,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,TRUE,2,150,288,FALSE,0,150,TRUE,3,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,TRUE,3,130,215,FALSE,0,138,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',36,TRUE,3,130,209,FALSE,0,178,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,4,124,260,FALSE,1,112,TRUE,3,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,2,120,284,FALSE,0,118,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,FALSE,2,113,468,NULL,0,127,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,TRUE,2,125,188,FALSE,0,145,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,3,145,518,FALSE,0,130,FALSE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,3,130,NULL,FALSE,0,114,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,125,224,FALSE,0,122,FALSE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,4,130,172,FALSE,1,130,FALSE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,2,150,186,FALSE,0,154,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',32,TRUE,2,125,254,FALSE,0,155,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',65,TRUE,4,140,306,TRUE,0,87,TRUE,1.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,FALSE,2,110,250,FALSE,1,142,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,2,120,NULL,TRUE,1,148,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,4,150,227,FALSE,0,130,TRUE,1,2,9,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,150,230,FALSE,0,130,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,3,130,294,FALSE,1,100,TRUE,0,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',35,TRUE,2,150,264,FALSE,0,168,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,3,140,259,FALSE,1,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,TRUE,4,120,175,FALSE,0,120,TRUE,1,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,TRUE,3,130,318,FALSE,0,120,TRUE,1,2,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,TRUE,4,120,223,FALSE,0,168,FALSE,0,NULL,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,2,140,216,FALSE,0,170,FALSE,0,NULL,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',36,TRUE,3,112,340,FALSE,0,184,FALSE,1,2,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,4,110,289,FALSE,0,170,FALSE,0,NULL,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,4,130,233,FALSE,0,121,TRUE,2,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,FALSE,4,120,205,FALSE,0,98,TRUE,2,2,NULL,6,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,TRUE,2,140,224,TRUE,0,122,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,FALSE,2,130,245,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,FALSE,4,130,180,FALSE,0,140,TRUE,1.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,FALSE,2,160,194,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',31,TRUE,4,120,270,FALSE,0,153,TRUE,1.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,3,130,213,FALSE,1,140,FALSE,0,NULL,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,150,365,FALSE,1,134,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,112,342,FALSE,1,96,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,2,100,253,FALSE,0,174,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,3,150,NULL,FALSE,0,175,FALSE,0,NULL,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,TRUE,4,140,224,FALSE,0,144,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,120,277,FALSE,0,125,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,FALSE,2,110,202,FALSE,0,145,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,FALSE,2,120,260,FALSE,0,130,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,FALSE,4,132,297,FALSE,0,144,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',32,TRUE,2,110,225,FALSE,0,184,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,160,246,FALSE,1,82,TRUE,4,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,TRUE,4,150,412,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',57,TRUE,2,140,265,FALSE,1,145,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,TRUE,2,130,215,FALSE,0,135,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,120,182,FALSE,0,150,FALSE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,FALSE,4,120,218,FALSE,1,115,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,4,140,268,FALSE,0,128,TRUE,1.5,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,3,150,163,NULL,0,116,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',32,TRUE,4,118,529,FALSE,0,130,FALSE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',35,FALSE,4,140,167,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,2,140,100,FALSE,0,138,TRUE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,130,206,FALSE,0,170,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,3,110,277,FALSE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,2,120,238,FALSE,0,154,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',63,TRUE,4,150,223,FALSE,0,115,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,2,160,196,FALSE,0,165,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,4,150,213,TRUE,0,125,TRUE,1,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',66,TRUE,4,140,NULL,FALSE,0,94,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',65,TRUE,4,170,263,TRUE,0,112,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,FALSE,2,140,216,FALSE,0,142,TRUE,2,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,TRUE,1,120,291,FALSE,1,155,FALSE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,4,140,229,FALSE,0,110,TRUE,0.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,FALSE,2,110,NULL,FALSE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,4,130,307,FALSE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,FALSE,2,120,210,FALSE,0,148,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,160,329,FALSE,0,92,TRUE,1.5,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,FALSE,3,110,182,FALSE,1,180,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,4,130,263,FALSE,0,140,TRUE,2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,TRUE,2,142,207,FALSE,0,138,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,3,160,147,TRUE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,4,120,85,FALSE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,2,125,269,FALSE,0,144,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',65,TRUE,4,130,275,FALSE,1,115,TRUE,1,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,TRUE,4,130,179,FALSE,0,100,FALSE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,FALSE,4,150,392,FALSE,0,130,FALSE,2,2,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,TRUE,4,120,466,NULL,0,152,TRUE,1,2,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,118,186,FALSE,0,124,FALSE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',57,TRUE,2,140,260,TRUE,0,140,FALSE,0,NULL,NULL,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,4,120,254,FALSE,1,110,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',34,TRUE,2,150,214,FALSE,1,168,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,4,140,129,FALSE,0,135,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,2,190,241,FALSE,0,106,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,FALSE,2,130,188,FALSE,0,124,FALSE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',57,TRUE,4,150,255,FALSE,0,92,TRUE,3,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,TRUE,4,140,276,TRUE,0,125,TRUE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,TRUE,2,140,297,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,FALSE,3,130,207,FALSE,1,135,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',33,FALSE,4,100,246,FALSE,0,150,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,TRUE,4,120,282,FALSE,0,170,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,FALSE,4,130,338,TRUE,1,130,TRUE,1.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',35,FALSE,1,120,160,FALSE,1,185,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',34,TRUE,1,140,156,FALSE,0,180,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,FALSE,3,135,248,TRUE,0,170,FALSE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,FALSE,3,125,272,FALSE,0,139,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,110,240,FALSE,1,140,FALSE,0,NULL,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,FALSE,2,180,393,FALSE,0,110,TRUE,1,2,NULL,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,2,130,230,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,2,120,246,FALSE,0,110,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',34,FALSE,2,130,161,FALSE,0,190,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,4,108,163,FALSE,0,175,FALSE,2,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,120,230,TRUE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,TRUE,3,120,228,FALSE,0,152,TRUE,1.5,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,TRUE,3,145,292,FALSE,0,130,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,110,202,FALSE,0,150,TRUE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,4,170,388,FALSE,1,122,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,4,150,230,FALSE,1,124,TRUE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',61,FALSE,4,130,294,FALSE,1,120,TRUE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,3,115,265,FALSE,0,175,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,2,120,215,FALSE,1,175,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,2,120,NULL,FALSE,1,146,FALSE,2,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,140,NULL,FALSE,0,118,TRUE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,TRUE,4,150,247,FALSE,0,130,TRUE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,160,331,FALSE,0,94,TRUE,2.5,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,4,140,341,FALSE,1,125,TRUE,2.5,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,TRUE,4,160,291,FALSE,1,158,TRUE,3,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,4,140,243,FALSE,0,155,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,FALSE,2,120,279,FALSE,0,150,FALSE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,4,110,273,FALSE,0,132,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,TRUE,2,120,198,FALSE,0,155,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,2,120,249,FALSE,1,176,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,2,120,168,FALSE,0,160,FALSE,0,NULL,0,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,130,603,TRUE,0,125,TRUE,1,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,2,130,NULL,FALSE,0,120,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,2,100,NULL,FALSE,0,100,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,TRUE,2,130,275,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,4,120,270,FALSE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,2,120,291,FALSE,1,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,4,155,342,TRUE,0,150,TRUE,3,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,TRUE,4,110,NULL,FALSE,0,150,TRUE,1,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,140,NULL,FALSE,0,130,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,TRUE,4,130,290,FALSE,0,100,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,2,160,195,FALSE,1,130,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,TRUE,4,140,264,TRUE,2,119,TRUE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,128,212,FALSE,0,96,TRUE,0,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,TRUE,2,160,263,FALSE,0,174,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,FALSE,2,110,NULL,FALSE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,TRUE,2,120,196,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,FALSE,2,140,NULL,FALSE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,1,140,272,TRUE,0,175,FALSE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,4,140,231,FALSE,1,140,TRUE,5,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,2,140,238,FALSE,0,118,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,4,135,222,FALSE,0,100,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,3,140,179,FALSE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',29,TRUE,2,120,243,FALSE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,TRUE,3,140,NULL,FALSE,0,188,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,2,140,320,FALSE,0,162,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,3,140,187,FALSE,0,172,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,140,266,FALSE,0,134,TRUE,2,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,TRUE,4,140,288,FALSE,0,135,TRUE,2,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,140,216,FALSE,0,105,FALSE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,TRUE,2,140,287,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,TRUE,3,130,194,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,FALSE,4,130,238,FALSE,0,90,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,130,225,FALSE,0,120,TRUE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,TRUE,2,130,224,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,140,404,FALSE,0,124,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,110,238,FALSE,1,140,TRUE,1,2,NULL,3,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,160,312,FALSE,0,130,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,3,160,211,TRUE,1,92,FALSE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',58,TRUE,2,130,251,FALSE,0,110,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,4,120,237,NULL,0,138,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,FALSE,4,120,328,FALSE,0,110,TRUE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,4,180,285,FALSE,1,120,TRUE,1.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,180,280,FALSE,1,120,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,2,170,209,FALSE,1,116,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,2,130,245,FALSE,0,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,TRUE,3,135,NULL,FALSE,0,110,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,FALSE,2,125,184,FALSE,0,180,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',62,FALSE,1,160,193,FALSE,0,116,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,120,297,NULL,0,132,FALSE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,TRUE,2,150,268,FALSE,0,136,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,4,120,246,FALSE,0,116,TRUE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',57,FALSE,1,130,308,FALSE,0,98,FALSE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,TRUE,1,110,249,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,3,120,230,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,TRUE,3,160,147,FALSE,0,146,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',31,FALSE,2,100,219,FALSE,1,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,2,130,184,FALSE,0,100,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,4,150,215,FALSE,0,140,TRUE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',35,TRUE,2,120,308,FALSE,2,180,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',35,TRUE,2,110,257,FALSE,0,140,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',28,TRUE,2,130,132,FALSE,2,185,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,125,216,FALSE,0,140,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,106,263,TRUE,0,110,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,FALSE,3,140,288,FALSE,0,140,TRUE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,TRUE,3,130,276,FALSE,0,128,TRUE,1,1,NULL,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',56,FALSE,3,130,219,NULL,1,164,FALSE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,TRUE,4,150,226,FALSE,0,98,TRUE,1.5,2,0,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',30,FALSE,1,170,237,FALSE,1,170,FALSE,0,NULL,NULL,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,4,110,280,FALSE,0,150,FALSE,0,NULL,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,3,120,217,FALSE,0,137,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,2,140,196,FALSE,0,150,FALSE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',29,TRUE,2,140,NULL,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,130,222,FALSE,0,112,FALSE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,FALSE,4,160,303,FALSE,0,150,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,3,120,195,FALSE,0,125,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',33,TRUE,3,120,298,FALSE,0,185,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,2,120,256,TRUE,0,137,FALSE,0,NULL,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',50,TRUE,4,145,264,FALSE,0,150,FALSE,0,NULL,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,3,120,195,FALSE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,TRUE,4,92,117,FALSE,0,134,TRUE,2.5,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,2,120,295,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,FALSE,4,130,173,FALSE,1,184,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',37,TRUE,4,130,315,FALSE,0,158,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',40,TRUE,3,130,281,FALSE,0,167,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',38,FALSE,2,120,275,NULL,0,129,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,4,112,250,FALSE,0,142,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,140,309,NULL,1,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',39,TRUE,2,120,200,FALSE,0,160,TRUE,1,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',41,TRUE,4,120,336,FALSE,0,118,TRUE,3,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,1,140,295,FALSE,NULL,136,FALSE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,160,355,FALSE,0,99,TRUE,2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,160,193,FALSE,0,102,TRUE,3,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,2,145,326,FALSE,0,155,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,200,198,FALSE,0,142,TRUE,2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,2,160,292,TRUE,0,143,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',43,FALSE,2,120,266,FALSE,0,118,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,160,268,FALSE,0,103,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,1,120,171,FALSE,0,137,FALSE,2,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,3,120,237,FALSE,0,150,TRUE,1.5,NULL,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,122,275,TRUE,1,150,TRUE,2,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,TRUE,4,130,219,FALSE,1,130,TRUE,1,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,130,341,FALSE,0,120,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',44,TRUE,4,135,491,FALSE,0,135,FALSE,0,NULL,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,4,120,260,FALSE,0,115,FALSE,2,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',61,TRUE,4,125,292,FALSE,1,115,TRUE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',62,TRUE,2,140,271,FALSE,0,152,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,4,145,248,FALSE,0,96,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,FALSE,3,120,274,FALSE,0,130,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,FALSE,2,130,394,FALSE,2,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',36,TRUE,3,150,160,FALSE,0,172,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,FALSE,3,150,200,FALSE,0,120,FALSE,0.5,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,FALSE,2,122,320,FALSE,0,155,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,2,140,275,FALSE,0,165,TRUE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,120,221,FALSE,0,138,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',46,TRUE,4,120,231,FALSE,0,115,TRUE,0,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,TRUE,4,130,NULL,FALSE,0,125,FALSE,0,NULL,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,TRUE,3,140,193,FALSE,0,145,TRUE,1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,2,160,305,FALSE,0,175,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,130,298,FALSE,0,110,TRUE,1,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',34,TRUE,2,98,220,FALSE,0,150,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,TRUE,4,130,242,FALSE,0,91,TRUE,1,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,FALSE,3,130,NULL,FALSE,0,145,FALSE,2,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,TRUE,4,120,225,FALSE,0,140,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',32,FALSE,2,105,198,FALSE,0,165,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,4,140,201,FALSE,0,130,TRUE,3,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,TRUE,3,120,220,FALSE,2,134,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',45,FALSE,2,180,NULL,FALSE,0,180,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,TRUE,3,180,213,FALSE,0,100,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,TRUE,3,135,160,FALSE,0,150,FALSE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',52,TRUE,4,170,NULL,FALSE,0,126,TRUE,1.5,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',57,FALSE,4,180,347,FALSE,1,126,TRUE,0.8,2,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',54,FALSE,2,130,253,FALSE,1,155,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',60,TRUE,3,120,246,FALSE,2,135,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',49,TRUE,4,150,222,FALSE,0,122,FALSE,2,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,FALSE,3,130,220,FALSE,0,160,TRUE,2,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',55,FALSE,2,110,344,FALSE,1,160,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',42,TRUE,4,140,358,FALSE,0,170,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',51,FALSE,3,110,190,FALSE,0,120,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',59,TRUE,4,140,NULL,FALSE,0,140,FALSE,0,NULL,0,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,2,120,NULL,FALSE,0,132,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,FALSE,2,NULL,308,FALSE,1,NULL,NULL,2,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',36,TRUE,2,120,166,FALSE,0,180,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',48,TRUE,3,110,211,FALSE,0,138,FALSE,0,NULL,NULL,6,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',47,FALSE,2,140,257,FALSE,0,135,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('hungary',53,TRUE,4,130,182,FALSE,0,148,FALSE,0,NULL,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',32,TRUE,1,95,0,NULL,0,127,FALSE,0.7,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',34,TRUE,4,115,0,NULL,NULL,154,FALSE,0.2,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',35,TRUE,4,NULL,0,NULL,0,130,TRUE,NULL,NULL,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',36,TRUE,4,110,0,NULL,0,125,TRUE,1,2,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',38,FALSE,4,105,0,NULL,0,166,FALSE,2.8,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',38,FALSE,4,110,0,FALSE,0,156,FALSE,0,2,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',38,TRUE,3,100,0,NULL,0,179,FALSE,-1.1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',38,TRUE,3,115,0,FALSE,0,128,TRUE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',38,TRUE,4,135,0,NULL,0,150,FALSE,0,NULL,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',38,TRUE,4,150,0,NULL,0,120,TRUE,NULL,NULL,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',40,TRUE,4,95,0,NULL,1,144,FALSE,0,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',41,TRUE,4,125,0,NULL,0,176,FALSE,1.6,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',42,TRUE,4,105,0,NULL,0,128,TRUE,-1.5,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',42,TRUE,4,145,0,FALSE,0,99,TRUE,0,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',43,TRUE,4,100,0,NULL,0,122,FALSE,1.5,3,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',43,TRUE,4,115,0,FALSE,0,145,TRUE,2,2,NULL,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',43,TRUE,4,140,0,FALSE,1,140,TRUE,0.5,1,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',45,TRUE,3,110,0,NULL,0,138,FALSE,-0.1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',46,TRUE,4,100,0,NULL,1,133,FALSE,-2.6,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',46,TRUE,4,115,0,FALSE,0,113,TRUE,1.5,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',47,TRUE,3,110,0,NULL,0,120,TRUE,0,NULL,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',47,TRUE,3,155,0,FALSE,0,118,TRUE,1,2,NULL,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',47,TRUE,4,110,0,NULL,1,149,FALSE,2.1,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',47,TRUE,4,160,0,FALSE,0,124,TRUE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',48,TRUE,4,115,0,NULL,0,128,FALSE,0,2,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',50,FALSE,4,160,0,NULL,0,110,FALSE,0,NULL,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',50,TRUE,4,115,0,FALSE,0,120,TRUE,0.5,2,NULL,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',50,TRUE,4,120,0,FALSE,1,156,TRUE,0,1,NULL,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',50,TRUE,4,145,0,NULL,0,139,TRUE,0.7,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,FALSE,4,120,0,NULL,0,127,TRUE,1.5,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,TRUE,4,110,0,NULL,0,92,FALSE,0,2,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,TRUE,4,120,0,TRUE,0,104,FALSE,0,2,NULL,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,TRUE,4,130,0,NULL,0,170,FALSE,-0.7,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,TRUE,4,130,0,NULL,1,163,FALSE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,TRUE,4,140,0,FALSE,0,60,FALSE,0,2,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',51,TRUE,4,95,0,NULL,0,126,FALSE,2.2,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',52,TRUE,4,130,0,NULL,0,120,FALSE,0,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',52,TRUE,4,135,0,NULL,0,128,TRUE,2,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',52,TRUE,4,165,0,NULL,0,122,TRUE,1,1,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',52,TRUE,4,95,0,NULL,0,82,TRUE,NULL,NULL,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,2,120,0,FALSE,0,95,FALSE,0,2,NULL,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,2,130,0,NULL,1,120,FALSE,0.7,3,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,3,105,0,FALSE,0,115,FALSE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,3,160,0,NULL,2,122,TRUE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,4,120,0,NULL,0,120,FALSE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,4,125,0,NULL,0,120,FALSE,1.5,1,NULL,NULL,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,4,130,0,FALSE,2,135,TRUE,1,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',53,TRUE,4,80,0,NULL,0,141,TRUE,2,3,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',54,TRUE,4,120,0,FALSE,0,155,FALSE,0,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',54,TRUE,4,130,0,NULL,0,110,TRUE,3,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',54,TRUE,4,180,0,NULL,0,150,FALSE,1.5,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',55,TRUE,2,140,0,NULL,1,150,FALSE,0.2,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',55,TRUE,4,115,0,NULL,0,155,FALSE,0.1,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',55,TRUE,4,120,0,FALSE,1,92,FALSE,0.3,1,NULL,7,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',55,TRUE,4,140,0,FALSE,0,83,FALSE,0,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,3,120,0,FALSE,0,97,FALSE,0,2,NULL,7,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,3,125,0,NULL,0,98,FALSE,-2,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,3,155,0,FALSE,1,99,FALSE,0,2,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,4,115,0,NULL,1,82,FALSE,-1,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,4,120,0,FALSE,1,100,TRUE,-1,3,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,4,120,0,FALSE,1,148,FALSE,0,2,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,4,125,0,TRUE,0,103,TRUE,1,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',56,TRUE,4,140,0,NULL,0,121,TRUE,1.8,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',57,TRUE,3,105,0,NULL,0,148,FALSE,0.3,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',57,TRUE,4,110,0,NULL,1,131,TRUE,1.4,1,1,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',57,TRUE,4,140,0,FALSE,0,120,TRUE,2,2,NULL,6,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',57,TRUE,4,140,0,NULL,0,100,TRUE,0,NULL,NULL,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',57,TRUE,4,160,0,NULL,0,98,TRUE,2,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',57,TRUE,4,95,0,NULL,0,182,FALSE,0.7,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',58,TRUE,4,115,0,NULL,0,138,FALSE,0.5,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',58,TRUE,4,130,0,FALSE,1,100,TRUE,1,2,NULL,6,4);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',58,TRUE,4,170,0,NULL,1,105,TRUE,0,NULL,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',59,TRUE,3,125,0,NULL,0,175,FALSE,2.6,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',59,TRUE,4,110,0,NULL,0,94,FALSE,0,NULL,NULL,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',59,TRUE,4,120,0,FALSE,0,115,FALSE,0,2,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',59,TRUE,4,125,0,NULL,0,119,TRUE,0.9,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',59,TRUE,4,135,0,FALSE,0,115,TRUE,1,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',60,TRUE,3,115,0,NULL,0,143,FALSE,2.4,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',60,TRUE,4,125,0,NULL,0,110,FALSE,0.1,1,2,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',60,TRUE,4,130,0,NULL,1,130,TRUE,1.1,3,1,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',60,TRUE,4,135,0,FALSE,0,63,TRUE,0.5,1,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',60,TRUE,4,160,0,FALSE,1,99,TRUE,0.5,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',60,TRUE,4,160,0,NULL,0,149,FALSE,0.4,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,3,200,0,NULL,1,70,FALSE,0,NULL,NULL,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,105,0,NULL,0,110,TRUE,1.5,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,110,0,NULL,0,113,FALSE,1.4,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,125,0,FALSE,0,105,TRUE,0,3,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,130,0,FALSE,2,115,FALSE,0,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,130,0,NULL,0,77,FALSE,2.5,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,150,0,FALSE,0,105,TRUE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,150,0,FALSE,0,117,TRUE,2,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',61,TRUE,4,160,0,TRUE,1,145,FALSE,1,2,NULL,7,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,FALSE,1,140,0,NULL,0,143,FALSE,0,NULL,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,FALSE,4,120,0,NULL,1,123,TRUE,1.7,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,TRUE,1,120,0,NULL,2,134,FALSE,-0.8,2,2,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,TRUE,3,160,0,FALSE,0,72,TRUE,0,2,NULL,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,TRUE,4,115,0,NULL,0,128,TRUE,2.5,3,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,TRUE,4,115,0,NULL,0,72,TRUE,-0.5,2,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',62,TRUE,4,150,0,NULL,1,78,FALSE,2,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',63,TRUE,4,100,0,NULL,0,109,FALSE,-0.9,2,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',63,TRUE,4,140,0,NULL,2,149,FALSE,2,1,NULL,NULL,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',63,TRUE,4,150,0,FALSE,0,86,TRUE,2,2,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',63,TRUE,4,150,0,NULL,1,154,FALSE,3.7,1,NULL,NULL,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',63,TRUE,4,185,0,FALSE,0,98,TRUE,0,1,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',64,FALSE,4,200,0,FALSE,0,140,TRUE,1,2,NULL,3,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',64,FALSE,4,95,0,NULL,0,145,FALSE,1.1,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',64,TRUE,4,110,0,NULL,0,114,TRUE,1.3,3,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',65,TRUE,4,115,0,FALSE,0,93,TRUE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',65,TRUE,4,145,0,NULL,1,67,FALSE,NULL,NULL,NULL,6,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',65,TRUE,4,155,0,NULL,0,154,FALSE,1,1,NULL,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',65,TRUE,4,160,0,TRUE,1,122,FALSE,NULL,NULL,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',66,FALSE,4,155,0,NULL,0,90,FALSE,0,NULL,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',66,TRUE,4,150,0,FALSE,0,108,TRUE,2,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',67,TRUE,1,145,0,FALSE,2,125,FALSE,0,2,NULL,3,2);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',68,TRUE,4,135,0,FALSE,1,120,TRUE,0,1,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',68,TRUE,4,145,0,NULL,0,136,FALSE,1.8,1,NULL,NULL,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',69,TRUE,4,135,0,FALSE,0,130,FALSE,0,2,NULL,6,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',69,TRUE,4,NULL,0,FALSE,1,NULL,NULL,NULL,NULL,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',70,TRUE,4,115,0,FALSE,1,92,TRUE,0,2,NULL,7,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',70,TRUE,4,140,0,TRUE,0,157,TRUE,2,2,NULL,7,3);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',72,TRUE,3,160,0,NULL,2,114,FALSE,1.6,2,2,NULL,0);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',73,FALSE,3,160,0,FALSE,1,121,FALSE,0,1,NULL,3,1);
-INSERT INTO heart_disease(source,age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,num) VALUES ('switzerland',74,TRUE,2,145,0,NULL,1,123,FALSE,1.3,1,NULL,NULL,1);
+INSERT INTO heart_disease (source,
+                           age,
+                           sex,
+                           cp,
+                           trestbps,
+                           chol,
+                           fbs,
+                           restecg,
+                           thalach,
+                           exang,
+                           oldpeak,
+                           slope,
+                           ca,
+                           thal,
+                           num)
+VALUES ('cleveland', 63, TRUE, 1, 145, 233, TRUE, 2, 150, FALSE, 2.3, 3, 0, 6, 0),
+       ('cleveland', 67, TRUE, 4, 160, 286, FALSE, 2, 108, TRUE, 1.5, 2, 3, 3, 2),
+       ('cleveland', 67, TRUE, 4, 120, 229, FALSE, 2, 129, TRUE, 2.6, 2, 2, 7, 1),
+       ('cleveland', 37, TRUE, 3, 130, 250, FALSE, 0, 187, FALSE, 3.5, 3, 0, 3, 0),
+       ('cleveland', 41, FALSE, 2, 130, 204, FALSE, 2, 172, FALSE, 1.4, 1, 0, 3, 0),
+       ('cleveland', 56, TRUE, 2, 120, 236, FALSE, 0, 178, FALSE, 0.8, 1, 0, 3, 0),
+       ('cleveland', 62, FALSE, 4, 140, 268, FALSE, 2, 160, FALSE, 3.6, 3, 2, 3, 3),
+       ('cleveland', 57, FALSE, 4, 120, 354, FALSE, 0, 163, TRUE, 0.6, 1, 0, 3, 0),
+       ('cleveland', 63, TRUE, 4, 130, 254, FALSE, 2, 147, FALSE, 1.4, 2, 1, 7, 2),
+       ('cleveland', 53, TRUE, 4, 140, 203, TRUE, 2, 155, TRUE, 3.1, 3, 0, 7, 1),
+       ('cleveland', 57, TRUE, 4, 140, 192, FALSE, 0, 148, FALSE, 0.4, 2, 0, 6, 0),
+       ('cleveland', 56, FALSE, 2, 140, 294, FALSE, 2, 153, FALSE, 1.3, 2, 0, 3, 0),
+       ('cleveland', 56, TRUE, 3, 130, 256, TRUE, 2, 142, TRUE, 0.6, 2, 1, 6, 2),
+       ('cleveland', 44, TRUE, 2, 120, 263, FALSE, 0, 173, FALSE, 0, 1, 0, 7, 0),
+       ('cleveland', 52, TRUE, 3, 172, 199, TRUE, 0, 162, FALSE, 0.5, 1, 0, 7, 0),
+       ('cleveland', 57, TRUE, 3, 150, 168, FALSE, 0, 174, FALSE, 1.6, 1, 0, 3, 0),
+       ('cleveland', 48, TRUE, 2, 110, 229, FALSE, 0, 168, FALSE, 1, 3, 0, 7, 1),
+       ('cleveland', 54, TRUE, 4, 140, 239, FALSE, 0, 160, FALSE, 1.2, 1, 0, 3, 0),
+       ('cleveland', 48, FALSE, 3, 130, 275, FALSE, 0, 139, FALSE, 0.2, 1, 0, 3, 0),
+       ('cleveland', 49, TRUE, 2, 130, 266, FALSE, 0, 171, FALSE, 0.6, 1, 0, 3, 0),
+       ('cleveland', 64, TRUE, 1, 110, 211, FALSE, 2, 144, TRUE, 1.8, 2, 0, 3, 0),
+       ('cleveland', 58, FALSE, 1, 150, 283, TRUE, 2, 162, FALSE, 1, 1, 0, 3, 0),
+       ('cleveland', 58, TRUE, 2, 120, 284, FALSE, 2, 160, FALSE, 1.8, 2, 0, 3, 1),
+       ('cleveland', 58, TRUE, 3, 132, 224, FALSE, 2, 173, FALSE, 3.2, 1, 2, 7, 3),
+       ('cleveland', 60, TRUE, 4, 130, 206, FALSE, 2, 132, TRUE, 2.4, 2, 2, 7, 4),
+       ('cleveland', 50, FALSE, 3, 120, 219, FALSE, 0, 158, FALSE, 1.6, 2, 0, 3, 0),
+       ('cleveland', 58, FALSE, 3, 120, 340, FALSE, 0, 172, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 66, FALSE, 1, 150, 226, FALSE, 0, 114, FALSE, 2.6, 3, 0, 3, 0),
+       ('cleveland', 43, TRUE, 4, 150, 247, FALSE, 0, 171, FALSE, 1.5, 1, 0, 3, 0),
+       ('cleveland', 40, TRUE, 4, 110, 167, FALSE, 2, 114, TRUE, 2, 2, 0, 7, 3),
+       ('cleveland', 69, FALSE, 1, 140, 239, FALSE, 0, 151, FALSE, 1.8, 1, 2, 3, 0),
+       ('cleveland', 60, TRUE, 4, 117, 230, TRUE, 0, 160, TRUE, 1.4, 1, 2, 7, 2),
+       ('cleveland', 64, TRUE, 3, 140, 335, FALSE, 0, 158, FALSE, 0, 1, 0, 3, 1),
+       ('cleveland', 59, TRUE, 4, 135, 234, FALSE, 0, 161, FALSE, 0.5, 2, 0, 7, 0),
+       ('cleveland', 44, TRUE, 3, 130, 233, FALSE, 0, 179, TRUE, 0.4, 1, 0, 3, 0),
+       ('cleveland', 42, TRUE, 4, 140, 226, FALSE, 0, 178, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 43, TRUE, 4, 120, 177, FALSE, 2, 120, TRUE, 2.5, 2, 0, 7, 3),
+       ('cleveland', 57, TRUE, 4, 150, 276, FALSE, 2, 112, TRUE, 0.6, 2, 1, 6, 1),
+       ('cleveland', 55, TRUE, 4, 132, 353, FALSE, 0, 132, TRUE, 1.2, 2, 1, 7, 3),
+       ('cleveland', 61, TRUE, 3, 150, 243, TRUE, 0, 137, TRUE, 1, 2, 0, 3, 0),
+       ('cleveland', 65, FALSE, 4, 150, 225, FALSE, 2, 114, FALSE, 1, 2, 3, 7, 4),
+       ('cleveland', 40, TRUE, 1, 140, 199, FALSE, 0, 178, TRUE, 1.4, 1, 0, 7, 0),
+       ('cleveland', 71, FALSE, 2, 160, 302, FALSE, 0, 162, FALSE, 0.4, 1, 2, 3, 0),
+       ('cleveland', 59, TRUE, 3, 150, 212, TRUE, 0, 157, FALSE, 1.6, 1, 0, 3, 0),
+       ('cleveland', 61, FALSE, 4, 130, 330, FALSE, 2, 169, FALSE, 0, 1, 0, 3, 1),
+       ('cleveland', 58, TRUE, 3, 112, 230, FALSE, 2, 165, FALSE, 2.5, 2, 1, 7, 4),
+       ('cleveland', 51, TRUE, 3, 110, 175, FALSE, 0, 123, FALSE, 0.6, 1, 0, 3, 0),
+       ('cleveland', 50, TRUE, 4, 150, 243, FALSE, 2, 128, FALSE, 2.6, 2, 0, 7, 4),
+       ('cleveland', 65, FALSE, 3, 140, 417, TRUE, 2, 157, FALSE, 0.8, 1, 1, 3, 0),
+       ('cleveland', 53, TRUE, 3, 130, 197, TRUE, 2, 152, FALSE, 1.2, 3, 0, 3, 0),
+       ('cleveland', 41, FALSE, 2, 105, 198, FALSE, 0, 168, FALSE, 0, 1, 1, 3, 0),
+       ('cleveland', 65, TRUE, 4, 120, 177, FALSE, 0, 140, FALSE, 0.4, 1, 0, 7, 0),
+       ('cleveland', 44, TRUE, 4, 112, 290, FALSE, 2, 153, FALSE, 0, 1, 1, 3, 2),
+       ('cleveland', 44, TRUE, 2, 130, 219, FALSE, 2, 188, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 60, TRUE, 4, 130, 253, FALSE, 0, 144, TRUE, 1.4, 1, 1, 7, 1),
+       ('cleveland', 54, TRUE, 4, 124, 266, FALSE, 2, 109, TRUE, 2.2, 2, 1, 7, 1),
+       ('cleveland', 50, TRUE, 3, 140, 233, FALSE, 0, 163, FALSE, 0.6, 2, 1, 7, 1),
+       ('cleveland', 41, TRUE, 4, 110, 172, FALSE, 2, 158, FALSE, 0, 1, 0, 7, 1),
+       ('cleveland', 54, TRUE, 3, 125, 273, FALSE, 2, 152, FALSE, 0.5, 3, 1, 3, 0),
+       ('cleveland', 51, TRUE, 1, 125, 213, FALSE, 2, 125, TRUE, 1.4, 1, 1, 3, 0),
+       ('cleveland', 51, FALSE, 4, 130, 305, FALSE, 0, 142, TRUE, 1.2, 2, 0, 7, 2),
+       ('cleveland', 46, FALSE, 3, 142, 177, FALSE, 2, 160, TRUE, 1.4, 3, 0, 3, 0),
+       ('cleveland', 58, TRUE, 4, 128, 216, FALSE, 2, 131, TRUE, 2.2, 2, 3, 7, 1),
+       ('cleveland', 54, FALSE, 3, 135, 304, TRUE, 0, 170, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 54, TRUE, 4, 120, 188, FALSE, 0, 113, FALSE, 1.4, 2, 1, 7, 2),
+       ('cleveland', 60, TRUE, 4, 145, 282, FALSE, 2, 142, TRUE, 2.8, 2, 2, 7, 2),
+       ('cleveland', 60, TRUE, 3, 140, 185, FALSE, 2, 155, FALSE, 3, 2, 0, 3, 1),
+       ('cleveland', 54, TRUE, 3, 150, 232, FALSE, 2, 165, FALSE, 1.6, 1, 0, 7, 0),
+       ('cleveland', 59, TRUE, 4, 170, 326, FALSE, 2, 140, TRUE, 3.4, 3, 0, 7, 2),
+       ('cleveland', 46, TRUE, 3, 150, 231, FALSE, 0, 147, FALSE, 3.6, 2, 0, 3, 1),
+       ('cleveland', 65, FALSE, 3, 155, 269, FALSE, 0, 148, FALSE, 0.8, 1, 0, 3, 0),
+       ('cleveland', 67, TRUE, 4, 125, 254, TRUE, 0, 163, FALSE, 0.2, 2, 2, 7, 3),
+       ('cleveland', 62, TRUE, 4, 120, 267, FALSE, 0, 99, TRUE, 1.8, 2, 2, 7, 1),
+       ('cleveland', 65, TRUE, 4, 110, 248, FALSE, 2, 158, FALSE, 0.6, 1, 2, 6, 1),
+       ('cleveland', 44, TRUE, 4, 110, 197, FALSE, 2, 177, FALSE, 0, 1, 1, 3, 1),
+       ('cleveland', 65, FALSE, 3, 160, 360, FALSE, 2, 151, FALSE, 0.8, 1, 0, 3, 0),
+       ('cleveland', 60, TRUE, 4, 125, 258, FALSE, 2, 141, TRUE, 2.8, 2, 1, 7, 1),
+       ('cleveland', 51, FALSE, 3, 140, 308, FALSE, 2, 142, FALSE, 1.5, 1, 1, 3, 0),
+       ('cleveland', 48, TRUE, 2, 130, 245, FALSE, 2, 180, FALSE, 0.2, 2, 0, 3, 0),
+       ('cleveland', 58, TRUE, 4, 150, 270, FALSE, 2, 111, TRUE, 0.8, 1, 0, 7, 3),
+       ('cleveland', 45, TRUE, 4, 104, 208, FALSE, 2, 148, TRUE, 3, 2, 0, 3, 0),
+       ('cleveland', 53, FALSE, 4, 130, 264, FALSE, 2, 143, FALSE, 0.4, 2, 0, 3, 0),
+       ('cleveland', 39, TRUE, 3, 140, 321, FALSE, 2, 182, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 68, TRUE, 3, 180, 274, TRUE, 2, 150, TRUE, 1.6, 2, 0, 7, 3),
+       ('cleveland', 52, TRUE, 2, 120, 325, FALSE, 0, 172, FALSE, 0.2, 1, 0, 3, 0),
+       ('cleveland', 44, TRUE, 3, 140, 235, FALSE, 2, 180, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 47, TRUE, 3, 138, 257, FALSE, 2, 156, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 53, FALSE, 3, 128, 216, FALSE, 2, 115, FALSE, 0, 1, 0, NULL, 0),
+       ('cleveland', 53, FALSE, 4, 138, 234, FALSE, 2, 160, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 51, FALSE, 3, 130, 256, FALSE, 2, 149, FALSE, 0.5, 1, 0, 3, 0),
+       ('cleveland', 66, TRUE, 4, 120, 302, FALSE, 2, 151, FALSE, 0.4, 2, 0, 3, 0),
+       ('cleveland', 62, FALSE, 4, 160, 164, FALSE, 2, 145, FALSE, 6.2, 3, 3, 7, 3),
+       ('cleveland', 62, TRUE, 3, 130, 231, FALSE, 0, 146, FALSE, 1.8, 2, 3, 7, 0),
+       ('cleveland', 44, FALSE, 3, 108, 141, FALSE, 0, 175, FALSE, 0.6, 2, 0, 3, 0),
+       ('cleveland', 63, FALSE, 3, 135, 252, FALSE, 2, 172, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 52, TRUE, 4, 128, 255, FALSE, 0, 161, TRUE, 0, 1, 1, 7, 1),
+       ('cleveland', 59, TRUE, 4, 110, 239, FALSE, 2, 142, TRUE, 1.2, 2, 1, 7, 2),
+       ('cleveland', 60, FALSE, 4, 150, 258, FALSE, 2, 157, FALSE, 2.6, 2, 2, 7, 3),
+       ('cleveland', 52, TRUE, 2, 134, 201, FALSE, 0, 158, FALSE, 0.8, 1, 1, 3, 0),
+       ('cleveland', 48, TRUE, 4, 122, 222, FALSE, 2, 186, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 45, TRUE, 4, 115, 260, FALSE, 2, 185, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 34, TRUE, 1, 118, 182, FALSE, 2, 174, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 57, FALSE, 4, 128, 303, FALSE, 2, 159, FALSE, 0, 1, 1, 3, 0),
+       ('cleveland', 71, FALSE, 3, 110, 265, TRUE, 2, 130, FALSE, 0, 1, 1, 3, 0),
+       ('cleveland', 49, TRUE, 3, 120, 188, FALSE, 0, 139, FALSE, 2, 2, 3, 7, 3),
+       ('cleveland', 54, TRUE, 2, 108, 309, FALSE, 0, 156, FALSE, 0, 1, 0, 7, 0),
+       ('cleveland', 59, TRUE, 4, 140, 177, FALSE, 0, 162, TRUE, 0, 1, 1, 7, 2),
+       ('cleveland', 57, TRUE, 3, 128, 229, FALSE, 2, 150, FALSE, 0.4, 2, 1, 7, 1),
+       ('cleveland', 61, TRUE, 4, 120, 260, FALSE, 0, 140, TRUE, 3.6, 2, 1, 7, 2),
+       ('cleveland', 39, TRUE, 4, 118, 219, FALSE, 0, 140, FALSE, 1.2, 2, 0, 7, 3),
+       ('cleveland', 61, FALSE, 4, 145, 307, FALSE, 2, 146, TRUE, 1, 2, 0, 7, 1),
+       ('cleveland', 56, TRUE, 4, 125, 249, TRUE, 2, 144, TRUE, 1.2, 2, 1, 3, 1),
+       ('cleveland', 52, TRUE, 1, 118, 186, FALSE, 2, 190, FALSE, 0, 2, 0, 6, 0),
+       ('cleveland', 43, FALSE, 4, 132, 341, TRUE, 2, 136, TRUE, 3, 2, 0, 7, 2),
+       ('cleveland', 62, FALSE, 3, 130, 263, FALSE, 0, 97, FALSE, 1.2, 2, 1, 7, 2),
+       ('cleveland', 41, TRUE, 2, 135, 203, FALSE, 0, 132, FALSE, 0, 2, 0, 6, 0),
+       ('cleveland', 58, TRUE, 3, 140, 211, TRUE, 2, 165, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 35, FALSE, 4, 138, 183, FALSE, 0, 182, FALSE, 1.4, 1, 0, 3, 0),
+       ('cleveland', 63, TRUE, 4, 130, 330, TRUE, 2, 132, TRUE, 1.8, 1, 3, 7, 3),
+       ('cleveland', 65, TRUE, 4, 135, 254, FALSE, 2, 127, FALSE, 2.8, 2, 1, 7, 2),
+       ('cleveland', 48, TRUE, 4, 130, 256, TRUE, 2, 150, TRUE, 0, 1, 2, 7, 3),
+       ('cleveland', 63, FALSE, 4, 150, 407, FALSE, 2, 154, FALSE, 4, 2, 3, 7, 4),
+       ('cleveland', 51, TRUE, 3, 100, 222, FALSE, 0, 143, TRUE, 1.2, 2, 0, 3, 0),
+       ('cleveland', 55, TRUE, 4, 140, 217, FALSE, 0, 111, TRUE, 5.6, 3, 0, 7, 3),
+       ('cleveland', 65, TRUE, 1, 138, 282, TRUE, 2, 174, FALSE, 1.4, 2, 1, 3, 1),
+       ('cleveland', 45, FALSE, 2, 130, 234, FALSE, 2, 175, FALSE, 0.6, 2, 0, 3, 0),
+       ('cleveland', 56, FALSE, 4, 200, 288, TRUE, 2, 133, TRUE, 4, 3, 2, 7, 3),
+       ('cleveland', 54, TRUE, 4, 110, 239, FALSE, 0, 126, TRUE, 2.8, 2, 1, 7, 3),
+       ('cleveland', 44, TRUE, 2, 120, 220, FALSE, 0, 170, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 62, FALSE, 4, 124, 209, FALSE, 0, 163, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 54, TRUE, 3, 120, 258, FALSE, 2, 147, FALSE, 0.4, 2, 0, 7, 0),
+       ('cleveland', 51, TRUE, 3, 94, 227, FALSE, 0, 154, TRUE, 0, 1, 1, 7, 0),
+       ('cleveland', 29, TRUE, 2, 130, 204, FALSE, 2, 202, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 51, TRUE, 4, 140, 261, FALSE, 2, 186, TRUE, 0, 1, 0, 3, 0),
+       ('cleveland', 43, FALSE, 3, 122, 213, FALSE, 0, 165, FALSE, 0.2, 2, 0, 3, 0),
+       ('cleveland', 55, FALSE, 2, 135, 250, FALSE, 2, 161, FALSE, 1.4, 2, 0, 3, 0),
+       ('cleveland', 70, TRUE, 4, 145, 174, FALSE, 0, 125, TRUE, 2.6, 3, 0, 7, 4),
+       ('cleveland', 62, TRUE, 2, 120, 281, FALSE, 2, 103, FALSE, 1.4, 2, 1, 7, 3),
+       ('cleveland', 35, TRUE, 4, 120, 198, FALSE, 0, 130, TRUE, 1.6, 2, 0, 7, 1),
+       ('cleveland', 51, TRUE, 3, 125, 245, TRUE, 2, 166, FALSE, 2.4, 2, 0, 3, 0),
+       ('cleveland', 59, TRUE, 2, 140, 221, FALSE, 0, 164, TRUE, 0, 1, 0, 3, 0),
+       ('cleveland', 59, TRUE, 1, 170, 288, FALSE, 2, 159, FALSE, 0.2, 2, 0, 7, 1),
+       ('cleveland', 52, TRUE, 2, 128, 205, TRUE, 0, 184, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 64, TRUE, 3, 125, 309, FALSE, 0, 131, TRUE, 1.8, 2, 0, 7, 1),
+       ('cleveland', 58, TRUE, 3, 105, 240, FALSE, 2, 154, TRUE, 0.6, 2, 0, 7, 0),
+       ('cleveland', 47, TRUE, 3, 108, 243, FALSE, 0, 152, FALSE, 0, 1, 0, 3, 1),
+       ('cleveland', 57, TRUE, 4, 165, 289, TRUE, 2, 124, FALSE, 1, 2, 3, 7, 4),
+       ('cleveland', 41, TRUE, 3, 112, 250, FALSE, 0, 179, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 45, TRUE, 2, 128, 308, FALSE, 2, 170, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 60, FALSE, 3, 102, 318, FALSE, 0, 160, FALSE, 0, 1, 1, 3, 0),
+       ('cleveland', 52, TRUE, 1, 152, 298, TRUE, 0, 178, FALSE, 1.2, 2, 0, 7, 0),
+       ('cleveland', 42, FALSE, 4, 102, 265, FALSE, 2, 122, FALSE, 0.6, 2, 0, 3, 0),
+       ('cleveland', 67, FALSE, 3, 115, 564, FALSE, 2, 160, FALSE, 1.6, 2, 0, 7, 0),
+       ('cleveland', 55, TRUE, 4, 160, 289, FALSE, 2, 145, TRUE, 0.8, 2, 1, 7, 4),
+       ('cleveland', 64, TRUE, 4, 120, 246, FALSE, 2, 96, TRUE, 2.2, 3, 1, 3, 3),
+       ('cleveland', 70, TRUE, 4, 130, 322, FALSE, 2, 109, FALSE, 2.4, 2, 3, 3, 1),
+       ('cleveland', 51, TRUE, 4, 140, 299, FALSE, 0, 173, TRUE, 1.6, 1, 0, 7, 1),
+       ('cleveland', 58, TRUE, 4, 125, 300, FALSE, 2, 171, FALSE, 0, 1, 2, 7, 1),
+       ('cleveland', 60, TRUE, 4, 140, 293, FALSE, 2, 170, FALSE, 1.2, 2, 2, 7, 2),
+       ('cleveland', 68, TRUE, 3, 118, 277, FALSE, 0, 151, FALSE, 1, 1, 1, 7, 0),
+       ('cleveland', 46, TRUE, 2, 101, 197, TRUE, 0, 156, FALSE, 0, 1, 0, 7, 0),
+       ('cleveland', 77, TRUE, 4, 125, 304, FALSE, 2, 162, TRUE, 0, 1, 3, 3, 4),
+       ('cleveland', 54, FALSE, 3, 110, 214, FALSE, 0, 158, FALSE, 1.6, 2, 0, 3, 0),
+       ('cleveland', 58, FALSE, 4, 100, 248, FALSE, 2, 122, FALSE, 1, 2, 0, 3, 0),
+       ('cleveland', 48, TRUE, 3, 124, 255, TRUE, 0, 175, FALSE, 0, 1, 2, 3, 0),
+       ('cleveland', 57, TRUE, 4, 132, 207, FALSE, 0, 168, TRUE, 0, 1, 0, 7, 0),
+       ('cleveland', 52, TRUE, 3, 138, 223, FALSE, 0, 169, FALSE, 0, 1, NULL, 3, 0),
+       ('cleveland', 54, FALSE, 2, 132, 288, TRUE, 2, 159, TRUE, 0, 1, 1, 3, 0),
+       ('cleveland', 35, TRUE, 4, 126, 282, FALSE, 2, 156, TRUE, 0, 1, 0, 7, 1),
+       ('cleveland', 45, FALSE, 2, 112, 160, FALSE, 0, 138, FALSE, 0, 2, 0, 3, 0),
+       ('cleveland', 70, TRUE, 3, 160, 269, FALSE, 0, 112, TRUE, 2.9, 2, 1, 7, 3),
+       ('cleveland', 53, TRUE, 4, 142, 226, FALSE, 2, 111, TRUE, 0, 1, 0, 7, 0),
+       ('cleveland', 59, FALSE, 4, 174, 249, FALSE, 0, 143, TRUE, 0, 2, 0, 3, 1),
+       ('cleveland', 62, FALSE, 4, 140, 394, FALSE, 2, 157, FALSE, 1.2, 2, 0, 3, 0),
+       ('cleveland', 64, TRUE, 4, 145, 212, FALSE, 2, 132, FALSE, 2, 2, 2, 6, 4),
+       ('cleveland', 57, TRUE, 4, 152, 274, FALSE, 0, 88, TRUE, 1.2, 2, 1, 7, 1),
+       ('cleveland', 52, TRUE, 4, 108, 233, TRUE, 0, 147, FALSE, 0.1, 1, 3, 7, 0),
+       ('cleveland', 56, TRUE, 4, 132, 184, FALSE, 2, 105, TRUE, 2.1, 2, 1, 6, 1),
+       ('cleveland', 43, TRUE, 3, 130, 315, FALSE, 0, 162, FALSE, 1.9, 1, 1, 3, 0),
+       ('cleveland', 53, TRUE, 3, 130, 246, TRUE, 2, 173, FALSE, 0, 1, 3, 3, 0),
+       ('cleveland', 48, TRUE, 4, 124, 274, FALSE, 2, 166, FALSE, 0.5, 2, 0, 7, 3),
+       ('cleveland', 56, FALSE, 4, 134, 409, FALSE, 2, 150, TRUE, 1.9, 2, 2, 7, 2),
+       ('cleveland', 42, TRUE, 1, 148, 244, FALSE, 2, 178, FALSE, 0.8, 1, 2, 3, 0),
+       ('cleveland', 59, TRUE, 1, 178, 270, FALSE, 2, 145, FALSE, 4.2, 3, 0, 7, 0),
+       ('cleveland', 60, FALSE, 4, 158, 305, FALSE, 2, 161, FALSE, 0, 1, 0, 3, 1),
+       ('cleveland', 63, FALSE, 2, 140, 195, FALSE, 0, 179, FALSE, 0, 1, 2, 3, 0),
+       ('cleveland', 42, TRUE, 3, 120, 240, TRUE, 0, 194, FALSE, 0.8, 3, 0, 7, 0),
+       ('cleveland', 66, TRUE, 2, 160, 246, FALSE, 0, 120, TRUE, 0, 2, 3, 6, 2),
+       ('cleveland', 54, TRUE, 2, 192, 283, FALSE, 2, 195, FALSE, 0, 1, 1, 7, 1),
+       ('cleveland', 69, TRUE, 3, 140, 254, FALSE, 2, 146, FALSE, 2, 2, 3, 7, 2),
+       ('cleveland', 50, TRUE, 3, 129, 196, FALSE, 0, 163, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 51, TRUE, 4, 140, 298, FALSE, 0, 122, TRUE, 4.2, 2, 3, 7, 3),
+       ('cleveland', 43, TRUE, 4, 132, 247, TRUE, 2, 143, TRUE, 0.1, 2, NULL, 7, 1),
+       ('cleveland', 62, FALSE, 4, 138, 294, TRUE, 0, 106, FALSE, 1.9, 2, 3, 3, 2),
+       ('cleveland', 68, FALSE, 3, 120, 211, FALSE, 2, 115, FALSE, 1.5, 2, 0, 3, 0),
+       ('cleveland', 67, TRUE, 4, 100, 299, FALSE, 2, 125, TRUE, 0.9, 2, 2, 3, 3),
+       ('cleveland', 69, TRUE, 1, 160, 234, TRUE, 2, 131, FALSE, 0.1, 2, 1, 3, 0),
+       ('cleveland', 45, FALSE, 4, 138, 236, FALSE, 2, 152, TRUE, 0.2, 2, 0, 3, 0),
+       ('cleveland', 50, FALSE, 2, 120, 244, FALSE, 0, 162, FALSE, 1.1, 1, 0, 3, 0),
+       ('cleveland', 59, TRUE, 1, 160, 273, FALSE, 2, 125, FALSE, 0, 1, 0, 3, 1),
+       ('cleveland', 50, FALSE, 4, 110, 254, FALSE, 2, 159, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 64, FALSE, 4, 180, 325, FALSE, 0, 154, TRUE, 0, 1, 0, 3, 0),
+       ('cleveland', 57, TRUE, 3, 150, 126, TRUE, 0, 173, FALSE, 0.2, 1, 1, 7, 0),
+       ('cleveland', 64, FALSE, 3, 140, 313, FALSE, 0, 133, FALSE, 0.2, 1, 0, 7, 0),
+       ('cleveland', 43, TRUE, 4, 110, 211, FALSE, 0, 161, FALSE, 0, 1, 0, 7, 0),
+       ('cleveland', 45, TRUE, 4, 142, 309, FALSE, 2, 147, TRUE, 0, 2, 3, 7, 3),
+       ('cleveland', 58, TRUE, 4, 128, 259, FALSE, 2, 130, TRUE, 3, 2, 2, 7, 3),
+       ('cleveland', 50, TRUE, 4, 144, 200, FALSE, 2, 126, TRUE, 0.9, 2, 0, 7, 3),
+       ('cleveland', 55, TRUE, 2, 130, 262, FALSE, 0, 155, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 62, FALSE, 4, 150, 244, FALSE, 0, 154, TRUE, 1.4, 2, 0, 3, 1),
+       ('cleveland', 37, FALSE, 3, 120, 215, FALSE, 0, 170, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 38, TRUE, 1, 120, 231, FALSE, 0, 182, TRUE, 3.8, 2, 0, 7, 4),
+       ('cleveland', 41, TRUE, 3, 130, 214, FALSE, 2, 168, FALSE, 2, 2, 0, 3, 0),
+       ('cleveland', 66, FALSE, 4, 178, 228, TRUE, 0, 165, TRUE, 1, 2, 2, 7, 3),
+       ('cleveland', 52, TRUE, 4, 112, 230, FALSE, 0, 160, FALSE, 0, 1, 1, 3, 1),
+       ('cleveland', 56, TRUE, 1, 120, 193, FALSE, 2, 162, FALSE, 1.9, 2, 0, 7, 0),
+       ('cleveland', 46, FALSE, 2, 105, 204, FALSE, 0, 172, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 46, FALSE, 4, 138, 243, FALSE, 2, 152, TRUE, 0, 2, 0, 3, 0),
+       ('cleveland', 64, FALSE, 4, 130, 303, FALSE, 0, 122, FALSE, 2, 2, 2, 3, 0),
+       ('cleveland', 59, TRUE, 4, 138, 271, FALSE, 2, 182, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 41, FALSE, 3, 112, 268, FALSE, 2, 172, TRUE, 0, 1, 0, 3, 0),
+       ('cleveland', 54, FALSE, 3, 108, 267, FALSE, 2, 167, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 39, FALSE, 3, 94, 199, FALSE, 0, 179, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 53, TRUE, 4, 123, 282, FALSE, 0, 95, TRUE, 2, 2, 2, 7, 3),
+       ('cleveland', 63, FALSE, 4, 108, 269, FALSE, 0, 169, TRUE, 1.8, 2, 2, 3, 1),
+       ('cleveland', 34, FALSE, 2, 118, 210, FALSE, 0, 192, FALSE, 0.7, 1, 0, 3, 0),
+       ('cleveland', 47, TRUE, 4, 112, 204, FALSE, 0, 143, FALSE, 0.1, 1, 0, 3, 0),
+       ('cleveland', 67, FALSE, 3, 152, 277, FALSE, 0, 172, FALSE, 0, 1, 1, 3, 0),
+       ('cleveland', 54, TRUE, 4, 110, 206, FALSE, 2, 108, TRUE, 0, 2, 1, 3, 3),
+       ('cleveland', 66, TRUE, 4, 112, 212, FALSE, 2, 132, TRUE, 0.1, 1, 1, 3, 2),
+       ('cleveland', 52, FALSE, 3, 136, 196, FALSE, 2, 169, FALSE, 0.1, 2, 0, 3, 0),
+       ('cleveland', 55, FALSE, 4, 180, 327, FALSE, 1, 117, TRUE, 3.4, 2, 0, 3, 2),
+       ('cleveland', 49, TRUE, 3, 118, 149, FALSE, 2, 126, FALSE, 0.8, 1, 3, 3, 1),
+       ('cleveland', 74, FALSE, 2, 120, 269, FALSE, 2, 121, TRUE, 0.2, 1, 1, 3, 0),
+       ('cleveland', 54, FALSE, 3, 160, 201, FALSE, 0, 163, FALSE, 0, 1, 1, 3, 0),
+       ('cleveland', 54, TRUE, 4, 122, 286, FALSE, 2, 116, TRUE, 3.2, 2, 2, 3, 3),
+       ('cleveland', 56, TRUE, 4, 130, 283, TRUE, 2, 103, TRUE, 1.6, 3, 0, 7, 2),
+       ('cleveland', 46, TRUE, 4, 120, 249, FALSE, 2, 144, FALSE, 0.8, 1, 0, 7, 1),
+       ('cleveland', 49, FALSE, 2, 134, 271, FALSE, 0, 162, FALSE, 0, 2, 0, 3, 0),
+       ('cleveland', 42, TRUE, 2, 120, 295, FALSE, 0, 162, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 41, TRUE, 2, 110, 235, FALSE, 0, 153, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 41, FALSE, 2, 126, 306, FALSE, 0, 163, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 49, FALSE, 4, 130, 269, FALSE, 0, 163, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 61, TRUE, 1, 134, 234, FALSE, 0, 145, FALSE, 2.6, 2, 2, 3, 2),
+       ('cleveland', 60, FALSE, 3, 120, 178, TRUE, 0, 96, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 67, TRUE, 4, 120, 237, FALSE, 0, 71, FALSE, 1, 2, 0, 3, 2),
+       ('cleveland', 58, TRUE, 4, 100, 234, FALSE, 0, 156, FALSE, 0.1, 1, 1, 7, 2),
+       ('cleveland', 47, TRUE, 4, 110, 275, FALSE, 2, 118, TRUE, 1, 2, 1, 3, 1),
+       ('cleveland', 52, TRUE, 4, 125, 212, FALSE, 0, 168, FALSE, 1, 1, 2, 7, 3),
+       ('cleveland', 62, TRUE, 2, 128, 208, TRUE, 2, 140, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 57, TRUE, 4, 110, 201, FALSE, 0, 126, TRUE, 1.5, 2, 0, 6, 0),
+       ('cleveland', 58, TRUE, 4, 146, 218, FALSE, 0, 105, FALSE, 2, 2, 1, 7, 1),
+       ('cleveland', 64, TRUE, 4, 128, 263, FALSE, 0, 105, TRUE, 0.2, 2, 1, 7, 0),
+       ('cleveland', 51, FALSE, 3, 120, 295, FALSE, 2, 157, FALSE, 0.6, 1, 0, 3, 0),
+       ('cleveland', 43, TRUE, 4, 115, 303, FALSE, 0, 181, FALSE, 1.2, 2, 0, 3, 0),
+       ('cleveland', 42, FALSE, 3, 120, 209, FALSE, 0, 173, FALSE, 0, 2, 0, 3, 0),
+       ('cleveland', 67, FALSE, 4, 106, 223, FALSE, 0, 142, FALSE, 0.3, 1, 2, 3, 0),
+       ('cleveland', 76, FALSE, 3, 140, 197, FALSE, 1, 116, FALSE, 1.1, 2, 0, 3, 0),
+       ('cleveland', 70, TRUE, 2, 156, 245, FALSE, 2, 143, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 57, TRUE, 2, 124, 261, FALSE, 0, 141, FALSE, 0.3, 1, 0, 7, 1),
+       ('cleveland', 44, FALSE, 3, 118, 242, FALSE, 0, 149, FALSE, 0.3, 2, 1, 3, 0),
+       ('cleveland', 58, FALSE, 2, 136, 319, TRUE, 2, 152, FALSE, 0, 1, 2, 3, 3),
+       ('cleveland', 60, FALSE, 1, 150, 240, FALSE, 0, 171, FALSE, 0.9, 1, 0, 3, 0),
+       ('cleveland', 44, TRUE, 3, 120, 226, FALSE, 0, 169, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 61, TRUE, 4, 138, 166, FALSE, 2, 125, TRUE, 3.6, 2, 1, 3, 4),
+       ('cleveland', 42, TRUE, 4, 136, 315, FALSE, 0, 125, TRUE, 1.8, 2, 0, 6, 2),
+       ('cleveland', 52, TRUE, 4, 128, 204, TRUE, 0, 156, TRUE, 1, 2, 0, NULL, 2),
+       ('cleveland', 59, TRUE, 3, 126, 218, TRUE, 0, 134, FALSE, 2.2, 2, 1, 6, 2),
+       ('cleveland', 40, TRUE, 4, 152, 223, FALSE, 0, 181, FALSE, 0, 1, 0, 7, 1),
+       ('cleveland', 42, TRUE, 3, 130, 180, FALSE, 0, 150, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 61, TRUE, 4, 140, 207, FALSE, 2, 138, TRUE, 1.9, 1, 1, 7, 1),
+       ('cleveland', 66, TRUE, 4, 160, 228, FALSE, 2, 138, FALSE, 2.3, 1, 0, 6, 0),
+       ('cleveland', 46, TRUE, 4, 140, 311, FALSE, 0, 120, TRUE, 1.8, 2, 2, 7, 2),
+       ('cleveland', 71, FALSE, 4, 112, 149, FALSE, 0, 125, FALSE, 1.6, 2, 0, 3, 0),
+       ('cleveland', 59, TRUE, 1, 134, 204, FALSE, 0, 162, FALSE, 0.8, 1, 2, 3, 1),
+       ('cleveland', 64, TRUE, 1, 170, 227, FALSE, 2, 155, FALSE, 0.6, 2, 0, 7, 0),
+       ('cleveland', 66, FALSE, 3, 146, 278, FALSE, 2, 152, FALSE, 0, 2, 1, 3, 0),
+       ('cleveland', 39, FALSE, 3, 138, 220, FALSE, 0, 152, FALSE, 0, 2, 0, 3, 0),
+       ('cleveland', 57, TRUE, 2, 154, 232, FALSE, 2, 164, FALSE, 0, 1, 1, 3, 1),
+       ('cleveland', 58, FALSE, 4, 130, 197, FALSE, 0, 131, FALSE, 0.6, 2, 0, 3, 0),
+       ('cleveland', 57, TRUE, 4, 110, 335, FALSE, 0, 143, TRUE, 3, 2, 1, 7, 2),
+       ('cleveland', 47, TRUE, 3, 130, 253, FALSE, 0, 179, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 55, FALSE, 4, 128, 205, FALSE, 1, 130, TRUE, 2, 2, 1, 7, 3),
+       ('cleveland', 35, TRUE, 2, 122, 192, FALSE, 0, 174, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 61, TRUE, 4, 148, 203, FALSE, 0, 161, FALSE, 0, 1, 1, 7, 2),
+       ('cleveland', 58, TRUE, 4, 114, 318, FALSE, 1, 140, FALSE, 4.4, 3, 3, 6, 4),
+       ('cleveland', 58, FALSE, 4, 170, 225, TRUE, 2, 146, TRUE, 2.8, 2, 2, 6, 2),
+       ('cleveland', 58, TRUE, 2, 125, 220, FALSE, 0, 144, FALSE, 0.4, 2, NULL, 7, 0),
+       ('cleveland', 56, TRUE, 2, 130, 221, FALSE, 2, 163, FALSE, 0, 1, 0, 7, 0),
+       ('cleveland', 56, TRUE, 2, 120, 240, FALSE, 0, 169, FALSE, 0, 3, 0, 3, 0),
+       ('cleveland', 67, TRUE, 3, 152, 212, FALSE, 2, 150, FALSE, 0.8, 2, 0, 7, 1),
+       ('cleveland', 55, FALSE, 2, 132, 342, FALSE, 0, 166, FALSE, 1.2, 1, 0, 3, 0),
+       ('cleveland', 44, TRUE, 4, 120, 169, FALSE, 0, 144, TRUE, 2.8, 3, 0, 6, 2),
+       ('cleveland', 63, TRUE, 4, 140, 187, FALSE, 2, 144, TRUE, 4, 1, 2, 7, 2),
+       ('cleveland', 63, FALSE, 4, 124, 197, FALSE, 0, 136, TRUE, 0, 2, 0, 3, 1),
+       ('cleveland', 41, TRUE, 2, 120, 157, FALSE, 0, 182, FALSE, 0, 1, 0, 3, 0),
+       ('cleveland', 59, TRUE, 4, 164, 176, TRUE, 2, 90, FALSE, 1, 2, 2, 6, 3),
+       ('cleveland', 57, FALSE, 4, 140, 241, FALSE, 0, 123, TRUE, 0.2, 2, 0, 7, 1),
+       ('cleveland', 45, TRUE, 1, 110, 264, FALSE, 0, 132, FALSE, 1.2, 2, 0, 7, 1),
+       ('cleveland', 68, TRUE, 4, 144, 193, TRUE, 0, 141, FALSE, 3.4, 2, 2, 7, 2),
+       ('cleveland', 57, TRUE, 4, 130, 131, FALSE, 0, 115, TRUE, 1.2, 2, 1, 7, 3),
+       ('cleveland', 57, FALSE, 2, 130, 236, FALSE, 2, 174, FALSE, 0, 2, 1, 3, 1),
+       ('cleveland', 38, TRUE, 3, 138, 175, FALSE, 0, 173, FALSE, 0, 1, NULL, 3, 0),
+       ('long_beach_va', 63, TRUE, 4, 140, 260, FALSE, 1, 112, TRUE, 3, 2, NULL, NULL, 2),
+       ('long_beach_va', 44, TRUE, 4, 130, 209, FALSE, 1, 127, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 60, TRUE, 4, 132, 218, FALSE, 1, 140, TRUE, 1.5, 3, NULL, NULL, 2),
+       ('long_beach_va', 55, TRUE, 4, 142, 228, FALSE, 1, 149, TRUE, 2.5, 1, NULL, NULL, 1),
+       ('long_beach_va', 66, TRUE, 3, 110, 213, TRUE, 2, 99, TRUE, 1.3, 2, NULL, NULL, 0),
+       ('long_beach_va', 66, TRUE, 3, 120, 0, FALSE, 1, 120, FALSE, -0.5, 1, NULL, NULL, 0),
+       ('long_beach_va', 65, TRUE, 4, 150, 236, TRUE, 1, 105, TRUE, 0, NULL, NULL, NULL, 3),
+       ('long_beach_va', 60, TRUE, 3, 180, 0, FALSE, 1, 140, TRUE, 1.5, 2, NULL, NULL, 0),
+       ('long_beach_va', 60, TRUE, 3, 120, 0, NULL, 0, 141, TRUE, 2, 1, NULL, NULL, 3),
+       ('long_beach_va', 60, TRUE, 2, 160, 267, TRUE, 1, 157, FALSE, 0.5, 2, NULL, NULL, 1),
+       ('long_beach_va', 56, TRUE, 2, 126, 166, FALSE, 1, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 59, TRUE, 4, 140, 0, FALSE, 1, 117, TRUE, 1, 2, NULL, NULL, 1),
+       ('long_beach_va', 62, TRUE, 4, 110, 0, FALSE, 0, 120, TRUE, 0.5, 2, NULL, 3, 1),
+       ('long_beach_va', 63, TRUE, 3, NULL, 0, FALSE, 2, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 57, TRUE, 4, 128, 0, TRUE, 1, 148, TRUE, 1, 2, NULL, NULL, 1),
+       ('long_beach_va', 62, TRUE, 4, 120, 220, FALSE, 1, 86, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 63, TRUE, 4, 170, 177, FALSE, 0, 84, TRUE, 2.5, 3, NULL, NULL, 4),
+       ('long_beach_va', 46, TRUE, 4, 110, 236, FALSE, 0, 125, TRUE, 2, 2, NULL, NULL, 1),
+       ('long_beach_va', 63, TRUE, 4, 126, 0, FALSE, 1, 120, FALSE, 1.5, 3, NULL, NULL, 0),
+       ('long_beach_va', 60, TRUE, 4, 152, 0, FALSE, 1, 118, TRUE, 0, NULL, NULL, 7, 0),
+       ('long_beach_va', 58, TRUE, 4, 116, 0, FALSE, 0, 124, FALSE, 1, 1, NULL, NULL, 2),
+       ('long_beach_va', 64, TRUE, 4, 120, 0, TRUE, 1, 106, FALSE, 2, 2, NULL, NULL, 1),
+       ('long_beach_va', 63, TRUE, 3, 130, 0, FALSE, 1, 111, TRUE, 0, NULL, NULL, NULL, 3),
+       ('long_beach_va', 74, TRUE, 3, NULL, 0, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 52, TRUE, 3, 128, 0, FALSE, 1, 180, FALSE, 3, 1, NULL, NULL, 2),
+       ('long_beach_va', 69, TRUE, 4, 130, 0, TRUE, 1, 129, FALSE, 1, 2, NULL, 6, 2),
+       ('long_beach_va', 51, TRUE, 4, NULL, 0, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 60, TRUE, 4, 130, 186, TRUE, 1, 140, TRUE, 0.5, 2, NULL, NULL, 1),
+       ('long_beach_va', 56, TRUE, 4, 120, 100, FALSE, 0, 120, TRUE, 1.5, 2, 0, 7, 1),
+       ('long_beach_va', 55, TRUE, 3, NULL, 228, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 54, TRUE, 4, NULL, 0, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 77, TRUE, 4, 124, 171, FALSE, 1, 110, TRUE, 2, 1, NULL, NULL, 3),
+       ('long_beach_va', 63, TRUE, 4, 160, 230, TRUE, 0, 105, TRUE, 1, 2, NULL, NULL, 3),
+       ('long_beach_va', 55, TRUE, 3, 0, 0, FALSE, 0, 155, FALSE, 1.5, 2, NULL, NULL, 3),
+       ('long_beach_va', 52, TRUE, 3, 122, 0, FALSE, 0, 110, TRUE, 2, 3, NULL, NULL, 2),
+       ('long_beach_va', 64, TRUE, 4, 144, 0, FALSE, 1, 122, TRUE, 1, 2, NULL, NULL, 3),
+       ('long_beach_va', 60, TRUE, 4, NULL, 281, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 60, TRUE, 4, 120, 0, FALSE, 0, 133, TRUE, 2, 1, NULL, 7, 0),
+       ('long_beach_va', 58, TRUE, 4, NULL, 203, TRUE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 59, TRUE, 4, 154, 0, FALSE, 1, 131, TRUE, 1.5, NULL, 0, NULL, 0),
+       ('long_beach_va', 61, TRUE, 3, 120, 0, FALSE, 0, 80, TRUE, 0, 2, NULL, NULL, 3),
+       ('long_beach_va', 40, TRUE, 4, 125, 0, TRUE, 0, 165, FALSE, 0, NULL, NULL, 7, 1),
+       ('long_beach_va', 61, TRUE, 4, NULL, 0, TRUE, 1, 86, FALSE, 1.5, 2, NULL, 7, 3),
+       ('long_beach_va', 41, TRUE, 4, 104, 0, FALSE, 1, 111, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 57, TRUE, 4, NULL, 277, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 4),
+       ('long_beach_va', 63, TRUE, 4, 136, 0, FALSE, 0, 84, TRUE, 0, NULL, NULL, 7, 2),
+       ('long_beach_va', 59, TRUE, 4, 122, 233, FALSE, 0, 117, TRUE, 1.3, 3, NULL, NULL, 1),
+       ('long_beach_va', 51, TRUE, 4, 128, 0, FALSE, 0, 107, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 59, TRUE, 3, NULL, 0, FALSE, 0, 128, TRUE, 2, 3, NULL, NULL, 2),
+       ('long_beach_va', 42, TRUE, 3, 134, 240, NULL, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 55, TRUE, 3, 120, 0, FALSE, 1, 125, TRUE, 2.5, 2, NULL, 7, 1),
+       ('long_beach_va', 63, FALSE, 2, NULL, 0, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 62, TRUE, 4, 152, 153, FALSE, 1, 97, TRUE, 1.6, 1, NULL, 7, 2),
+       ('long_beach_va', 56, TRUE, 2, 124, 224, TRUE, 0, 161, FALSE, 2, 2, NULL, NULL, 0),
+       ('long_beach_va', 53, TRUE, 4, 126, 0, FALSE, 0, 106, FALSE, 0, NULL, NULL, NULL, 1),
+       ('long_beach_va', 68, TRUE, 4, 138, 0, FALSE, 0, 130, TRUE, 3, 2, NULL, NULL, 2),
+       ('long_beach_va', 53, TRUE, 4, 154, 0, NULL, 1, 140, TRUE, 1.5, 2, NULL, NULL, 2),
+       ('long_beach_va', 60, TRUE, 3, NULL, 316, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 62, TRUE, 2, NULL, 0, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 59, TRUE, 4, 178, 0, TRUE, 2, 120, TRUE, 0, NULL, NULL, 7, 1),
+       ('long_beach_va', 51, TRUE, 4, NULL, 218, TRUE, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 61, TRUE, 4, 110, 0, NULL, 0, 108, TRUE, 2, 3, NULL, NULL, 2),
+       ('long_beach_va', 57, TRUE, 4, 130, 311, NULL, 1, 148, TRUE, 2, 2, NULL, NULL, 1),
+       ('long_beach_va', 56, TRUE, 3, 170, 0, FALSE, 2, 123, TRUE, 2.5, NULL, NULL, NULL, 4),
+       ('long_beach_va', 58, TRUE, 2, 126, 0, TRUE, 0, 110, TRUE, 2, 2, NULL, NULL, 2),
+       ('long_beach_va', 69, TRUE, 3, 140, 0, NULL, 1, 118, FALSE, 2.5, 3, NULL, NULL, 2),
+       ('long_beach_va', 67, TRUE, 1, 142, 270, TRUE, 0, 125, FALSE, 2.5, 1, NULL, NULL, 3),
+       ('long_beach_va', 58, TRUE, 4, 120, 0, FALSE, 2, 106, TRUE, 1.5, 3, NULL, 7, 1),
+       ('long_beach_va', 65, TRUE, 4, NULL, 0, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 63, TRUE, 2, NULL, 217, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 55, TRUE, 2, 110, 214, TRUE, 1, 180, FALSE, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 57, TRUE, 4, 140, 214, FALSE, 1, 144, TRUE, 2, 2, NULL, 6, 2),
+       ('long_beach_va', 65, TRUE, 1, NULL, 252, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 54, TRUE, 4, 136, 220, FALSE, 0, 140, TRUE, 3, 2, NULL, NULL, 3),
+       ('long_beach_va', 72, TRUE, 3, 120, 214, FALSE, 0, 102, TRUE, 1, 2, NULL, NULL, 3),
+       ('long_beach_va', 75, TRUE, 4, 170, 203, TRUE, 1, 108, FALSE, 0, NULL, NULL, 7, 1),
+       ('long_beach_va', 49, TRUE, 1, 130, 0, FALSE, 1, 145, FALSE, 3, 2, NULL, NULL, 2),
+       ('long_beach_va', 51, TRUE, 3, NULL, 339, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 60, TRUE, 4, 142, 216, FALSE, 0, 110, TRUE, 2.5, 2, NULL, NULL, 2),
+       ('long_beach_va', 64, FALSE, 4, 142, 276, FALSE, 0, 140, TRUE, 1, 2, NULL, 7, 1),
+       ('long_beach_va', 58, TRUE, 4, 132, 458, TRUE, 0, 69, FALSE, 1, 3, NULL, NULL, 0),
+       ('long_beach_va', 61, TRUE, 4, 146, 241, FALSE, 0, 148, TRUE, 3, 3, NULL, NULL, 2),
+       ('long_beach_va', 67, TRUE, 4, 160, 384, TRUE, 1, 130, TRUE, 0, 2, NULL, NULL, 2),
+       ('long_beach_va', 62, TRUE, 4, 135, 297, FALSE, 0, 130, TRUE, 1, 2, NULL, NULL, 2),
+       ('long_beach_va', 65, TRUE, 4, 136, 248, FALSE, 0, 140, TRUE, 4, 3, NULL, NULL, 4),
+       ('long_beach_va', 63, TRUE, 4, 130, 308, FALSE, 0, 138, TRUE, 2, 2, NULL, NULL, 2),
+       ('long_beach_va', 69, TRUE, 4, 140, 208, FALSE, 1, 140, TRUE, 2, NULL, NULL, NULL, 3),
+       ('long_beach_va', 51, TRUE, 4, NULL, 227, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 62, TRUE, 4, 158, 210, TRUE, 0, 112, TRUE, 3, 3, NULL, NULL, 1),
+       ('long_beach_va', 55, TRUE, 3, NULL, 245, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 75, TRUE, 4, 136, 225, FALSE, 0, 112, TRUE, 3, 2, NULL, NULL, 3),
+       ('long_beach_va', 40, TRUE, 3, 106, 240, FALSE, 0, 80, TRUE, 0, NULL, NULL, 7, 0),
+       ('long_beach_va', 67, TRUE, 4, 120, 0, TRUE, 0, 150, FALSE, 1.5, 3, NULL, NULL, 3),
+       ('long_beach_va', 58, TRUE, 4, 110, 198, FALSE, 0, 110, FALSE, 0, NULL, NULL, NULL, 1),
+       ('long_beach_va', 60, TRUE, 4, NULL, 195, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 63, TRUE, 4, 160, 267, TRUE, 1, 88, TRUE, 2, NULL, NULL, NULL, 3),
+       ('long_beach_va', 35, TRUE, 3, NULL, 161, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 62, TRUE, 1, 112, 258, FALSE, 1, 150, TRUE, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 43, TRUE, 4, 122, 0, FALSE, 0, 120, FALSE, 0.5, 1, NULL, NULL, 1),
+       ('long_beach_va', 63, TRUE, 3, 130, 0, TRUE, 1, 160, FALSE, 3, 2, NULL, NULL, 0),
+       ('long_beach_va', 68, TRUE, 3, 150, 195, TRUE, 0, 132, FALSE, 0, NULL, NULL, 6, 1),
+       ('long_beach_va', 65, TRUE, 4, 150, 235, FALSE, 0, 120, TRUE, 1.5, 2, NULL, NULL, 3),
+       ('long_beach_va', 48, TRUE, 3, 102, 0, NULL, 1, 110, TRUE, 1, 3, NULL, NULL, 1),
+       ('long_beach_va', 63, TRUE, 4, 96, 305, FALSE, 1, 121, TRUE, 1, 1, NULL, NULL, 1),
+       ('long_beach_va', 64, TRUE, 4, 130, 223, FALSE, 1, 128, FALSE, 0.5, 2, NULL, NULL, 0),
+       ('long_beach_va', 61, TRUE, 4, 120, 282, FALSE, 1, 135, TRUE, 4, 3, NULL, 6, 3),
+       ('long_beach_va', 50, TRUE, 4, 144, 349, FALSE, 2, 120, TRUE, 1, 1, NULL, 7, 1),
+       ('long_beach_va', 59, TRUE, 4, 124, NULL, FALSE, 0, 117, TRUE, 1, 2, NULL, NULL, 1),
+       ('long_beach_va', 55, TRUE, 4, 150, 160, FALSE, 1, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 45, TRUE, 3, NULL, 236, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 65, TRUE, 4, NULL, 312, FALSE, 2, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 61, TRUE, 2, NULL, 283, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 49, TRUE, 3, NULL, 142, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 72, TRUE, 4, NULL, 211, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 50, TRUE, 4, NULL, 218, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 64, TRUE, 4, NULL, 306, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 55, TRUE, 4, 116, 186, TRUE, 1, 102, FALSE, 0, NULL, NULL, NULL, 2),
+       ('long_beach_va', 63, TRUE, 4, 110, 252, FALSE, 1, 140, TRUE, 2, 2, NULL, NULL, 2),
+       ('long_beach_va', 59, TRUE, 4, 125, 222, FALSE, 0, 135, TRUE, 2.5, 3, NULL, NULL, 3),
+       ('long_beach_va', 56, TRUE, 4, NULL, 0, FALSE, 2, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 62, TRUE, 3, NULL, 0, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 74, TRUE, 4, 150, 258, TRUE, 1, 130, TRUE, 4, 3, NULL, NULL, 3),
+       ('long_beach_va', 54, TRUE, 4, 130, 202, TRUE, 0, 112, TRUE, 2, 2, NULL, NULL, 1),
+       ('long_beach_va', 57, TRUE, 4, 110, 197, FALSE, 2, 100, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 62, TRUE, 3, NULL, 204, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 76, TRUE, 3, 104, NULL, FALSE, 2, 120, FALSE, 3.5, 3, NULL, NULL, 4),
+       ('long_beach_va', 54, FALSE, 4, 138, 274, FALSE, 0, 105, TRUE, 1.5, 2, NULL, NULL, 1),
+       ('long_beach_va', 70, TRUE, 4, 170, 192, FALSE, 1, 129, TRUE, 3, 3, NULL, NULL, 2),
+       ('long_beach_va', 61, FALSE, 2, 140, 298, TRUE, 0, 120, TRUE, 0, NULL, NULL, 7, 0),
+       ('long_beach_va', 48, TRUE, 4, NULL, 272, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 48, TRUE, 3, 132, 220, TRUE, 1, 162, FALSE, 0, NULL, NULL, 6, 1),
+       ('long_beach_va', 61, TRUE, 1, 142, 200, TRUE, 1, 100, FALSE, 1.5, 3, NULL, NULL, 3),
+       ('long_beach_va', 66, TRUE, 4, 112, 261, FALSE, 0, 140, FALSE, 1.5, 1, NULL, NULL, 1),
+       ('long_beach_va', 68, TRUE, 1, NULL, 181, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 55, TRUE, 4, 172, 260, FALSE, 0, 73, FALSE, 2, NULL, NULL, NULL, 3),
+       ('long_beach_va', 62, TRUE, 3, 120, 220, FALSE, 2, 86, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 71, TRUE, 3, NULL, 221, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 74, TRUE, 1, NULL, 216, TRUE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 53, TRUE, 3, 155, 175, TRUE, 1, 160, FALSE, NULL, NULL, NULL, 6, 0),
+       ('long_beach_va', 58, TRUE, 3, 150, 219, FALSE, 1, 118, TRUE, 0, NULL, NULL, NULL, 2),
+       ('long_beach_va', 75, TRUE, 4, 160, 310, TRUE, 0, 112, TRUE, 2, 3, NULL, 7, 0),
+       ('long_beach_va', 56, TRUE, 3, NULL, 208, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 4),
+       ('long_beach_va', 58, TRUE, 3, NULL, 232, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 64, TRUE, 4, 134, 273, FALSE, 0, 102, TRUE, 4, 3, NULL, NULL, 4),
+       ('long_beach_va', 54, TRUE, 3, NULL, 203, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 54, TRUE, 2, NULL, 182, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 59, TRUE, 4, 140, 274, FALSE, 0, 154, TRUE, 2, 2, NULL, NULL, 0),
+       ('long_beach_va', 55, TRUE, 4, NULL, 204, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 57, TRUE, 4, 144, 270, TRUE, 1, 160, TRUE, 2, 2, NULL, NULL, 3),
+       ('long_beach_va', 61, TRUE, 4, NULL, 292, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 41, TRUE, 4, 150, 171, FALSE, 0, 128, TRUE, 1.5, 2, NULL, NULL, 0),
+       ('long_beach_va', 71, TRUE, 4, 130, 221, FALSE, 1, 115, TRUE, 0, NULL, NULL, NULL, 3),
+       ('long_beach_va', 38, TRUE, 4, 110, 289, FALSE, 0, 105, TRUE, 1.5, 3, NULL, NULL, 1),
+       ('long_beach_va', 55, TRUE, 4, 158, 217, FALSE, 0, 110, TRUE, 2.5, 2, NULL, NULL, 1),
+       ('long_beach_va', 56, TRUE, 4, 128, 223, FALSE, 1, 119, TRUE, 2, 3, NULL, NULL, 2),
+       ('long_beach_va', 69, TRUE, 4, NULL, NULL, TRUE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 64, TRUE, 4, 150, 193, FALSE, 1, 135, TRUE, 0.5, 2, NULL, NULL, 2),
+       ('long_beach_va', 72, TRUE, 4, 160, NULL, TRUE, 2, 130, FALSE, 1.5, NULL, NULL, NULL, 2),
+       ('long_beach_va', 69, TRUE, 4, NULL, 210, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 56, TRUE, 4, NULL, 282, TRUE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 62, TRUE, 4, NULL, 170, FALSE, 1, 120, TRUE, 3, NULL, NULL, NULL, 4),
+       ('long_beach_va', 67, TRUE, 4, NULL, 369, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 57, TRUE, 4, 156, 173, FALSE, 2, 119, TRUE, 3, 3, NULL, NULL, 3),
+       ('long_beach_va', 69, TRUE, 4, NULL, 289, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 3),
+       ('long_beach_va', 51, TRUE, 4, NULL, NULL, TRUE, 2, NULL, NULL, NULL, NULL, NULL, 7, 1),
+       ('long_beach_va', 48, TRUE, 4, 140, NULL, FALSE, 0, 159, TRUE, 1.5, 1, NULL, NULL, 3),
+       ('long_beach_va', 69, TRUE, 4, 122, 216, TRUE, 2, 84, TRUE, 0, NULL, NULL, 7, 2),
+       ('long_beach_va', 69, TRUE, 3, NULL, 271, FALSE, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 64, TRUE, 4, NULL, 244, TRUE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+       ('long_beach_va', 57, TRUE, 2, 180, 285, TRUE, 1, 120, FALSE, 0.8, NULL, NULL, NULL, 1),
+       ('long_beach_va', 53, TRUE, 4, 124, 243, FALSE, 0, 122, TRUE, 2, 2, NULL, 7, 1),
+       ('long_beach_va', 37, TRUE, 3, 118, 240, FALSE, 2, 165, FALSE, 1, 2, NULL, 3, 0),
+       ('long_beach_va', 67, TRUE, 4, 140, 219, FALSE, 1, 122, TRUE, 2, 2, NULL, 7, 3),
+       ('long_beach_va', 74, TRUE, 3, 140, 237, TRUE, 0, 94, FALSE, 0, NULL, NULL, NULL, 1),
+       ('long_beach_va', 63, TRUE, 2, NULL, 165, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 58, TRUE, 4, 100, 213, FALSE, 1, 110, FALSE, 0, NULL, NULL, NULL, 0),
+       ('long_beach_va', 61, TRUE, 4, 190, 287, TRUE, 2, 150, TRUE, 2, 3, NULL, NULL, 4),
+       ('long_beach_va', 64, TRUE, 4, 130, 258, TRUE, 2, 130, FALSE, 0, NULL, NULL, 6, 2),
+       ('long_beach_va', 58, TRUE, 4, 160, 256, TRUE, 2, 113, TRUE, 1, 1, NULL, NULL, 3),
+       ('long_beach_va', 60, TRUE, 4, 130, 186, TRUE, 2, 140, TRUE, 0.5, 2, NULL, NULL, 1),
+       ('long_beach_va', 57, TRUE, 4, 122, 264, FALSE, 2, 100, FALSE, 0, NULL, NULL, NULL, 1),
+       ('long_beach_va', 55, TRUE, 3, NULL, NULL, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 55, TRUE, 4, 120, 226, FALSE, 2, 127, TRUE, 1.7, 3, NULL, 7, 1),
+       ('long_beach_va', 56, TRUE, 4, 130, 203, TRUE, 0, 98, FALSE, 1.5, 2, NULL, 7, 1),
+       ('long_beach_va', 57, TRUE, 4, 130, 207, FALSE, 1, 96, TRUE, 1, 2, NULL, NULL, 0),
+       ('long_beach_va', 61, TRUE, 3, NULL, 284, FALSE, 0, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+       ('long_beach_va', 61, TRUE, 3, 120, 337, FALSE, 0, 98, TRUE, 0, NULL, NULL, NULL, 3),
+       ('long_beach_va', 58, TRUE, 3, 150, 219, FALSE, 1, 118, TRUE, 0, NULL, NULL, NULL, 2),
+       ('long_beach_va', 74, TRUE, 4, 155, 310, FALSE, 0, 112, TRUE, 1.5, 3, NULL, NULL, 2),
+       ('long_beach_va', 68, TRUE, 3, 134, 254, TRUE, 0, 151, TRUE, 0, NULL, NULL, 3, 0),
+       ('long_beach_va', 51, FALSE, 4, 114, 258, TRUE, 2, 96, FALSE, 1, 1, NULL, NULL, 0),
+       ('long_beach_va', 62, TRUE, 4, 160, 254, TRUE, 1, 108, TRUE, 3, 2, NULL, NULL, 4),
+       ('long_beach_va', 53, TRUE, 4, 144, 300, TRUE, 1, 128, TRUE, 1.5, 2, NULL, NULL, 3),
+       ('long_beach_va', 62, TRUE, 4, 158, 170, FALSE, 1, 138, TRUE, 0, NULL, NULL, NULL, 1),
+       ('long_beach_va', 46, TRUE, 4, 134, 310, FALSE, 0, 126, FALSE, 0, NULL, NULL, 3, 2),
+       ('long_beach_va', 54, FALSE, 4, 127, 333, TRUE, 1, 154, FALSE, 0, NULL, NULL, NULL, 1),
+       ('long_beach_va', 62, TRUE, 1, NULL, 139, FALSE, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 55, TRUE, 4, 122, 223, TRUE, 1, 100, FALSE, 0, NULL, NULL, 6, 2),
+       ('long_beach_va', 58, TRUE, 4, NULL, 385, TRUE, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+       ('long_beach_va', 62, TRUE, 2, 120, 254, FALSE, 2, 93, TRUE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 40, TRUE, 2, 140, 289, FALSE, 0, 172, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, FALSE, 3, 160, 180, FALSE, 0, 156, FALSE, 1, 2, NULL, NULL, 1),
+       ('hungary', 37, TRUE, 2, 130, 283, FALSE, 1, 98, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, FALSE, 4, 138, 214, FALSE, 0, 108, TRUE, 1.5, 2, NULL, NULL, 3),
+       ('hungary', 54, TRUE, 3, 150, NULL, FALSE, 0, 122, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 39, TRUE, 3, 120, 339, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 45, FALSE, 2, 130, 237, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 2, 110, 208, FALSE, 0, 142, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 37, TRUE, 4, 140, 207, FALSE, 0, 130, TRUE, 1.5, 2, NULL, NULL, 1),
+       ('hungary', 48, FALSE, 2, 120, 284, FALSE, 0, 120, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 37, FALSE, 3, 130, 211, FALSE, 0, 142, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 58, TRUE, 2, 136, 164, FALSE, 1, 99, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 39, TRUE, 2, 120, 204, FALSE, 0, 145, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, TRUE, 4, 140, 234, FALSE, 0, 140, TRUE, 1, 2, NULL, NULL, 3),
+       ('hungary', 42, FALSE, 3, 115, 211, FALSE, 1, 137, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, FALSE, 2, 120, 273, FALSE, 0, 150, FALSE, 1.5, 2, NULL, NULL, 0),
+       ('hungary', 38, TRUE, 4, 110, 196, FALSE, 0, 166, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 43, FALSE, 2, 120, 201, FALSE, 0, 165, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 60, TRUE, 4, 100, 248, FALSE, 0, 125, FALSE, 1, 2, NULL, NULL, 1),
+       ('hungary', 36, TRUE, 2, 120, 267, FALSE, 0, 160, FALSE, 3, 2, NULL, NULL, 1),
+       ('hungary', 43, FALSE, 1, 100, 223, FALSE, 0, 142, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 44, TRUE, 2, 120, 184, FALSE, 0, 142, FALSE, 1, 2, NULL, NULL, 0),
+       ('hungary', 49, FALSE, 2, 124, 201, FALSE, 0, 164, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 44, TRUE, 2, 150, 288, FALSE, 0, 150, TRUE, 3, 2, NULL, NULL, 3),
+       ('hungary', 40, TRUE, 3, 130, 215, FALSE, 0, 138, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 36, TRUE, 3, 130, 209, FALSE, 0, 178, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 53, TRUE, 4, 124, 260, FALSE, 1, 112, TRUE, 3, 2, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 2, 120, 284, FALSE, 0, 118, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 53, FALSE, 2, 113, 468, NULL, 0, 127, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 51, TRUE, 2, 125, 188, FALSE, 0, 145, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 53, TRUE, 3, 145, 518, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 3),
+       ('hungary', 56, TRUE, 3, 130, NULL, FALSE, 0, 114, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 4, 125, 224, FALSE, 0, 122, FALSE, 2, 2, NULL, NULL, 1),
+       ('hungary', 41, TRUE, 4, 130, 172, FALSE, 1, 130, FALSE, 2, 2, NULL, NULL, 3),
+       ('hungary', 43, FALSE, 2, 150, 186, FALSE, 0, 154, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 32, TRUE, 2, 125, 254, FALSE, 0, 155, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 65, TRUE, 4, 140, 306, TRUE, 0, 87, TRUE, 1.5, 2, NULL, NULL, 1),
+       ('hungary', 41, FALSE, 2, 110, 250, FALSE, 1, 142, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, FALSE, 2, 120, NULL, TRUE, 1, 148, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, FALSE, 4, 150, 227, FALSE, 0, 130, TRUE, 1, 2, 9, NULL, 0),
+       ('hungary', 54, FALSE, 2, 150, 230, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, FALSE, 3, 130, 294, FALSE, 1, 100, TRUE, 0, 2, NULL, NULL, 4),
+       ('hungary', 35, TRUE, 2, 150, 264, FALSE, 0, 168, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 3, 140, 259, FALSE, 1, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 43, TRUE, 4, 120, 175, FALSE, 0, 120, TRUE, 1, 2, NULL, 7, 3),
+       ('hungary', 59, TRUE, 3, 130, 318, FALSE, 0, 120, TRUE, 1, 2, NULL, 3, 0),
+       ('hungary', 37, TRUE, 4, 120, 223, FALSE, 0, 168, FALSE, 0, NULL, NULL, 3, 0),
+       ('hungary', 50, TRUE, 2, 140, 216, FALSE, 0, 170, FALSE, 0, NULL, NULL, 3, 0),
+       ('hungary', 36, TRUE, 3, 112, 340, FALSE, 0, 184, FALSE, 1, 2, NULL, 3, 0),
+       ('hungary', 41, TRUE, 4, 110, 289, FALSE, 0, 170, FALSE, 0, NULL, NULL, 6, 1),
+       ('hungary', 50, TRUE, 4, 130, 233, FALSE, 0, 121, TRUE, 2, 2, NULL, 7, 2),
+       ('hungary', 47, FALSE, 4, 120, 205, FALSE, 0, 98, TRUE, 2, 2, NULL, 6, 4),
+       ('hungary', 45, TRUE, 2, 140, 224, TRUE, 0, 122, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 41, FALSE, 2, 130, 245, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, FALSE, 4, 130, 180, FALSE, 0, 140, TRUE, 1.5, 2, NULL, NULL, 0),
+       ('hungary', 51, FALSE, 2, 160, 194, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 31, TRUE, 4, 120, 270, FALSE, 0, 153, TRUE, 1.5, 2, NULL, NULL, 1),
+       ('hungary', 58, TRUE, 3, 130, 213, FALSE, 1, 140, FALSE, 0, NULL, NULL, 6, 1),
+       ('hungary', 54, TRUE, 4, 150, 365, FALSE, 1, 134, FALSE, 1, 1, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 112, 342, FALSE, 1, 96, TRUE, 1, 2, NULL, NULL, 3),
+       ('hungary', 49, TRUE, 2, 100, 253, FALSE, 0, 174, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 43, FALSE, 3, 150, NULL, FALSE, 0, 175, FALSE, 0, NULL, NULL, 3, 0),
+       ('hungary', 45, TRUE, 4, 140, 224, FALSE, 0, 144, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 4, 120, 277, FALSE, 0, 125, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 50, FALSE, 2, 110, 202, FALSE, 0, 145, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 37, FALSE, 2, 120, 260, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 45, FALSE, 4, 132, 297, FALSE, 0, 144, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 32, TRUE, 2, 110, 225, FALSE, 0, 184, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 160, 246, FALSE, 1, 82, TRUE, 4, 2, NULL, NULL, 3),
+       ('hungary', 44, TRUE, 4, 150, 412, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 57, TRUE, 2, 140, 265, FALSE, 1, 145, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 44, TRUE, 2, 130, 215, FALSE, 0, 135, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 120, 182, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 44, FALSE, 4, 120, 218, FALSE, 1, 115, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 55, TRUE, 4, 140, 268, FALSE, 0, 128, TRUE, 1.5, 2, NULL, NULL, 2),
+       ('hungary', 46, TRUE, 3, 150, 163, NULL, 0, 116, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 32, TRUE, 4, 118, 529, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 35, FALSE, 4, 140, 167, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 2, 140, 100, FALSE, 0, 138, TRUE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, TRUE, 4, 130, 206, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 55, TRUE, 3, 110, 277, FALSE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 2, 120, 238, FALSE, 0, 154, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 63, TRUE, 4, 150, 223, FALSE, 0, 115, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 52, TRUE, 2, 160, 196, FALSE, 0, 165, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 56, TRUE, 4, 150, 213, TRUE, 0, 125, TRUE, 1, 2, NULL, NULL, 2),
+       ('hungary', 66, TRUE, 4, 140, NULL, FALSE, 0, 94, TRUE, 1, 2, NULL, NULL, 3),
+       ('hungary', 65, TRUE, 4, 170, 263, TRUE, 0, 112, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 53, FALSE, 2, 140, 216, FALSE, 0, 142, TRUE, 2, 2, NULL, NULL, 0),
+       ('hungary', 43, TRUE, 1, 120, 291, FALSE, 1, 155, FALSE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 55, TRUE, 4, 140, 229, FALSE, 0, 110, TRUE, 0.5, 2, NULL, NULL, 0),
+       ('hungary', 49, FALSE, 2, 110, NULL, FALSE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 39, TRUE, 4, 130, 307, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, FALSE, 2, 120, 210, FALSE, 0, 148, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, TRUE, 4, 160, 329, FALSE, 0, 92, TRUE, 1.5, 2, NULL, NULL, 2),
+       ('hungary', 39, FALSE, 3, 110, 182, FALSE, 1, 180, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 58, TRUE, 4, 130, 263, FALSE, 0, 140, TRUE, 2, 2, NULL, NULL, 2),
+       ('hungary', 43, TRUE, 2, 142, 207, FALSE, 0, 138, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 39, TRUE, 3, 160, 147, TRUE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 56, TRUE, 4, 120, 85, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 41, TRUE, 2, 125, 269, FALSE, 0, 144, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 65, TRUE, 4, 130, 275, FALSE, 1, 115, TRUE, 1, 2, NULL, NULL, 4),
+       ('hungary', 51, TRUE, 4, 130, 179, FALSE, 0, 100, FALSE, 0, NULL, NULL, 7, 0),
+       ('hungary', 40, FALSE, 4, 150, 392, FALSE, 0, 130, FALSE, 2, 2, NULL, 6, 2),
+       ('hungary', 40, TRUE, 4, 120, 466, NULL, 0, 152, TRUE, 1, 2, NULL, 6, 1),
+       ('hungary', 46, TRUE, 4, 118, 186, FALSE, 0, 124, FALSE, 0, NULL, NULL, 7, 1),
+       ('hungary', 57, TRUE, 2, 140, 260, TRUE, 0, 140, FALSE, 0, NULL, NULL, 6, 0),
+       ('hungary', 48, FALSE, 4, 120, 254, FALSE, 1, 110, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 34, TRUE, 2, 150, 214, FALSE, 1, 168, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 50, TRUE, 4, 140, 129, FALSE, 0, 135, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 39, TRUE, 2, 190, 241, FALSE, 0, 106, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 59, FALSE, 2, 130, 188, FALSE, 0, 124, FALSE, 1, 2, NULL, NULL, 0),
+       ('hungary', 57, TRUE, 4, 150, 255, FALSE, 0, 92, TRUE, 3, 2, NULL, NULL, 2),
+       ('hungary', 47, TRUE, 4, 140, 276, TRUE, 0, 125, TRUE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 38, TRUE, 2, 140, 297, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, FALSE, 3, 130, 207, FALSE, 1, 135, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 33, FALSE, 4, 100, 246, FALSE, 0, 150, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 38, TRUE, 4, 120, 282, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 59, FALSE, 4, 130, 338, TRUE, 1, 130, TRUE, 1.5, 2, NULL, NULL, 1),
+       ('hungary', 35, FALSE, 1, 120, 160, FALSE, 1, 185, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 34, TRUE, 1, 140, 156, FALSE, 0, 180, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 47, FALSE, 3, 135, 248, TRUE, 0, 170, FALSE, 0, NULL, NULL, NULL, 3),
+       ('hungary', 52, FALSE, 3, 125, 272, FALSE, 0, 139, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 4, 110, 240, FALSE, 1, 140, FALSE, 0, NULL, NULL, 3, 0),
+       ('hungary', 58, FALSE, 2, 180, 393, FALSE, 0, 110, TRUE, 1, 2, NULL, 7, 4),
+       ('hungary', 58, TRUE, 2, 130, 230, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 2, 120, 246, FALSE, 0, 110, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 34, FALSE, 2, 130, 161, FALSE, 0, 190, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, FALSE, 4, 108, 163, FALSE, 0, 175, FALSE, 2, 1, NULL, NULL, 0),
+       ('hungary', 54, FALSE, 2, 120, 230, TRUE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 42, TRUE, 3, 120, 228, FALSE, 0, 152, TRUE, 1.5, 2, NULL, NULL, 0),
+       ('hungary', 38, TRUE, 3, 145, 292, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 4, 110, 202, FALSE, 0, 150, TRUE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 56, TRUE, 4, 170, 388, FALSE, 1, 122, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 56, TRUE, 4, 150, 230, FALSE, 1, 124, TRUE, 1.5, 2, NULL, NULL, 3),
+       ('hungary', 61, FALSE, 4, 130, 294, FALSE, 1, 120, TRUE, 1, 2, NULL, NULL, 0),
+       ('hungary', 49, TRUE, 3, 115, 265, FALSE, 0, 175, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 43, FALSE, 2, 120, 215, FALSE, 1, 175, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 39, TRUE, 2, 120, NULL, FALSE, 1, 146, FALSE, 2, 1, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 4, 140, NULL, FALSE, 0, 118, TRUE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 43, TRUE, 4, 150, 247, FALSE, 0, 130, TRUE, 2, 2, NULL, NULL, 1),
+       ('hungary', 52, TRUE, 4, 160, 331, FALSE, 0, 94, TRUE, 2.5, NULL, NULL, NULL, 4),
+       ('hungary', 50, TRUE, 4, 140, 341, FALSE, 1, 125, TRUE, 2.5, 2, NULL, NULL, 4),
+       ('hungary', 47, TRUE, 4, 160, 291, FALSE, 1, 158, TRUE, 3, 2, NULL, NULL, 4),
+       ('hungary', 53, TRUE, 4, 140, 243, FALSE, 0, 155, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 56, FALSE, 2, 120, 279, FALSE, 0, 150, FALSE, 1, 2, NULL, NULL, 3),
+       ('hungary', 39, TRUE, 4, 110, 273, FALSE, 0, 132, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 42, TRUE, 2, 120, 198, FALSE, 0, 155, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 43, FALSE, 2, 120, 249, FALSE, 1, 176, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 50, TRUE, 2, 120, 168, FALSE, 0, 160, FALSE, 0, NULL, 0, NULL, 0),
+       ('hungary', 54, TRUE, 4, 130, 603, TRUE, 0, 125, TRUE, 1, 2, NULL, NULL, 2),
+       ('hungary', 39, TRUE, 2, 130, NULL, FALSE, 0, 120, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, TRUE, 2, 100, NULL, FALSE, 0, 100, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 40, TRUE, 2, 130, 275, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 55, TRUE, 4, 120, 270, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 41, TRUE, 2, 120, 291, FALSE, 1, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 56, TRUE, 4, 155, 342, TRUE, 0, 150, TRUE, 3, 2, NULL, NULL, 4),
+       ('hungary', 38, TRUE, 4, 110, NULL, FALSE, 0, 150, TRUE, 1, 2, NULL, NULL, 2),
+       ('hungary', 49, TRUE, 4, 140, NULL, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 44, TRUE, 4, 130, 290, FALSE, 0, 100, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 54, TRUE, 2, 160, 195, FALSE, 1, 130, FALSE, 1, 1, NULL, NULL, 0),
+       ('hungary', 59, TRUE, 4, 140, 264, TRUE, 2, 119, TRUE, 0, NULL, NULL, NULL, 3),
+       ('hungary', 49, TRUE, 4, 128, 212, FALSE, 0, 96, TRUE, 0, NULL, NULL, NULL, 4),
+       ('hungary', 47, TRUE, 2, 160, 263, FALSE, 0, 174, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, FALSE, 2, 110, NULL, FALSE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 42, TRUE, 2, 120, 196, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, FALSE, 2, 140, NULL, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 1, 140, 272, TRUE, 0, 175, FALSE, 2, 2, NULL, NULL, 3),
+       ('hungary', 50, TRUE, 4, 140, 231, FALSE, 1, 140, TRUE, 5, 2, NULL, NULL, 4),
+       ('hungary', 48, TRUE, 2, 140, 238, FALSE, 0, 118, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 58, TRUE, 4, 135, 222, FALSE, 0, 100, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 58, TRUE, 3, 140, 179, FALSE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 29, TRUE, 2, 120, 243, FALSE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 40, TRUE, 3, 140, NULL, FALSE, 0, 188, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 53, TRUE, 2, 140, 320, FALSE, 0, 162, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, TRUE, 3, 140, 187, FALSE, 0, 172, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 140, 266, FALSE, 0, 134, TRUE, 2, 2, NULL, NULL, 4),
+       ('hungary', 43, TRUE, 4, 140, 288, FALSE, 0, 135, TRUE, 2, 2, NULL, NULL, 4),
+       ('hungary', 54, TRUE, 4, 140, 216, FALSE, 0, 105, FALSE, 1.5, 2, NULL, NULL, 3),
+       ('hungary', 59, TRUE, 2, 140, 287, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 37, TRUE, 3, 130, 194, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, FALSE, 4, 130, 238, FALSE, 0, 90, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 130, 225, FALSE, 0, 120, TRUE, 2, 2, NULL, NULL, 1),
+       ('hungary', 51, TRUE, 2, 130, 224, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 140, 404, FALSE, 0, 124, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 46, TRUE, 4, 110, 238, FALSE, 1, 140, TRUE, 1, 2, NULL, 3, 0),
+       ('hungary', 54, FALSE, 2, 160, 312, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 58, TRUE, 3, 160, 211, TRUE, 1, 92, FALSE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 58, TRUE, 2, 130, 251, FALSE, 0, 110, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 41, TRUE, 4, 120, 237, NULL, 0, 138, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 50, FALSE, 4, 120, 328, FALSE, 0, 110, TRUE, 1, 2, NULL, NULL, 0),
+       ('hungary', 53, TRUE, 4, 180, 285, FALSE, 1, 120, TRUE, 1.5, 2, NULL, NULL, 3),
+       ('hungary', 46, TRUE, 4, 180, 280, FALSE, 1, 120, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 50, TRUE, 2, 170, 209, FALSE, 1, 116, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, TRUE, 2, 130, 245, FALSE, 0, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 45, TRUE, 3, 135, NULL, FALSE, 0, 110, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 41, FALSE, 2, 125, 184, FALSE, 0, 180, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 62, FALSE, 1, 160, 193, FALSE, 0, 116, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, TRUE, 4, 120, 297, NULL, 0, 132, FALSE, 1, 2, NULL, NULL, 0),
+       ('hungary', 42, TRUE, 2, 150, 268, FALSE, 0, 136, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 53, TRUE, 4, 120, 246, FALSE, 0, 116, TRUE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 57, FALSE, 1, 130, 308, FALSE, 0, 98, FALSE, 1, 2, NULL, NULL, 0),
+       ('hungary', 47, TRUE, 1, 110, 249, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 3, 120, 230, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 42, TRUE, 3, 160, 147, FALSE, 0, 146, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 31, FALSE, 2, 100, 219, FALSE, 1, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 56, TRUE, 2, 130, 184, FALSE, 0, 100, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 50, TRUE, 4, 150, 215, FALSE, 0, 140, TRUE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 35, TRUE, 2, 120, 308, FALSE, 2, 180, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 35, TRUE, 2, 110, 257, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 28, TRUE, 2, 130, 132, FALSE, 2, 185, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 4, 125, 216, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 48, TRUE, 4, 106, 263, TRUE, 0, 110, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 50, FALSE, 3, 140, 288, FALSE, 0, 140, TRUE, 0, NULL, NULL, 7, 1),
+       ('hungary', 56, TRUE, 3, 130, 276, FALSE, 0, 128, TRUE, 1, 1, NULL, 6, 0),
+       ('hungary', 56, FALSE, 3, 130, 219, NULL, 1, 164, FALSE, 0, NULL, NULL, 7, 0),
+       ('hungary', 47, TRUE, 4, 150, 226, FALSE, 0, 98, TRUE, 1.5, 2, 0, 7, 1),
+       ('hungary', 30, FALSE, 1, 170, 237, FALSE, 1, 170, FALSE, 0, NULL, NULL, 6, 0),
+       ('hungary', 39, TRUE, 4, 110, 280, FALSE, 0, 150, FALSE, 0, NULL, NULL, 6, 2),
+       ('hungary', 54, TRUE, 3, 120, 217, FALSE, 0, 137, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 55, TRUE, 2, 140, 196, FALSE, 0, 150, FALSE, 0, NULL, NULL, 7, 0),
+       ('hungary', 29, TRUE, 2, 140, NULL, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 4, 130, 222, FALSE, 0, 112, FALSE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 51, FALSE, 4, 160, 303, FALSE, 0, 150, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 48, FALSE, 3, 120, 195, FALSE, 0, 125, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 33, TRUE, 3, 120, 298, FALSE, 0, 185, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 55, TRUE, 2, 120, 256, TRUE, 0, 137, FALSE, 0, NULL, NULL, 7, 0),
+       ('hungary', 50, TRUE, 4, 145, 264, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 1),
+       ('hungary', 53, TRUE, 3, 120, 195, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 38, TRUE, 4, 92, 117, FALSE, 0, 134, TRUE, 2.5, 2, NULL, NULL, 1),
+       ('hungary', 41, TRUE, 2, 120, 295, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 37, FALSE, 4, 130, 173, FALSE, 1, 184, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 37, TRUE, 4, 130, 315, FALSE, 0, 158, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 40, TRUE, 3, 130, 281, FALSE, 0, 167, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 38, FALSE, 2, 120, 275, NULL, 0, 129, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 41, TRUE, 4, 112, 250, FALSE, 0, 142, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, FALSE, 2, 140, 309, NULL, 1, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 39, TRUE, 2, 120, 200, FALSE, 0, 160, TRUE, 1, 2, NULL, NULL, 0),
+       ('hungary', 41, TRUE, 4, 120, 336, FALSE, 0, 118, TRUE, 3, 2, NULL, NULL, 4),
+       ('hungary', 55, TRUE, 1, 140, 295, FALSE, NULL, 136, FALSE, 0, NULL, NULL, NULL, 3),
+       ('hungary', 48, TRUE, 4, 160, 355, FALSE, 0, 99, TRUE, 2, 2, NULL, NULL, 2),
+       ('hungary', 48, TRUE, 4, 160, 193, FALSE, 0, 102, TRUE, 3, 2, NULL, NULL, 2),
+       ('hungary', 55, TRUE, 2, 145, 326, FALSE, 0, 155, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 4, 200, 198, FALSE, 0, 142, TRUE, 2, 2, NULL, NULL, 2),
+       ('hungary', 55, TRUE, 2, 160, 292, TRUE, 0, 143, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 43, FALSE, 2, 120, 266, FALSE, 0, 118, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, TRUE, 4, 160, 268, FALSE, 0, 103, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 54, TRUE, 1, 120, 171, FALSE, 0, 137, FALSE, 2, 1, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 3, 120, 237, FALSE, 0, 150, TRUE, 1.5, NULL, NULL, 7, 2),
+       ('hungary', 48, TRUE, 4, 122, 275, TRUE, 1, 150, TRUE, 2, 3, NULL, NULL, 2),
+       ('hungary', 45, TRUE, 4, 130, 219, FALSE, 1, 130, TRUE, 1, 2, NULL, NULL, 2),
+       ('hungary', 49, TRUE, 4, 130, 341, FALSE, 0, 120, TRUE, 1, 2, NULL, NULL, 3),
+       ('hungary', 44, TRUE, 4, 135, 491, FALSE, 0, 135, FALSE, 0, NULL, NULL, NULL, 4),
+       ('hungary', 48, TRUE, 4, 120, 260, FALSE, 0, 115, FALSE, 2, 2, NULL, NULL, 1),
+       ('hungary', 61, TRUE, 4, 125, 292, FALSE, 1, 115, TRUE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 62, TRUE, 2, 140, 271, FALSE, 0, 152, FALSE, 1, 1, NULL, NULL, 0),
+       ('hungary', 55, TRUE, 4, 145, 248, FALSE, 0, 96, TRUE, 2, 2, NULL, NULL, 3),
+       ('hungary', 53, FALSE, 3, 120, 274, FALSE, 0, 130, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 55, FALSE, 2, 130, 394, FALSE, 2, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 36, TRUE, 3, 150, 160, FALSE, 0, 172, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 51, FALSE, 3, 150, 200, FALSE, 0, 120, FALSE, 0.5, 1, NULL, NULL, 0),
+       ('hungary', 55, FALSE, 2, 122, 320, FALSE, 0, 155, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 2, 140, 275, FALSE, 0, 165, TRUE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, FALSE, 2, 120, 221, FALSE, 0, 138, FALSE, 1, 1, NULL, NULL, 0),
+       ('hungary', 46, TRUE, 4, 120, 231, FALSE, 0, 115, TRUE, 0, NULL, NULL, NULL, 2),
+       ('hungary', 59, TRUE, 4, 130, NULL, FALSE, 0, 125, FALSE, 0, NULL, NULL, NULL, 3),
+       ('hungary', 47, TRUE, 3, 140, 193, FALSE, 0, 145, TRUE, 1, 2, NULL, NULL, 1),
+       ('hungary', 54, TRUE, 2, 160, 305, FALSE, 0, 175, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 52, TRUE, 4, 130, 298, FALSE, 0, 110, TRUE, 1, 2, NULL, NULL, 3),
+       ('hungary', 34, TRUE, 2, 98, 220, FALSE, 0, 150, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 54, TRUE, 4, 130, 242, FALSE, 0, 91, TRUE, 1, 2, NULL, NULL, 2),
+       ('hungary', 47, FALSE, 3, 130, NULL, FALSE, 0, 145, FALSE, 2, 2, NULL, NULL, 0),
+       ('hungary', 45, TRUE, 4, 120, 225, FALSE, 0, 140, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 32, FALSE, 2, 105, 198, FALSE, 0, 165, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 55, TRUE, 4, 140, 201, FALSE, 0, 130, TRUE, 3, 2, NULL, NULL, 1),
+       ('hungary', 55, TRUE, 3, 120, 220, FALSE, 2, 134, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 45, FALSE, 2, 180, NULL, FALSE, 0, 180, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 59, TRUE, 3, 180, 213, FALSE, 0, 100, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 51, TRUE, 3, 135, 160, FALSE, 0, 150, FALSE, 2, 2, NULL, NULL, 3),
+       ('hungary', 52, TRUE, 4, 170, NULL, FALSE, 0, 126, TRUE, 1.5, 2, NULL, NULL, 2),
+       ('hungary', 57, FALSE, 4, 180, 347, FALSE, 1, 126, TRUE, 0.8, 2, NULL, NULL, 0),
+       ('hungary', 54, FALSE, 2, 130, 253, FALSE, 1, 155, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 60, TRUE, 3, 120, 246, FALSE, 2, 135, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 49, TRUE, 4, 150, 222, FALSE, 0, 122, FALSE, 2, 2, NULL, NULL, 4),
+       ('hungary', 51, FALSE, 3, 130, 220, FALSE, 0, 160, TRUE, 2, 1, NULL, NULL, 0),
+       ('hungary', 55, FALSE, 2, 110, 344, FALSE, 1, 160, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 42, TRUE, 4, 140, 358, FALSE, 0, 170, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 51, FALSE, 3, 110, 190, FALSE, 0, 120, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 59, TRUE, 4, 140, NULL, FALSE, 0, 140, FALSE, 0, NULL, 0, NULL, 0),
+       ('hungary', 53, TRUE, 2, 120, NULL, FALSE, 0, 132, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, FALSE, 2, NULL, 308, FALSE, 1, NULL, NULL, 2, 1, NULL, NULL, 0),
+       ('hungary', 36, TRUE, 2, 120, 166, FALSE, 0, 180, FALSE, 0, NULL, NULL, NULL, 0),
+       ('hungary', 48, TRUE, 3, 110, 211, FALSE, 0, 138, FALSE, 0, NULL, NULL, 6, 0),
+       ('hungary', 47, FALSE, 2, 140, 257, FALSE, 0, 135, FALSE, 1, 1, NULL, NULL, 0),
+       ('hungary', 53, TRUE, 4, 130, 182, FALSE, 0, 148, FALSE, 0, NULL, NULL, NULL, 0),
+       ('switzerland', 32, TRUE, 1, 95, 0, NULL, 0, 127, FALSE, 0.7, 1, NULL, NULL, 1),
+       ('switzerland', 34, TRUE, 4, 115, 0, NULL, NULL, 154, FALSE, 0.2, 1, NULL, NULL, 1),
+       ('switzerland', 35, TRUE, 4, NULL, 0, NULL, 0, 130, TRUE, NULL, NULL, NULL, 7, 3),
+       ('switzerland', 36, TRUE, 4, 110, 0, NULL, 0, 125, TRUE, 1, 2, NULL, 6, 1),
+       ('switzerland', 38, FALSE, 4, 105, 0, NULL, 0, 166, FALSE, 2.8, 1, NULL, NULL, 2),
+       ('switzerland', 38, FALSE, 4, 110, 0, FALSE, 0, 156, FALSE, 0, 2, NULL, 3, 1),
+       ('switzerland', 38, TRUE, 3, 100, 0, NULL, 0, 179, FALSE, -1.1, 1, NULL, NULL, 0),
+       ('switzerland', 38, TRUE, 3, 115, 0, FALSE, 0, 128, TRUE, 0, 2, NULL, 7, 1),
+       ('switzerland', 38, TRUE, 4, 135, 0, NULL, 0, 150, FALSE, 0, NULL, NULL, 3, 2),
+       ('switzerland', 38, TRUE, 4, 150, 0, NULL, 0, 120, TRUE, NULL, NULL, NULL, 3, 1),
+       ('switzerland', 40, TRUE, 4, 95, 0, NULL, 1, 144, FALSE, 0, 1, NULL, NULL, 2),
+       ('switzerland', 41, TRUE, 4, 125, 0, NULL, 0, 176, FALSE, 1.6, 1, NULL, NULL, 2),
+       ('switzerland', 42, TRUE, 4, 105, 0, NULL, 0, 128, TRUE, -1.5, 3, NULL, NULL, 1),
+       ('switzerland', 42, TRUE, 4, 145, 0, FALSE, 0, 99, TRUE, 0, 2, NULL, NULL, 2),
+       ('switzerland', 43, TRUE, 4, 100, 0, NULL, 0, 122, FALSE, 1.5, 3, NULL, NULL, 3),
+       ('switzerland', 43, TRUE, 4, 115, 0, FALSE, 0, 145, TRUE, 2, 2, NULL, 7, 4),
+       ('switzerland', 43, TRUE, 4, 140, 0, FALSE, 1, 140, TRUE, 0.5, 1, NULL, 7, 2),
+       ('switzerland', 45, TRUE, 3, 110, 0, NULL, 0, 138, FALSE, -0.1, 1, NULL, NULL, 0),
+       ('switzerland', 46, TRUE, 4, 100, 0, NULL, 1, 133, FALSE, -2.6, 2, NULL, NULL, 1),
+       ('switzerland', 46, TRUE, 4, 115, 0, FALSE, 0, 113, TRUE, 1.5, 2, NULL, 7, 1),
+       ('switzerland', 47, TRUE, 3, 110, 0, NULL, 0, 120, TRUE, 0, NULL, NULL, 3, 1),
+       ('switzerland', 47, TRUE, 3, 155, 0, FALSE, 0, 118, TRUE, 1, 2, NULL, 3, 3),
+       ('switzerland', 47, TRUE, 4, 110, 0, NULL, 1, 149, FALSE, 2.1, 1, NULL, NULL, 2),
+       ('switzerland', 47, TRUE, 4, 160, 0, FALSE, 0, 124, TRUE, 0, 2, NULL, 7, 1),
+       ('switzerland', 48, TRUE, 4, 115, 0, NULL, 0, 128, FALSE, 0, 2, NULL, 6, 2),
+       ('switzerland', 50, FALSE, 4, 160, 0, NULL, 0, 110, FALSE, 0, NULL, NULL, 3, 1),
+       ('switzerland', 50, TRUE, 4, 115, 0, FALSE, 0, 120, TRUE, 0.5, 2, NULL, 6, 3),
+       ('switzerland', 50, TRUE, 4, 120, 0, FALSE, 1, 156, TRUE, 0, 1, NULL, 6, 3),
+       ('switzerland', 50, TRUE, 4, 145, 0, NULL, 0, 139, TRUE, 0.7, 2, NULL, NULL, 1),
+       ('switzerland', 51, FALSE, 4, 120, 0, NULL, 0, 127, TRUE, 1.5, 1, NULL, NULL, 2),
+       ('switzerland', 51, TRUE, 4, 110, 0, NULL, 0, 92, FALSE, 0, 2, NULL, NULL, 4),
+       ('switzerland', 51, TRUE, 4, 120, 0, TRUE, 0, 104, FALSE, 0, 2, NULL, 3, 3),
+       ('switzerland', 51, TRUE, 4, 130, 0, NULL, 0, 170, FALSE, -0.7, 1, NULL, NULL, 2),
+       ('switzerland', 51, TRUE, 4, 130, 0, NULL, 1, 163, FALSE, 0, NULL, NULL, 7, 1),
+       ('switzerland', 51, TRUE, 4, 140, 0, FALSE, 0, 60, FALSE, 0, 2, NULL, 3, 2),
+       ('switzerland', 51, TRUE, 4, 95, 0, NULL, 0, 126, FALSE, 2.2, 2, NULL, NULL, 2),
+       ('switzerland', 52, TRUE, 4, 130, 0, NULL, 0, 120, FALSE, 0, 2, NULL, 7, 2),
+       ('switzerland', 52, TRUE, 4, 135, 0, NULL, 0, 128, TRUE, 2, 2, NULL, 7, 2),
+       ('switzerland', 52, TRUE, 4, 165, 0, NULL, 0, 122, TRUE, 1, 1, NULL, 7, 2),
+       ('switzerland', 52, TRUE, 4, 95, 0, NULL, 0, 82, TRUE, NULL, NULL, NULL, NULL, 2),
+       ('switzerland', 53, TRUE, 2, 120, 0, FALSE, 0, 95, FALSE, 0, 2, NULL, 3, 3),
+       ('switzerland', 53, TRUE, 2, 130, 0, NULL, 1, 120, FALSE, 0.7, 3, NULL, NULL, 0),
+       ('switzerland', 53, TRUE, 3, 105, 0, FALSE, 0, 115, FALSE, 0, 2, NULL, 7, 1),
+       ('switzerland', 53, TRUE, 3, 160, 0, NULL, 2, 122, TRUE, 0, NULL, NULL, 7, 1),
+       ('switzerland', 53, TRUE, 4, 120, 0, NULL, 0, 120, FALSE, 0, 2, NULL, 7, 1),
+       ('switzerland', 53, TRUE, 4, 125, 0, NULL, 0, 120, FALSE, 1.5, 1, NULL, NULL, 4),
+       ('switzerland', 53, TRUE, 4, 130, 0, FALSE, 2, 135, TRUE, 1, 2, NULL, 7, 2),
+       ('switzerland', 53, TRUE, 4, 80, 0, NULL, 0, 141, TRUE, 2, 3, NULL, NULL, 0),
+       ('switzerland', 54, TRUE, 4, 120, 0, FALSE, 0, 155, FALSE, 0, 2, NULL, 7, 2),
+       ('switzerland', 54, TRUE, 4, 130, 0, NULL, 0, 110, TRUE, 3, 2, NULL, 7, 3),
+       ('switzerland', 54, TRUE, 4, 180, 0, NULL, 0, 150, FALSE, 1.5, 2, NULL, 7, 1),
+       ('switzerland', 55, TRUE, 2, 140, 0, NULL, 1, 150, FALSE, 0.2, 1, NULL, NULL, 0),
+       ('switzerland', 55, TRUE, 4, 115, 0, NULL, 0, 155, FALSE, 0.1, 2, NULL, NULL, 1),
+       ('switzerland', 55, TRUE, 4, 120, 0, FALSE, 1, 92, FALSE, 0.3, 1, NULL, 7, 4),
+       ('switzerland', 55, TRUE, 4, 140, 0, FALSE, 0, 83, FALSE, 0, 2, NULL, 7, 2),
+       ('switzerland', 56, TRUE, 3, 120, 0, FALSE, 0, 97, FALSE, 0, 2, NULL, 7, 0),
+       ('switzerland', 56, TRUE, 3, 125, 0, NULL, 0, 98, FALSE, -2, 2, NULL, 7, 2),
+       ('switzerland', 56, TRUE, 3, 155, 0, FALSE, 1, 99, FALSE, 0, 2, NULL, 3, 2),
+       ('switzerland', 56, TRUE, 4, 115, 0, NULL, 1, 82, FALSE, -1, 1, NULL, NULL, 1),
+       ('switzerland', 56, TRUE, 4, 120, 0, FALSE, 1, 100, TRUE, -1, 3, NULL, 7, 2),
+       ('switzerland', 56, TRUE, 4, 120, 0, FALSE, 1, 148, FALSE, 0, 2, NULL, NULL, 2),
+       ('switzerland', 56, TRUE, 4, 125, 0, TRUE, 0, 103, TRUE, 1, 2, NULL, 7, 3),
+       ('switzerland', 56, TRUE, 4, 140, 0, NULL, 0, 121, TRUE, 1.8, 1, NULL, NULL, 1),
+       ('switzerland', 57, TRUE, 3, 105, 0, NULL, 0, 148, FALSE, 0.3, 2, NULL, NULL, 1),
+       ('switzerland', 57, TRUE, 4, 110, 0, NULL, 1, 131, TRUE, 1.4, 1, 1, NULL, 3),
+       ('switzerland', 57, TRUE, 4, 140, 0, FALSE, 0, 120, TRUE, 2, 2, NULL, 6, 2),
+       ('switzerland', 57, TRUE, 4, 140, 0, NULL, 0, 100, TRUE, 0, NULL, NULL, 6, 3),
+       ('switzerland', 57, TRUE, 4, 160, 0, NULL, 0, 98, TRUE, 2, 2, NULL, 7, 2),
+       ('switzerland', 57, TRUE, 4, 95, 0, NULL, 0, 182, FALSE, 0.7, 3, NULL, NULL, 1),
+       ('switzerland', 58, TRUE, 4, 115, 0, NULL, 0, 138, FALSE, 0.5, 1, NULL, NULL, 1),
+       ('switzerland', 58, TRUE, 4, 130, 0, FALSE, 1, 100, TRUE, 1, 2, NULL, 6, 4),
+       ('switzerland', 58, TRUE, 4, 170, 0, NULL, 1, 105, TRUE, 0, NULL, NULL, 3, 1),
+       ('switzerland', 59, TRUE, 3, 125, 0, NULL, 0, 175, FALSE, 2.6, 2, NULL, NULL, 1),
+       ('switzerland', 59, TRUE, 4, 110, 0, NULL, 0, 94, FALSE, 0, NULL, NULL, 6, 3),
+       ('switzerland', 59, TRUE, 4, 120, 0, FALSE, 0, 115, FALSE, 0, 2, NULL, 3, 2),
+       ('switzerland', 59, TRUE, 4, 125, 0, NULL, 0, 119, TRUE, 0.9, 1, NULL, NULL, 1),
+       ('switzerland', 59, TRUE, 4, 135, 0, FALSE, 0, 115, TRUE, 1, 2, NULL, 7, 1),
+       ('switzerland', 60, TRUE, 3, 115, 0, NULL, 0, 143, FALSE, 2.4, 1, NULL, NULL, 1),
+       ('switzerland', 60, TRUE, 4, 125, 0, NULL, 0, 110, FALSE, 0.1, 1, 2, NULL, 3),
+       ('switzerland', 60, TRUE, 4, 130, 0, NULL, 1, 130, TRUE, 1.1, 3, 1, NULL, 1),
+       ('switzerland', 60, TRUE, 4, 135, 0, FALSE, 0, 63, TRUE, 0.5, 1, NULL, 7, 3),
+       ('switzerland', 60, TRUE, 4, 160, 0, FALSE, 1, 99, TRUE, 0.5, 2, NULL, 7, 3),
+       ('switzerland', 60, TRUE, 4, 160, 0, NULL, 0, 149, FALSE, 0.4, 2, NULL, NULL, 1),
+       ('switzerland', 61, TRUE, 3, 200, 0, NULL, 1, 70, FALSE, 0, NULL, NULL, 3, 3),
+       ('switzerland', 61, TRUE, 4, 105, 0, NULL, 0, 110, TRUE, 1.5, 1, NULL, NULL, 1),
+       ('switzerland', 61, TRUE, 4, 110, 0, NULL, 0, 113, FALSE, 1.4, 2, NULL, NULL, 1),
+       ('switzerland', 61, TRUE, 4, 125, 0, FALSE, 0, 105, TRUE, 0, 3, NULL, 7, 3),
+       ('switzerland', 61, TRUE, 4, 130, 0, FALSE, 2, 115, FALSE, 0, 2, NULL, 7, 3),
+       ('switzerland', 61, TRUE, 4, 130, 0, NULL, 0, 77, FALSE, 2.5, 2, NULL, NULL, 3),
+       ('switzerland', 61, TRUE, 4, 150, 0, FALSE, 0, 105, TRUE, 0, 2, NULL, 7, 1),
+       ('switzerland', 61, TRUE, 4, 150, 0, FALSE, 0, 117, TRUE, 2, 2, NULL, 7, 2),
+       ('switzerland', 61, TRUE, 4, 160, 0, TRUE, 1, 145, FALSE, 1, 2, NULL, 7, 2),
+       ('switzerland', 62, FALSE, 1, 140, 0, NULL, 0, 143, FALSE, 0, NULL, NULL, 3, 2),
+       ('switzerland', 62, FALSE, 4, 120, 0, NULL, 1, 123, TRUE, 1.7, 3, NULL, NULL, 1),
+       ('switzerland', 62, TRUE, 1, 120, 0, NULL, 2, 134, FALSE, -0.8, 2, 2, NULL, 1),
+       ('switzerland', 62, TRUE, 3, 160, 0, FALSE, 0, 72, TRUE, 0, 2, NULL, 3, 3),
+       ('switzerland', 62, TRUE, 4, 115, 0, NULL, 0, 128, TRUE, 2.5, 3, NULL, NULL, 2),
+       ('switzerland', 62, TRUE, 4, 115, 0, NULL, 0, 72, TRUE, -0.5, 2, NULL, 3, 1),
+       ('switzerland', 62, TRUE, 4, 150, 0, NULL, 1, 78, FALSE, 2, 2, NULL, 7, 3),
+       ('switzerland', 63, TRUE, 4, 100, 0, NULL, 0, 109, FALSE, -0.9, 2, NULL, NULL, 1),
+       ('switzerland', 63, TRUE, 4, 140, 0, NULL, 2, 149, FALSE, 2, 1, NULL, NULL, 2),
+       ('switzerland', 63, TRUE, 4, 150, 0, FALSE, 0, 86, TRUE, 2, 2, NULL, NULL, 3),
+       ('switzerland', 63, TRUE, 4, 150, 0, NULL, 1, 154, FALSE, 3.7, 1, NULL, NULL, 3),
+       ('switzerland', 63, TRUE, 4, 185, 0, FALSE, 0, 98, TRUE, 0, 1, NULL, 7, 1),
+       ('switzerland', 64, FALSE, 4, 200, 0, FALSE, 0, 140, TRUE, 1, 2, NULL, 3, 3),
+       ('switzerland', 64, FALSE, 4, 95, 0, NULL, 0, 145, FALSE, 1.1, 3, NULL, NULL, 1),
+       ('switzerland', 64, TRUE, 4, 110, 0, NULL, 0, 114, TRUE, 1.3, 3, NULL, NULL, 1),
+       ('switzerland', 65, TRUE, 4, 115, 0, FALSE, 0, 93, TRUE, 0, 2, NULL, 7, 1),
+       ('switzerland', 65, TRUE, 4, 145, 0, NULL, 1, 67, FALSE, NULL, NULL, NULL, 6, 3),
+       ('switzerland', 65, TRUE, 4, 155, 0, NULL, 0, 154, FALSE, 1, 1, NULL, NULL, 0),
+       ('switzerland', 65, TRUE, 4, 160, 0, TRUE, 1, 122, FALSE, NULL, NULL, NULL, 7, 3),
+       ('switzerland', 66, FALSE, 4, 155, 0, NULL, 0, 90, FALSE, 0, NULL, NULL, 7, 1),
+       ('switzerland', 66, TRUE, 4, 150, 0, FALSE, 0, 108, TRUE, 2, 2, NULL, 7, 3),
+       ('switzerland', 67, TRUE, 1, 145, 0, FALSE, 2, 125, FALSE, 0, 2, NULL, 3, 2),
+       ('switzerland', 68, TRUE, 4, 135, 0, FALSE, 1, 120, TRUE, 0, 1, NULL, 7, 3),
+       ('switzerland', 68, TRUE, 4, 145, 0, NULL, 0, 136, FALSE, 1.8, 1, NULL, NULL, 1),
+       ('switzerland', 69, TRUE, 4, 135, 0, FALSE, 0, 130, FALSE, 0, 2, NULL, 6, 1),
+       ('switzerland', 69, TRUE, 4, NULL, 0, FALSE, 1, NULL, NULL, NULL, NULL, NULL, 7, 3),
+       ('switzerland', 70, TRUE, 4, 115, 0, FALSE, 1, 92, TRUE, 0, 2, NULL, 7, 1),
+       ('switzerland', 70, TRUE, 4, 140, 0, TRUE, 0, 157, TRUE, 2, 2, NULL, 7, 3),
+       ('switzerland', 72, TRUE, 3, 160, 0, NULL, 2, 114, FALSE, 1.6, 2, 2, NULL, 0),
+       ('switzerland', 73, FALSE, 3, 160, 0, FALSE, 1, 121, FALSE, 0, 1, NULL, 3, 1),
+       ('switzerland', 74, TRUE, 2, 145, 0, NULL, 1, 123, FALSE, 1.3, 1, NULL, NULL, 1);

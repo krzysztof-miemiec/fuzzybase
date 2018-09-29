@@ -11,5 +11,6 @@ export const styles = createStyles({
     top: 0,
     bottom: 0,
     fontSize: 13,
+    fontFamily: 'Fira Code',
   },
 });

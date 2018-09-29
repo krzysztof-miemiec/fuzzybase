@@ -2,19 +2,14 @@
 
 CREATE OR REPLACE FUNCTION zadeh_or(float8, float8) RETURNS float8
   AS 'fuzzy', 'pg_max' LANGUAGE 'c' IMMUTABLE STRICT;
-
 CREATE OPERATOR ||| (LEFTARG=float8, RIGHTARG=float8, PROCEDURE=zadeh_or);
-
 
 CREATE OR REPLACE FUNCTION zadeh_and(float8, float8) RETURNS float8
   AS 'fuzzy', 'pg_min' LANGUAGE 'c' IMMUTABLE STRICT;
-
 CREATE OPERATOR &&& (LEFTARG=float8, RIGHTARG=float8, PROCEDURE=zadeh_and);
-
 
 CREATE OR REPLACE FUNCTION zadeh_not(float8) RETURNS float8
   AS 'fuzzy', 'pg_neg_dm' LANGUAGE 'c' IMMUTABLE STRICT;
-
 CREATE OPERATOR ~ (RIGHTARG=float8, PROCEDURE=zadeh_not);
 
 -- Percentage

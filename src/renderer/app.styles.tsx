@@ -1,9 +1,24 @@
+import { createMuiTheme } from '@material-ui/core';
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
 import { Classes, create, CreateStyleSheetOptions } from 'jss';
 import { Style } from 'jss/css';
+import { R } from '../common/resources';
 
 export const JSS = create(jssPreset() as any);
 export const generateClassName = createGenerateClassName();
+export const materialUiTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: R.color.primary,
+    },
+    secondary: {
+      main: R.color.accent,
+    },
+    background: {
+      main: R.color.background,
+    },
+  },
+});
 
 export type ViewStyle = Style | {
   '&:hover': Styles | Style
