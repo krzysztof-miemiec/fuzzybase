@@ -2,7 +2,7 @@ import { Button, IconButton, Snackbar as MaterialSnackbar } from '@material-ui/c
 import { Close } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
-import { mapActions } from '../../../../utils/redux.util';
+import { mapActions } from '../../../../../common/utils/redux.util';
 import { SnackbarState } from '../../store';
 import { hideSnackbar } from '../../store/layout.actions';
 import { styles } from './snackbar.styles';

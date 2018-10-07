@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { postgresQuery } from '../../../../../common/db/store/db.actions';
 import { getConnection, getDatabasesState, getQuery } from '../../../../../common/db/store/db.selectors';
+import { mapActions } from '../../../../../common/utils/redux.util';
+import { select } from '../../../../../common/utils/selector.util';
 import { AppState } from '../../../../store';
-import { mapActions } from '../../../../utils/redux.util';
-import { select } from '../../../../utils/selector.util';
 
 type RouteProps = RouteComponentProps<{ connectionId: string, queryId: string }>;
 
@@ -34,7 +34,8 @@ class QueryToolbarComponent extends React.Component<Props> {
   };
 
   render() {
-    return (
+    const {query} = this.props;
+    return query ? (
       <>
         <Tooltip title="Execute query">
         <IconButton onClick={this.executeQuery}>
@@ -42,6 +43,8 @@ class QueryToolbarComponent extends React.Component<Props> {
         </IconButton>
         </Tooltip>
       </>
+    ) : (
+      <></>
     );
   }
 }

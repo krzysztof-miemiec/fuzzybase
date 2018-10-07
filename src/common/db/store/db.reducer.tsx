@@ -2,9 +2,8 @@ import { defaultTo } from 'lodash';
 import { Reducer } from 'redux';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import { defaultPersistConfig } from '../../../renderer/utils/persist.util';
-import { select } from '../../../renderer/utils/selector.util';
+import { arrayCollectionReducer, objectCollectionReducer } from '../../utils/redux.util';
 import { DB_ACTIONS, DbAction } from './db.actions';
-import { getDatabaseIndex } from './db.selectors';
 import { ConnectionStatus, DatabaseConnectionState, DbState, initialState } from './db.state';
 
 export const persistConfig: PersistConfig = {
@@ -35,52 +34,43 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
     case DB_ACTIONS.SET_QUERY: {
       return {
         ...state,
-        queries: {
-          ...state.queries,
-          [action.queryId]: {
-            ...state.queries[action.queryId],
-            id: action.queryId,
-            query: action.query,
-          },
-        },
+        queries: objectCollectionReducer(state.queries).put(action.queryId, query => ({
+          ...query,
+          id: action.queryId,
+          query: action.query,
+          isSystemQuery: action.isSystemQuery,
+        })),
       };
     }
     case DB_ACTIONS.CLOSE_QUERY: {
-      const queries = { ...state.queries };
-      delete queries[action.queryId];
       return {
         ...state,
-        queries,
+        queries: objectCollectionReducer(state.queries).remove(action.queryId),
       };
     }
     case DB_ACTIONS.QUERY: {
       return {
         ...state,
-        queries: {
-          ...state.queries,
-          [action.queryId]: {
-            id: action.queryId,
-            start: Date.now(),
-            end: 0,
-            query: action.query,
-            result: null,
-            error: null,
-          },
-        },
+        queries: objectCollectionReducer(state.queries).put(action.queryId, () => ({
+          id: action.queryId,
+          start: Date.now(),
+          end: 0,
+          query: action.query,
+          result: null,
+          error: null,
+          isSystemQuery: action.isSystemQuery,
+        })),
       };
     }
     case DB_ACTIONS.QUERY_RESULT: {
       return {
         ...state,
-        queries: {
-          ...state.queries,
-          [action.queryId]: {
-            ...state.queries[action.queryId],
-            end: Date.now(),
-            result: action.result,
-            error: action.error,
-          },
-        },
+        queries: objectCollectionReducer(state.queries).put(action.queryId, query => ({
+          ...query,
+          end: Date.now(),
+          result: action.result,
+          error: action.error,
+        })),
       };
     }
     default:
@@ -94,36 +84,30 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
   }
   switch (action.type) {
     case DB_ACTIONS.SET_DATABASE: {
-      const databaseIndex = select(state, getDatabaseIndex(action.database.id));
-      const databases = [...state.databases];
-      if (databaseIndex < 0) {
-        databases.push(action.database);
-      } else {
-        databases[databaseIndex] = action.database;
-      }
-      return { ...state, databases };
+      return {
+        ...state,
+        databases: arrayCollectionReducer(state.databases, db => db.id)
+          .put(action.database.id, () => action.database),
+      };
     }
     case DB_ACTIONS.SET_METADATA: {
-      const databaseIndex = select(state, getDatabaseIndex(action.databaseId));
-      if (databaseIndex < 0) {
-        return state;
-      }
-      const databases = [...state.databases];
-      const database = databases[databaseIndex];
-      const { user, tables } = database.meta;
-      databases[databaseIndex] = {
-        ...database,
-        meta: {
-          tables: defaultTo(action.tables, tables),
-          user: defaultTo(action.user, user),
-        },
+      return {
+        ...state,
+        databases: arrayCollectionReducer(state.databases, db => db.id)
+          .put(action.databaseId, db => ({
+            ...db,
+            meta: {
+              tables: defaultTo(action.tables, db.meta.tables),
+              user: defaultTo(action.user, db.meta.user),
+            },
+          })),
       };
-      return { ...state, databases };
     }
     case DB_ACTIONS.REMOVE_DATABASE:
       return {
         ...state,
-        databases: state.databases.filter(database => database.id !== action.databaseId),
+        databases: arrayCollectionReducer(state.databases, db => db.id)
+          .remove(action.databaseId),
       };
     case DB_ACTIONS.CONNECTION_STATUS_CHANGED:
     case DB_ACTIONS.QUERY:

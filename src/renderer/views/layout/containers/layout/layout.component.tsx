@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { mapActions } from '../../../../../common/utils/redux.util';
+import { select } from '../../../../../common/utils/selector.util';
 import { View } from '../../../../shared/components/view';
 import { AppState } from '../../../../store';
-import { mapActions } from '../../../../utils/redux.util';
-import { select } from '../../../../utils/selector.util';
 import { getLayoutState, isDrawerOpen } from '../../store';
 import { closeDrawer, openDrawer } from '../../store/layout.actions';
 import { Drawer } from '../drawer/drawer.component';

@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import { createAction } from '../../../renderer/utils/redux.util';
+import { createAction } from '../../utils/redux.util';
 import { ConnectionStatus, DatabaseState, PostgresClientConfiguration, PostgresResponse, Table } from './db.state';
 
 export enum DB_ACTIONS {
@@ -48,8 +48,8 @@ export const disconnectFromPostgres = (connectionId: string) =>
 
 // DB/SET_QUERY
 export type SetQueryAction = ReturnType<typeof setQuery>;
-export const setQuery = (connectionId: string, queryId: string, query: string) =>
-  createAction(DB_ACTIONS.SET_QUERY, { connectionId, queryId, query });
+export const setQuery = (connectionId: string, queryId: string, query: string, isSystemQuery?: boolean) =>
+  createAction(DB_ACTIONS.SET_QUERY, { connectionId, queryId, query, isSystemQuery });
 
 // DB/CLOSE_QUERY
 export type CloseQueryAction = ReturnType<typeof closeQuery>;

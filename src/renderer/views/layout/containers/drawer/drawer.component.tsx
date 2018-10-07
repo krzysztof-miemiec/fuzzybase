@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Config } from '../../../../../common/config';
 import { getDatabaseList, getDatabasesState } from '../../../../../common/db/store/db.selectors';
+import { select } from '../../../../../common/utils/selector.util';
 import { PATHS } from '../../../../app.paths';
 import { AppState } from '../../../../store';
-import { select } from '../../../../utils/selector.util';
 import { DrawerItem } from '../drawer-item/drawer-item.component';
 import { styles } from './drawer.styles';
 

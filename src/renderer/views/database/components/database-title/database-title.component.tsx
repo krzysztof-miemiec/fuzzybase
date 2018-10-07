@@ -1,10 +1,14 @@
 import { Menu, MenuItem, Typography } from '@material-ui/core';
 import React from 'react';
 import { DatabaseState } from '../../../../../common/db/store/app';
+import { R } from '../../../../../common/resources';
+import { View } from '../../../../shared/components/view';
 import { styles } from './database-title.styles';
 
 interface Props {
   database: DatabaseState;
+  user: string;
+  onCloseConnection: () => void;
 }
 
 interface State {
@@ -27,23 +31,30 @@ export class DatabaseTitle extends React.Component<Props, State> {
   };
 
   render() {
-    const { database } = this.props;
+    const { database, user, onCloseConnection } = this.props;
     const { menuAnchor } = this.state;
     return (
       <>
-        <div
-          className={styles.container}
+        <View
+          style={[styles.container, menuAnchor && styles.highlightedContainer]}
           onClick={this.onTitleClick}
         >
           <div>
             <Typography className={styles.title}>
               {database.name}
             </Typography>
+            <Typography className={styles.subtitle}>
+              {user}
+            </Typography>
           </div>
-        </div>
+        </View>
         <Menu
           id="title-menu"
           anchorEl={menuAnchor}
+          style={{
+            marginTop: -R.dimen.spacing,
+            marginLeft: R.dimen.spacing,
+          }}
           getContentAnchorEl={null}
           anchorOrigin={{
             vertical: 'bottom',
@@ -56,6 +67,7 @@ export class DatabaseTitle extends React.Component<Props, State> {
           onClose={this.onMenuClose}
         >
           <MenuItem onClick={this.onMenuClose}>Configure</MenuItem>
+          <MenuItem onClick={onCloseConnection}>Close</MenuItem>
         </Menu>
       </>
     );

@@ -15,7 +15,7 @@ export const materialUiTheme = createMuiTheme({
       main: R.color.accent,
     },
     background: {
-      main: R.color.background,
+      default: R.color.background,
     },
   },
 });

@@ -9,6 +9,7 @@ export enum ConnectionStatus {
 
 export interface DatabaseQueryState {
   id: string;
+  isSystemQuery: boolean;
   query: string;
   start: number;
   end: number;

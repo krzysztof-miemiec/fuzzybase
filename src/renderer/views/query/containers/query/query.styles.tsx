@@ -1,5 +1,6 @@
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/idea.css';
+import { R } from '../../../../../common/resources';
 import { createStyles } from '../../../../app.styles';
 
 export const styles = createStyles({
@@ -8,6 +9,10 @@ export const styles = createStyles({
     gridRow: 1,
     gridColumn: 1,
     gridTemplateRows: 'auto 1fr',
+  },
+  emptyContainer: {
+    display: 'flex',
+    padding: R.dimen.spacing * 2,
   },
   queryField: {
     gridRow: 1,

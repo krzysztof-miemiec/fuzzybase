@@ -6,13 +6,14 @@ import {
   closeQuery,
   connectToPostgres,
   DatabaseState,
+  disconnectFromPostgres,
   getConnection,
   getDatabase,
   getDatabaseConnections,
   getDatabaseList,
   getDatabaseMetadata,
   getDatabasesState,
-  getFirstDatabaseConnection,
+  getFirstDatabaseConnection, getMetadata,
   getQuery,
   getTables,
   postgresQuery,
@@ -21,10 +22,10 @@ import {
   Table
 } from '../../../../../common/db/store/app';
 import { setDatabase } from '../../../../../common/db/store/db.actions';
+import { mapActions } from '../../../../../common/utils/redux.util';
+import { select } from '../../../../../common/utils/selector.util';
 import { PATHS } from '../../../../app.paths';
 import { AppState } from '../../../../store';
-import { mapActions } from '../../../../utils/redux.util';
-import { select } from '../../../../utils/selector.util';
 import { Query } from '../../../query/containers/query';
 import { QueryToolbar } from '../../../query/containers/query-toolbar';
 import { DatabaseConnect } from '../../components/database-connect';
@@ -47,6 +48,7 @@ const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
   return {
     database,
     databases: select(state, getDatabasesState, getDatabaseList),
+    metadata: select(database, getDatabaseMetadata),
     queries: select(state, getDatabasesState, getDatabaseConnections(databaseId)),
     connection,
     tablesQuery: connection && select(
@@ -59,10 +61,12 @@ const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
 const mapDispatchToProps = mapActions({
   setDatabase,
   connectToPostgres,
+  disconnectFromPostgres,
   postgresQuery,
   setQuery,
   closeQuery,
   removeDatabase,
+  getMetadata,
 });
 
 type Props =
@@ -110,12 +114,17 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
     actions.connectToPostgres(database);
   };
 
+  onDisconnect = () => {
+    const { actions, connection } = this.props;
+    actions.disconnectFromPostgres(connection.connectionId);
+  };
+
   onCancel = () => {
     this.props.history.replace(PATHS.HOME);
   };
 
   render() {
-    const { database, tables, connection } = this.props;
+    const { database, tables, connection, metadata } = this.props;
     const { isModified } = this.state;
     console.log(connection);
 
@@ -123,7 +132,11 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
       connection ? (
         <div className={styles.container}>
           <div className={styles.sidebar}>
-            <DatabaseTitle database={database} />
+            <DatabaseTitle
+              database={database}
+              user={metadata.user}
+              onCloseConnection={this.onDisconnect}
+            />
             <div className={styles.sidebarContent}>
               <DatabaseQueries
                 navigateToQuery={this.navigateToQuery}

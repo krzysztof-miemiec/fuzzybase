@@ -2,7 +2,7 @@ import { ofType, StateObservable } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
-import { select } from '../../../renderer/utils/selector.util';
+import { select } from '../../utils/selector.util';
 import { DB_ACTIONS, postgresQuery, PostgresQueryResultAction, setMetadata } from './db.actions';
 import { getConnection, getDatabasesState } from './db.selectors';
 import { findFieldByName } from './db.utils';
@@ -13,7 +13,8 @@ export const TABLES_QUERY_ID = 'table_metadata';
 export const getUserName = (connectionId: string) => of(postgresQuery(
   connectionId,
   USER_NAME_QUERY_ID,
-  `SELECT current_user;`
+  `SELECT current_user;`,
+  true
 ));
 
 export const processUserNameQueryResponse = (action$: Observable<any>, state$: StateObservable<AppState>) =>
@@ -43,7 +44,8 @@ export const getTables = (connectionId: string) => of(postgresQuery(
      WHERE t.table_name = c.table_name
        AND t.table_schema = c.table_schema
        AND t.table_catalog = c.table_catalog
-       AND t.table_schema NOT IN ('pg_catalog', 'information_schema');`
+       AND t.table_schema NOT IN ('pg_catalog', 'information_schema');`,
+  true
 ));
 
 export const processTablesQueryResponse = (action$: Observable<any>, state$: StateObservable<AppState>) =>

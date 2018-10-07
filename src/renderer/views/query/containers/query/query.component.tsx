@@ -1,13 +1,14 @@
+import { Typography } from '@material-ui/core';
 import { debounce } from 'lodash';
 import { FieldDef } from 'pg';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { postgresQuery, setQuery } from '../../../../../common/db/store/db.actions';
+import { getMetadata, postgresQuery, setQuery } from '../../../../../common/db/store/db.actions';
 import { getConnection, getDatabasesState, getQuery } from '../../../../../common/db/store/db.selectors';
+import { mapActions } from '../../../../../common/utils/redux.util';
+import { select } from '../../../../../common/utils/selector.util';
 import { AppState } from '../../../../store';
-import { mapActions } from '../../../../utils/redux.util';
-import { select } from '../../../../utils/selector.util';
 import { CodeInput } from '../../components/code-input';
 import { ResultsVirtual } from '../../components/results-virtual';
 import { styles } from './query.styles';
@@ -36,6 +37,7 @@ const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
 const mapDispatchToProps = mapActions({
   postgresQuery,
   setQuery,
+  getMetadata,
 });
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & RouteProps;
@@ -60,13 +62,17 @@ class QueryComponent extends React.PureComponent<Props, State> {
   getStateUpdate = (oldProps?: Props) => {
     const state: State = {} as State;
     const { query: oldQuery = undefined } = oldProps || {};
-    const { query } = this.props;
+    const { query, actions, connection } = this.props;
     const value = query && (query.error || query.result);
     const oldValue = oldQuery && (oldQuery.error || oldQuery.result);
 
     if (value !== oldValue) {
+      if (!value) {
+        return {} as any;
+      }
       state.data = (query.result && query.result.rows) || [[query.error]];
       state.headers = (query.result && query.result.fields) || (query.error && [ERROR_HEADER]);
+      actions.getMetadata(connection.connectionId);
     }
 
     if ((oldQuery && oldQuery.id) !== (query && query.id)) {
@@ -102,8 +108,10 @@ class QueryComponent extends React.PureComponent<Props, State> {
     const { code, data, headers } = this.state;
     if (!query) {
       return (
-        <div className={styles.container}>
-          Loading...
+        <div className={styles.emptyContainer}>
+          <Typography variant="body1">
+            There is no selected query at the moment. You can open or create new query by using a sidebar.
+          </Typography>
         </div>
       );
     }

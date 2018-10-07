@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
 import { closeQuery, DatabaseConnectionState, DatabaseQueryState, setQuery } from '../../../../../common/db/store/app';
-import { mapActions } from '../../../../utils/redux.util';
+import { mapActions } from '../../../../../common/utils/redux.util';
 import { SidebarSection } from '../sidebar-section';
 
 interface ComponentProps {
@@ -43,7 +43,7 @@ export class DatabaseQueriesComponent extends React.PureComponent<Props> {
         hint="Empty query"
         addTooltipDescription="Create new query"
         mapItem={(query: DatabaseQueryState) => ({ id: query.id, name: query.query })}
-        items={Object.values(connection.queries)}
+        items={Object.values(connection.queries).filter(q => !q.isSystemQuery)}
         onAddClick={this.onAddClick}
         onItemClick={this.onClick}
         onCloseItemClick={this.onCloseClick}

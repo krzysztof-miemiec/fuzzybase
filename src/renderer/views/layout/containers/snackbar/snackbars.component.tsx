@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../../../store';
-import { select } from '../../../../utils/selector.util';
+import { select } from '../../../../../common/utils/selector.util';
 import { getLayoutState, getSnackbarsState } from '../../store';
 import { Snackbar } from './snackbar.component';
 import { styles } from './snackbar.styles';

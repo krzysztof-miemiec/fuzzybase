@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import { createAction } from '../../../utils/redux.util';
+import { createAction } from '../../../../common/utils/redux.util';
 
 export enum LAYOUT_ACTIONS {
   SHOW_SNACKBAR = 'LAYOUT/SHOW_SNACKBAR',

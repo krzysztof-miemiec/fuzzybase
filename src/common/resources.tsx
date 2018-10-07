@@ -27,6 +27,7 @@ export const R = {
   },
   fontSize: {
     bolder: '16px',
+    normal: '13px',
   },
   timing: {
     animationDuration: 350,
