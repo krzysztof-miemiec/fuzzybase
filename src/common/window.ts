@@ -1,11 +1,17 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
+import * as path from 'path';
+import { format as formatUrl } from 'url';
 import { handleError } from '../main/errors';
 import { Config } from './config';
 
 export function getIndexLocation() {
   return Config.IS_DEV
     ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}/`
-    : `${__dirname}\\index.html`;
+    : formatUrl({
+      pathname: path.join(__dirname, 'index.html'),
+      protocol: 'file',
+      slashes: true,
+    });
 }
 
 type RendererWindowOptions = {

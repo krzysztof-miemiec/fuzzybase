@@ -32,7 +32,7 @@ process.on('uncaughtException', error => {
   handleError(error);
 });
 
-app.on('ready', () => installExtensions().then(() => {
+const createAppWindow = () => {
   appWindow = createRendererWindow({
     window: {
       width: 1024,
@@ -48,11 +48,20 @@ app.on('ready', () => installExtensions().then(() => {
   appWindow.on('closed', () => {
     appWindow = null;
   });
-  if (process.env.NODE_ENV === 'production') {
+
+  if (!Config.IS_DEV) {
+    // Setup production app
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
-  } else if (process.env.NODE_ENV === 'development') {
+  } else {
+    // Setup development app
     appWindow.webContents.openDevTools();
+    appWindow.webContents.on('devtools-opened', () => {
+      appWindow.focus();
+      setImmediate(() => {
+        appWindow.focus();
+      });
+    });
     appWindow.webContents.on('context-menu', (_e, props) => {
       const { x, y } = props;
       Menu.buildFromTemplate([
@@ -67,8 +76,17 @@ app.on('ready', () => installExtensions().then(() => {
     const p = path.join(__dirname, './node_modules');
     require('module').globalPaths.push(p);
   }
+};
+
+app.on('ready', () => installExtensions().then(() => {
+  createAppWindow();
 }));
 
+app.on('activate', () => {
+  if (appWindow === null) {
+    createAppWindow();
+  }
+});
 app.on('window-all-closed', () => {
   if (!isMac) {
     app.quit();

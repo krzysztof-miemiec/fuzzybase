@@ -28,15 +28,16 @@
     "node": ">=8.x",
     "npm": ">=5.x"
   },
-  "main": "./app/dist/main.js",
+  "main": "./dist/main/main.js",
   "scripts": {
     "postinstall": "node ./scripts/patch.js && electron-builder install-app-deps",
     "purge": "yarn clean && rimraf 'node_modules' && yarn",
-    "clean": "rimraf '{release,app/dist,.tscache,reports,screenshots}'",
-    "build": "electron-webpack",
+    "clean": "rimraf '{release,dist,.tscache,reports,screenshots}'",
+    "build:prod": "electron-webpack && yarn build:sql",
+    "build:release": "electron-builder -mwl",
     "build:sql": "(cd ./src/sql && make everything)",
-    "dev": "electron-webpack dev",
-    "dist": "yarn clean && yarn build && electron-builder",
+    "start:dev": "electron-webpack dev",
+    "start:prod": "yarn build:prod && yarn build:release",
     "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish"
   },
   "electronWebpack": {
@@ -67,32 +68,33 @@
       ]
     },
     "files": [
-      "build/dist/",
-      "node_modules/",
-      "app.html",
-      "main.js",
-      "main.js.map",
-      "app/package.json"
+      "dist"
     ],
     "directories": {
-      "buildResources": "app/dist",
+      "buildResources": "dist",
       "output": "release"
     },
     "mac": {
       "target": [
-        "dir"
-      ]
+        "dir",
+        "dmg"
+      ],
+      "icon": "src/assets/icons/icon.icns"
     },
     "win": {
       "target": [
-        "dir"
-      ]
+        "dir",
+        "portable",
+        "nsis"
+      ],
+      "icon": "src/assets/icons/icon.ico"
     },
     "linux": {
       "target": [
         "dir",
         "deb"
-      ]
+      ],
+      "icon": "src/assets/icons"
     }
   },
   "dependencies": {
@@ -144,9 +146,9 @@
     "@types/react-router-redux": "5.0.16",
     "@types/uuid": "3.4.4",
     "cpx": "1.5.0",
-    "electron": "2.0.5",
-    "electron-builder": "20.21.2",
-    "electron-webpack": "2.1.2",
+    "electron": "3.0.3",
+    "electron-builder": "20.28.4",
+    "electron-webpack": "2.3.1",
     "electron-webpack-ts": "2.1.1",
     "jest": "23.6.0",
     "node-sass": "^4.9.3",
@@ -156,10 +158,10 @@
     "tslint-loader": "3.6.0",
     "tslint-react": "3.6.0",
     "typescript": "3.0.3",
-    "webpack": "4.19.1",
-    "webpack-build-notifier": "0.1.29"
+    "webpack": "4.20.2",
+    "webpack-build-notifier": "0.1.30"
   },
   "resolutions": {
-    "webpack-sources": "1.2.0"
+    "webpack-sources": "1.3.0"
   }
 }

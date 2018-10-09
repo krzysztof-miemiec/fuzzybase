@@ -115,12 +115,9 @@ export const setMenu = (mainWindow: BrowserWindow) => {
           role: 'close',
         }, {
           type: 'separator',
-        }, {
-          label: 'Bring SettingsActions to Front',
-          role: 'front',
         },
       ],
-    } : {},
+    } : null,
     {
       label: 'Help',
       submenu: [

@@ -160,7 +160,7 @@ let generateIndexFile = (() => {
 <html>
   <head>
     <meta charset="utf-8">
-    <base href="http://${baseHref}/">
+    ${!configurator.isProduction ? `<base href="http://${baseHref}/">`: ''}
     ${title == null ? '' : `<title>${title}</title>`}
     <script>
       ${nodeModulePath == null ? '' : `require("module").globalPaths.push("${nodeModulePath.replace(/\\/g, '/')}")`}
@@ -173,14 +173,35 @@ let generateIndexFile = (() => {
     <div id="app"></div>
   </body>
 </html>`);
-    return `!!html-loader?minimize=false!${filePath}`;
-  }
-);
+    return `!!html-loader?minimize=false&url=false!${filePath}`;
+  });
 
   return function generateIndexFile(_x2, _x3) {
     return _ref2.apply(this, arguments);
   };
-})(); function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+})();
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  } else {
+    var newObj = {};
+    if (obj != null) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};
+          if (desc.get || desc.set) {
+            Object.defineProperty(newObj, key, desc);
+          } else {
+            newObj[key] = obj[key];
+          }
+        }
+      }
+    }
+    newObj.default = obj;
+    return newObj;
+  }
+}
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -252,9 +273,7 @@ class BaseRendererTarget extends _BaseTarget().BaseTarget {
     return (0, _bluebirdLst().coroutine)(function* () {
       configurator.debug('Add ExtractTextPlugin plugin');
       configurator.plugins.push(new MiniCssExtractPlugin({
-        filename:
-  `${configurator.type === 'renderer-dll' ? 'vendor' : 'styles'}.css`
-
+        filename: `${configurator.type === 'renderer-dll' ? 'vendor' : 'styles'}.css`
       })); // https://github.com/electron-userland/electrify/issues/1
 
       if (!configurator.isProduction) {
@@ -295,9 +314,7 @@ class RendererTarget extends BaseRendererTarget {
 
       if (configurator.isProduction) {
         configurator.plugins.push(new (_webpack().DefinePlugin)({
-          __static:
-  `"${path.join(configurator.projectDir, 'static').replace(/\\/g, '\\\\')}"`
-
+          __static: `process.resourcesPath + "/static"`
         }));
       } else {
         const contentBase = [path.join(configurator.projectDir, 'static'), path.join(configurator.commonDistDirectory, 'renderer-dll')];
