@@ -8,7 +8,7 @@ export const styles = createStyles({
     display: 'grid',
     gridRow: 1,
     gridColumn: 1,
-    gridTemplateRows: 'auto 1fr',
+    gridTemplateRows: 'auto 1fr auto',
   },
   emptyContainer: {
     display: 'flex',
@@ -17,6 +17,15 @@ export const styles = createStyles({
   queryField: {
     gridRow: 1,
     minHeight: 160,
+  },
+  statusBar: {
+    display: 'flex',
+    gridRow: 3,
+    height: 24,
+    paddingRight: R.dimen.spacing,
+    paddingLeft: R.dimen.spacing,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   tableContainer: {
     position: 'relative',

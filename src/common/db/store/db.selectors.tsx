@@ -1,5 +1,5 @@
 import { AppState } from '../../../renderer/store';
-import { DatabaseConnectionState, DatabaseMetadata, DatabaseState, DbState } from './db.state';
+import { DatabaseConnectionState, DatabaseMetadata, DatabaseQueryState, DatabaseState, DbState } from './db.state';
 
 export const getDatabasesState = (state: AppState) => state.db;
 
@@ -29,4 +29,4 @@ export const getDatabaseConnections =  (databaseId: string) => (state: DbState) 
 
 export const getStatus = (state: DatabaseConnectionState) => state.status;
 
-export const getQuery = (id: string) => (state: DatabaseConnectionState) => state.queries[id];
+export const getQuery = (id: string) => (state: DatabaseConnectionState): DatabaseQueryState => state.queries[id];

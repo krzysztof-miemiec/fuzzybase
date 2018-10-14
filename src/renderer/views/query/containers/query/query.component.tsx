@@ -128,6 +128,17 @@ class QueryComponent extends React.PureComponent<Props, State> {
             <ResultsVirtual headers={headers} data={data} />
           )}
         </div>
+        <div className={styles.statusBar}>
+          <Typography variant="caption">
+            {data
+              ? (query.end && query.start) || (!query.end && !query.start)
+                ? `Rows: ${data.length.toLocaleString()}, Execution time: ${
+                  (query.end - query.start || 0).toLocaleString()} ms`
+                : 'Query in progress...'
+              : 'No query data.'
+            }
+          </Typography>
+        </div>
       </div>
     );
   }
