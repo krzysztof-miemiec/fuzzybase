@@ -5,6 +5,21 @@ type TextModel = editor.ITextModel;
 type CompletionList = languages.CompletionList;
 type CompletionItem = languages.CompletionItem;
 
+const getTableByName = (tableName: string, metadata: DatabaseMetadata) => {
+  const parts = tableName.replace(/"/g, '').split('.');
+  while (parts.length < 3) {
+    parts.unshift('');
+  }
+  const foundTable = Object.keys(metadata.tables)
+    .find(table => {
+      const tableParts = table.split('.');
+      return (tableParts[2] === parts[2])
+        && (parts[1] && tableParts[1] === parts[1])
+        && (parts[0] && tableParts[0] === parts[0]);
+    });
+  return metadata.tables[foundTable];
+};
+
 const normalizeTableName = (fullTableName: string, metadata: DatabaseMetadata) => {
   const [, schema, table] = fullTableName.split('.');
   const normalizedTable = table.match(/[A-Z]/) ? `"${table}"` : table;
@@ -56,8 +71,44 @@ export class PostgresCompletionItemProvider implements languages.CompletionItemP
         }),
       };
     }
-    if (matchBefore = beforeCursor.match(/SELECT(\s*)(.+)$/i)) {
-      if (matchAfter = afterCursor.match(/^(.+)\s+FROM\s+(.+)/i)) {
+    if (beforeCursor.match(/SELECT(.+)$/i)) {
+      if (matchAfter = afterCursor.match(/^(.+)\s+FROM\s+(.+)(?:;|$)/i)) {
+        const word = model.getWordUntilPosition(position).word;
+        const tables = matchAfter[2].split(',')
+          .map(table => table.trim())
+          .map(table => {
+            const matches = table.match(/^(.+)\s+(.+)$/i);
+            const alias = matches[2];
+            return {
+              table: getTableByName(matches[1], this.metadata),
+              alias,
+              exact: word === alias,
+            };
+          })
+          .filter(t => t.alias.indexOf(word) >= 0);
+        const exactTable = tables.find(t => t.exact);
+        console.log('match', word, tables, matchAfter, exactTable);
+        if (exactTable) {
+          return {
+            isIncomplete: false,
+            items: exactTable.table.fields.map(field => ({
+              label: field.name,
+              filterText: word,
+              kind: languages.CompletionItemKind.Field,
+              insertText: word.indexOf('.') < 0 ? '.' + field.name : field.name,
+            })),
+          };
+        } else {
+          return {
+            isIncomplete: false,
+            items: tables.map(table => ({
+              label: table.alias,
+              filterText: word,
+              kind: languages.CompletionItemKind.Class,
+              insertText: table.alias.substring(word.length),
+            })),
+          };
+        }
       } else {
         return {
           isIncomplete: false,
