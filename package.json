@@ -42,11 +42,11 @@
   },
   "electronWebpack": {
     "main": {
-      "webpackConfig": "webpack.additions.js"
+      "webpackConfig": "webpack.main.additions.js"
     },
     "renderer": {
-      "webpackConfig": "webpack.additions.js",
-      "webpackDllConfig": "webpack.additions.js"
+      "webpackConfig": "webpack.renderer.additions.js",
+      "webpackDllConfig": "webpack.main.additions.js"
     }
   },
   "build": {
@@ -104,22 +104,22 @@
     "ag-grid-community": "^19.0.0",
     "ag-grid-react": "^19.0.0",
     "classnames": "2.2.6",
-    "codemirror": "5.40.2",
     "electron-debug": "2.0.0",
     "electron-devtools-installer": "2.2.4",
     "history": "4.7.2",
     "i18next": "11.9.0",
     "i18next-electron-language-detector": "0.0.10",
     "lodash": "4.17.11",
+    "monaco-editor": "^0.14.3",
     "pg": "7.4.3",
     "raven-js": "3.27.0",
     "react": "16.5.2",
-    "react-codemirror2": "5.1.0",
     "react-dom": "16.5.2",
     "react-hot-loader": "4.3.11",
     "react-i18next": "7.12.0",
     "react-jss": "^8.6.1",
     "react-redux": "5.0.7",
+    "react-resize-detector": "^3.1.3",
     "react-router": "4.3.1",
     "react-router-redux": "5.0.0-alpha.9",
     "redux": "4.0.0",
@@ -151,6 +151,7 @@
     "electron-webpack": "2.3.1",
     "electron-webpack-ts": "2.1.1",
     "jest": "23.6.0",
+    "monaco-editor-webpack-plugin": "^1.5.4",
     "node-sass": "^4.9.3",
     "rimraf": "2.6.2",
     "sass-loader": "^7.1.0",

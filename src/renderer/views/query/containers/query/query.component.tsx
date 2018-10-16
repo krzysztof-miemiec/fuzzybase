@@ -5,7 +5,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { getMetadata, postgresQuery, setQuery } from '../../../../../common/db/store/db.actions';
-import { getConnection, getDatabasesState, getQuery } from '../../../../../common/db/store/db.selectors';
+import {
+  getConnection,
+  getDatabase,
+  getDatabaseMetadata,
+  getDatabasesState,
+  getQuery
+} from '../../../../../common/db/store/db.selectors';
 import { mapActions } from '../../../../../common/utils/redux.util';
 import { select } from '../../../../../common/utils/selector.util';
 import { AppState } from '../../../../store';
@@ -23,13 +29,15 @@ const ERROR_HEADER: FieldDef = {
   name: 'Error',
 };
 
-type RouteProps = RouteComponentProps<{ connectionId: string, queryId: string }>;
+type RouteProps = RouteComponentProps<{ databaseId: string, connectionId: string, queryId: string }>;
 
 const mapStateToProps = (state: AppState, ownProps: RouteProps) => {
-  const { connectionId, queryId } = ownProps.match.params;
+  const { databaseId, connectionId, queryId } = ownProps.match.params;
+  const database = select(state, getDatabasesState, getDatabase(databaseId));
   const connection = select(state, getDatabasesState, getConnection(connectionId));
   return {
     connection,
+    metadata: select(database, getDatabaseMetadata),
     query: select(connection, getQuery(queryId)),
   };
 };
@@ -104,7 +112,7 @@ class QueryComponent extends React.PureComponent<Props, State> {
   };
 
   render() {
-    const { query } = this.props;
+    const { metadata, query } = this.props;
     const { code, data, headers } = this.state;
     if (!query) {
       return (
@@ -119,6 +127,7 @@ class QueryComponent extends React.PureComponent<Props, State> {
       <div className={styles.container}>
         <CodeInput
           text={code}
+          databaseMetadata={metadata}
           className={styles.queryField}
           onTextChanged={this.setCode}
           onSendTriggered={this.executeQuery}

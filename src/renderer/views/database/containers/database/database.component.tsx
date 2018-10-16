@@ -126,7 +126,6 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
   render() {
     const { database, tables, connection, metadata } = this.props;
     const { isModified } = this.state;
-    console.log(connection);
 
     return database && !isModified ? (
       connection ? (

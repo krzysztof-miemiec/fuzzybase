@@ -213,3 +213,20 @@ CREATE FUNCTION get_fuzzy_types() RETURNS TABLE (
       fuzzy.functions ffs ON ffs.type=fts.id
   GROUP BY fts.name;
 $$ LANGUAGE sql IMMUTABLE STRICT;
+
+DROP FUNCTION IF EXISTS get_fuzzy_functions();
+CREATE FUNCTION get_fuzzy_functions() RETURNS TABLE (
+  type_id INT,
+  type_name VARCHAR(64),
+  name VARCHAR(64),
+  fun TRAPEZOIDAL_FUNCTION
+) AS $$
+  SELECT
+    fts.id as type_id,
+    fts.name as type_name,
+    ffs.name as name,
+    ffs.fun as fun
+  FROM
+    fuzzy.types fts, fuzzy.functions ffs
+  WHERE ffs.type=fts.id;
+$$ LANGUAGE sql IMMUTABLE STRICT;

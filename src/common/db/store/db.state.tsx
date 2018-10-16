@@ -50,9 +50,22 @@ export interface Table {
   fields: Column[];
 }
 
+export interface FuzzyFunction {
+  name: string;
+  range: [number, number, number, number];
+}
+
+export interface FuzzyType {
+  name: string;
+  functions: FuzzyFunction[];
+}
+
 export interface DatabaseMetadata {
-  tables: { [key: string]: Table };
-  user: string;
+  tables?: { [key: string]: Table };
+  searchPath?: string[];
+  user?: string;
+  hasFuzzyExtension?: boolean;
+  fuzzyTypes?: Record<string, FuzzyType>;
 }
 
 export interface DatabaseState {

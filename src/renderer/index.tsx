@@ -1,5 +1,3 @@
-import './utils/codemirror.util';
-
 import { webFrame } from 'electron';
 import React from 'react';
 import ReactDOM from 'react-dom';

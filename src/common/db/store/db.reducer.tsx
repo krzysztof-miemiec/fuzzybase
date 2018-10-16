@@ -94,13 +94,25 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
       return {
         ...state,
         databases: arrayCollectionReducer(state.databases, db => db.id)
-          .put(action.databaseId, db => ({
-            ...db,
-            meta: {
-              tables: defaultTo(action.tables, db.meta.tables),
-              user: defaultTo(action.user, db.meta.user),
-            },
-          })),
+          .put(action.databaseId, db => {
+            const database = {
+              ...db,
+              meta: {
+                searchPath: defaultTo(action.searchPath, db.meta.searchPath),
+                fuzzyTypes: defaultTo(action.fuzzyTypes, db.meta.fuzzyTypes),
+                hasFuzzyExtension: defaultTo(action.hasFuzzyExtension, db.meta.hasFuzzyExtension),
+                tables: defaultTo(action.tables, db.meta.tables),
+                user: defaultTo(action.user, db.meta.user),
+              },
+            };
+            database.meta.searchPath = database.meta.searchPath
+              ? database.meta.searchPath.map(path => path
+                .replace(/\$user/g, database.meta.user)
+                .trim()
+              )
+              : undefined;
+            return database;
+          }),
       };
     }
     case DB_ACTIONS.REMOVE_DATABASE:

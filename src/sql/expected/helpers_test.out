@@ -87,6 +87,15 @@ SELECT * FROM get_fuzzy_types();
  heart_rate  | {low,normal,high}
 (2 rows)
 
+-- Selection of all functions
+SELECT * FROM get_fuzzy_functions();
+ type_id | type_name  |  name  |             fun             
+---------+------------+--------+-----------------------------
+      10 | heart_rate | low    | 35.00/40.00~60.00\70.00
+      10 | heart_rate | normal | 50.00/60.00~100.00\130.00
+      10 | heart_rate | high   | 120.00/130.00~160.00\190.00
+(3 rows)
+
 -- Getter for a specific function
 SELECT * FROM get_fuzzy_function('heart_rate', 'high');
      get_fuzzy_function      

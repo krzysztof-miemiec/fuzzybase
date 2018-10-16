@@ -4,8 +4,14 @@ import { switchMap } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { showSnackbar } from '../../../renderer/views/layout/store/layout.actions';
 import { ConnectionStatusChangedAction, DB_ACTIONS, DbAction, getMetadata, GetMetadataAction } from './db.actions';
-import { getTables, getUserName, processTablesQueryResponse, processUserNameQueryResponse } from './db.private-actions';
 import { ConnectionStatus } from './db.state';
+import {
+  getFuzzyFunctions, getSearchPath,
+  getTables,
+  getUserName, processFuzzyFunctionsQueryResponse, processSearchPathQueryResponse,
+  processTablesQueryResponse,
+  processUserNameQueryResponse
+} from './db.system-actions';
 
 const connectionStatusChanged$ = (action$: ActionsObservable<DbAction>) => action$
   .ofType<ConnectionStatusChangedAction>(DB_ACTIONS.CONNECTION_STATUS_CHANGED)
@@ -36,8 +42,12 @@ const getMetadata$ = (action$: ActionsObservable<DbAction>, state$: StateObserva
     switchMap(action => concat(
       getUserName(action.connectionId),
       getTables(action.connectionId),
+      getFuzzyFunctions(action.connectionId),
+      getSearchPath(action.connectionId),
       processUserNameQueryResponse(action$, state$),
-      processTablesQueryResponse(action$, state$)
+      processTablesQueryResponse(action$, state$),
+      processFuzzyFunctionsQueryResponse(action$, state$),
+      processSearchPathQueryResponse(action$, state$)
     ))
   );
 

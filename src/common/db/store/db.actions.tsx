@@ -1,6 +1,12 @@
 import uuid from 'uuid/v4';
 import { createAction } from '../../utils/redux.util';
-import { ConnectionStatus, DatabaseState, PostgresClientConfiguration, PostgresResponse, Table } from './db.state';
+import {
+  ConnectionStatus,
+  DatabaseMetadata,
+  DatabaseState,
+  PostgresClientConfiguration,
+  PostgresResponse
+} from './db.state';
 
 export enum DB_ACTIONS {
   SET_DATABASE = 'DB/SET_DATABASE',
@@ -73,11 +79,7 @@ export const getMetadata = (connectionId: string) =>
 
 // DB/SET_METADATA
 export type SetMetadataAction = ReturnType<typeof setMetadata>;
-export const setMetadata = (payload: {
-  databaseId: string,
-  tables?: { [key: string]: Table },
-  user?: string,
-}) =>
+export const setMetadata = (payload: { databaseId: string} & DatabaseMetadata) =>
   createAction(DB_ACTIONS.SET_METADATA, payload);
 
 export type DbAction =

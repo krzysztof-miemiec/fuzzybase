@@ -1,5 +1,3 @@
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/idea.css';
 import { R } from '../../../../../common/resources';
 import { createStyles } from '../../../../app.styles';
 
@@ -16,7 +14,7 @@ export const styles = createStyles({
   },
   queryField: {
     gridRow: 1,
-    minHeight: 160,
+    height: 160,
   },
   statusBar: {
     display: 'flex',

@@ -5,10 +5,71 @@ import { AppState } from '../../../renderer/store';
 import { select } from '../../utils/selector.util';
 import { DB_ACTIONS, postgresQuery, PostgresQueryResultAction, setMetadata } from './db.actions';
 import { getConnection, getDatabasesState } from './db.selectors';
+import { FuzzyFunction, FuzzyType } from './db.state';
 import { findFieldByName } from './db.utils';
 
 export const USER_NAME_QUERY_ID = 'user_name';
+export const FUZZY_FUNCTIONS_ID = 'fuzzy_functions';
+export const SEARCH_PATH_ID = 'search_paths';
 export const TABLES_QUERY_ID = 'table_metadata';
+
+export const getSearchPath = (connectionId: string) => of(postgresQuery(
+  connectionId,
+  SEARCH_PATH_ID,
+  `SHOW search_path;`,
+  true
+));
+
+export const processSearchPathQueryResponse = (action$: Observable<any>, state$: StateObservable<AppState>) =>
+  action$.pipe(
+    ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
+    filter(action => action.queryId === SEARCH_PATH_ID),
+    take(1),
+    map(action => {
+      const connection = select(state$.value, getDatabasesState, getConnection(action.connectionId));
+      const DEFAULT_SEARCH_PATH = '"$user", public';
+      const searchPathString = (action.result && action.result.rows[0][0] || DEFAULT_SEARCH_PATH);
+      return setMetadata({
+        databaseId: connection.clientId,
+        searchPath: searchPathString.split(',')
+          .map(str => str.replace(/^"(.*)"$/, '$1')),
+      });
+    })
+  );
+
+export const getFuzzyFunctions = (connectionId: string) => of(postgresQuery(
+  connectionId,
+  FUZZY_FUNCTIONS_ID,
+    `SELECT * FROM get_fuzzy_functions();`,
+  true
+));
+
+export const processFuzzyFunctionsQueryResponse = (action$: Observable<any>, state$: StateObservable<AppState>) =>
+  action$.pipe(
+    ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
+    filter(action => action.queryId === FUZZY_FUNCTIONS_ID),
+    take(1),
+    map(action => {
+      const connection = select(state$.value, getDatabasesState, getConnection(action.connectionId));
+      const hasFuzzyExtension = !action.error;
+      const fuzzyTypes: Record<string, FuzzyType> = {};
+      if (hasFuzzyExtension) {
+        for (let [, typeName, name, fun] of action.result.rows) {
+          const type = fuzzyTypes[typeName] || { name: typeName, functions: [] as FuzzyFunction[] };
+          const fuzzyFunction: FuzzyFunction = {
+            name,
+            range: fun.split(/[/\\~]/).map(n => parseFloat(n)),
+          };
+          type.functions.push(fuzzyFunction);
+        }
+      }
+      return setMetadata({
+        databaseId: connection.clientId,
+        hasFuzzyExtension,
+        fuzzyTypes,
+      });
+    })
+  );
 
 export const getUserName = (connectionId: string) => of(postgresQuery(
   connectionId,
