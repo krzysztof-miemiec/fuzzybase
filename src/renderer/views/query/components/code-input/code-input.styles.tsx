@@ -21,4 +21,8 @@ export const styles = createStyles({
     textDecorationColor: 'red !important',
     textDecoration: 'line-through',
   },
+  builtinFunctionDecoration: {
+    color: '#309080 !important',
+    fontWeight: 500,
+  },
 });

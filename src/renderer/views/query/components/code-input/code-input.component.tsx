@@ -68,6 +68,7 @@ export class CodeInput extends React.PureComponent<Props, State> {
     this.fuzzyDecorationProvider.updateDecorationsFor(editor);
     editor.onKeyDown(this.onKeyDown);
     editor.onDidChangeModelContent(event => {
+      console.log(monaco.editor.tokenize(editor.getModel().getValue(), 'pgsql'));
       if (event.isFlush) {
         this.fuzzyDecorationProvider.updateDecorationsFor(editor);
         return;
