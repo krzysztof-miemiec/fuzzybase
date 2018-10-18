@@ -13,4 +13,12 @@ export const styles = createStyles({
     fontSize: 13,
     fontFamily: 'Fira Code',
   },
+  functionDecoration: {
+    color: '#309080 !important',
+  },
+  invalidFunctionDecoration: {
+    color: 'red !important',
+    textDecorationColor: 'red !important',
+    textDecoration: 'line-through',
+  },
 });

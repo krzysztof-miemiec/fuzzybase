@@ -1,2 +1,2 @@
 export * from './completion-item-provider';
-export * from './color-provider';
+export * from './fuzzy-decoration-provider';

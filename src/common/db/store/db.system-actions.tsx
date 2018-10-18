@@ -55,7 +55,8 @@ export const processFuzzyFunctionsQueryResponse = (action$: Observable<any>, sta
       const fuzzyTypes: Record<string, FuzzyType> = {};
       if (hasFuzzyExtension) {
         for (let [, typeName, name, fun] of action.result.rows) {
-          const type = fuzzyTypes[typeName] || { name: typeName, functions: [] as FuzzyFunction[] };
+          const type = fuzzyTypes[typeName]
+            || (fuzzyTypes[typeName] = { name: typeName, functions: [] as FuzzyFunction[] });
           const fuzzyFunction: FuzzyFunction = {
             name,
             range: fun.split(/[/\\~]/).map(n => parseFloat(n)),

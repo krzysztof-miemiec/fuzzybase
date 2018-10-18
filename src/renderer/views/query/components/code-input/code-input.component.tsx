@@ -1,12 +1,12 @@
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
-import { IDisposable, IKeyboardEvent, KeyCode } from 'monaco-editor/esm/vs/editor/editor.api';
+import { IDisposable, IKeyboardEvent, IRange, KeyCode } from 'monaco-editor/esm/vs/editor/editor.api';
 import React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import { DatabaseMetadata } from '../../../../../common/db/store/db.state';
 import { View } from '../../../../shared/components/view';
 import { MonacoEditor } from '../monaco-editor';
 import { styles } from './code-input.styles';
-import { PostgresColorProvider, PostgresCompletionItemProvider } from './pgsql';
+import { FuzzyDecorationProvider, PostgresCompletionItemProvider } from './pgsql';
 
 const POSTGRES = 'pgsql';
 
@@ -23,22 +23,36 @@ interface State {
   height: number;
 }
 
+export const extendRangeByText = (
+  { startLineNumber, startColumn, endColumn, endLineNumber }: IRange,
+  text: string
+): IRange => {
+  const split = text.split('\n');
+  return {
+    endColumn: endColumn + split[split.length - 1].length,
+    startColumn: startColumn,
+    endLineNumber: endLineNumber + split.length - 1,
+    startLineNumber,
+  };
+};
+
 export class CodeInput extends React.PureComponent<Props, State> {
   container: any;
   state: State = { width: undefined, height: undefined };
   private completionItemProvider = new PostgresCompletionItemProvider();
+  private fuzzyDecorationProvider = new FuzzyDecorationProvider();
   private completionItemProviderDisposable: IDisposable;
-  private colorProvider = new PostgresColorProvider();
-  private colorProviderDisposable: IDisposable;
 
   componentDidMount() {
     const { databaseMetadata } = this.props;
+    this.fuzzyDecorationProvider.setMetadata(databaseMetadata);
     this.completionItemProvider.setMetadata(databaseMetadata);
   }
 
   componentDidUpdate(oldProps: Props) {
     const { databaseMetadata } = this.props;
     if (databaseMetadata !== oldProps.databaseMetadata) {
+      this.fuzzyDecorationProvider.setMetadata(databaseMetadata);
       this.completionItemProvider.setMetadata(databaseMetadata);
     }
   }
@@ -47,15 +61,21 @@ export class CodeInput extends React.PureComponent<Props, State> {
     if (this.completionItemProviderDisposable) {
       this.completionItemProviderDisposable.dispose();
     }
-    if (this.colorProviderDisposable) {
-      this.colorProviderDisposable.dispose();
-    }
   }
 
   editorDidMount = (editor: monacoEditor.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => {
+    this.fuzzyDecorationProvider.resetDecorations();
+    this.fuzzyDecorationProvider.updateDecorationsFor(editor);
     editor.onKeyDown(this.onKeyDown);
-    this.colorProviderDisposable = monaco.languages
-      .registerColorProvider(POSTGRES, this.colorProvider);
+    editor.onDidChangeModelContent(event => {
+      if (event.isFlush) {
+        this.fuzzyDecorationProvider.updateDecorationsFor(editor);
+        return;
+      }
+      for (const change of event.changes) {
+        this.fuzzyDecorationProvider.updateDecorationsFor(editor, extendRangeByText(change.range, change.text));
+      }
+    });
     this.completionItemProviderDisposable = monaco.languages
       .registerCompletionItemProvider(POSTGRES, this.completionItemProvider);
   };
