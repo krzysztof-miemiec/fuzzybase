@@ -12,9 +12,9 @@ typedef struct {
 
 twoint *new_twoint(void);
 
-float8 min(float8 x, float8 y);
+float8 minimum(float8 x, float8 y);
 
-float8 max(float8 x, float8 y);
+float8 maximum(float8 x, float8 y);
 
 float8 neg_dm(float8 x);
 
@@ -28,17 +28,17 @@ float8 final_percentage(twoint *last_state);
 
 // Zadeh operators
 
-float8 min(float8 x, float8 y) {
+float8 minimum(float8 x, float8 y) {
     return x<y ? x : y;
 }
 
-PG_FUNC_2(min, float8, FLOAT8, float8, FLOAT8, float8, FLOAT8);
+PG_FUNC_2(minimum, float8, FLOAT8, float8, FLOAT8, float8, FLOAT8);
 
-float8 max(float8 x, float8 y) {
+float8 maximum(float8 x, float8 y) {
     return x<y ? y : x;
 }
 
-PG_FUNC_2(max, float8, FLOAT8, float8, FLOAT8, float8, FLOAT8);
+PG_FUNC_2(maximum, float8, FLOAT8, float8, FLOAT8, float8, FLOAT8);
 
 float8 neg_dm(float8 x) {
     return 1 - x;

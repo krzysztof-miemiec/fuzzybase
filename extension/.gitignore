@@ -1,7 +1,14 @@
-fuzzy.o
+*.o
 *.so
 fuzzy--*.sql
 cmake-build-debug
 *.log.txt
 *.log
 results/*.out
+
+# Visual Studio
+windows/.vs
+windows/**/x64
+*.rsuser
+*.user
+*.userosscache

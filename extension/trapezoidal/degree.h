@@ -12,7 +12,7 @@ float8 degreerf(float8 x, trapezoidal_function *f);
 
 float8 degreefr(trapezoidal_function *f, float8 x);
 
-float e(float xD1, float xG1, float xD2, float xG2);
+float8 e(float8 xD1, float8 xG1, float8 xD2, float8 xG2);
 
 float8 degreeftofft(trapezoidal_function x, trapezoidal_function y);
 
@@ -81,7 +81,7 @@ PG_FUNC_2(degreefr, float8, FLOAT8, trapezoidal_function*, POINTER, float8, FLOA
  * @param xG2 edge point of second trapezoidal function
  * @return the (partial result) degree of membership of trapezoidal function
  */
-float e(float xD1, float xG1, float xD2, float xG2) {
+float8 e(float8 xD1, float8 xG1, float8 xD2, float8 xG2) {
     if ((xD1 < xD2 && xG1 > xG2) || (xD2 < xD1 && xG2 > xG1)) {
         return (xD1 - xD2) / ((xG2 - xD2) - (xG1 - xD1));
     }

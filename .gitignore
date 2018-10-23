@@ -11,8 +11,6 @@ node_modules/
 reports/
 
 # Builds
-*.o
-/extension/**/*.so
 *.log
 
 # OS

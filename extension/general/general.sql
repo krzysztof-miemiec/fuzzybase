@@ -1,11 +1,11 @@
 -- Zadeh operators
 
 CREATE OR REPLACE FUNCTION zadeh_or(float8, float8) RETURNS float8
-  AS 'fuzzy', 'pg_max' LANGUAGE 'c' IMMUTABLE STRICT;
+  AS 'fuzzy', 'pg_maximum' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OPERATOR ||| (LEFTARG=float8, RIGHTARG=float8, PROCEDURE=zadeh_or);
 
 CREATE OR REPLACE FUNCTION zadeh_and(float8, float8) RETURNS float8
-  AS 'fuzzy', 'pg_min' LANGUAGE 'c' IMMUTABLE STRICT;
+  AS 'fuzzy', 'pg_minimum' LANGUAGE 'c' IMMUTABLE STRICT;
 CREATE OPERATOR &&& (LEFTARG=float8, RIGHTARG=float8, PROCEDURE=zadeh_and);
 
 CREATE OR REPLACE FUNCTION zadeh_not(float8) RETURNS float8

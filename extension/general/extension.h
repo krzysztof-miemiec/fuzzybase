@@ -6,21 +6,23 @@
 #include "utils/builtins.h"
 
 #if defined(_WIN32)
-  #define OSIndependentDatum PGDLLEXPORT Datum
+  #define WindowsDllExport(name) extern PGDLLEXPORT Datum name(PG_FUNCTION_ARGS);
 #else
-  #define OSIndependentDatum Datum
+  #define WindowsDllExport(name)
 #endif
 
 #define PG_FUNC_0(NAME, RETURN_TYPE, PG_RETURN_TYPE) \
+WindowsDllExport(pg_ ## NAME);\
 PG_FUNCTION_INFO_V1(pg_ ## NAME);\
-OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
+Datum pg_ ## NAME(PG_FUNCTION_ARGS) {\
     RETURN_TYPE result = NAME();\
     PG_RETURN_ ## PG_RETURN_TYPE(result);\
 }
 
 #define PG_FUNC_1(NAME, RETURN_TYPE, PG_RETURN_TYPE, ARG0_TYPE, PG_ARG0_TYPE) \
+WindowsDllExport(pg_ ## NAME);\
 PG_FUNCTION_INFO_V1(pg_ ## NAME); \
-OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) { \
+Datum pg_ ## NAME(PG_FUNCTION_ARGS) { \
     if(PG_ARGISNULL(0)){\
         PG_RETURN_NULL();\
     }\
@@ -30,8 +32,9 @@ OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) { \
 }
 
 #define PG_FUNC_2(NAME, RETURN_TYPE, PG_RETURN_TYPE, ARG0_TYPE, PG_ARG0_TYPE, ARG1_TYPE, PG_ARG1_TYPE) \
+WindowsDllExport(pg_ ## NAME);\
 PG_FUNCTION_INFO_V1(pg_ ## NAME);\
-OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
+Datum pg_ ## NAME(PG_FUNCTION_ARGS) {\
     if(PG_ARGISNULL(0) || PG_ARGISNULL(1)){\
         PG_RETURN_NULL();\
     }\
@@ -42,8 +45,9 @@ OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
 }
 
 #define PG_FUNC_2_POINTER(NAME, ARG0_TYPE, PG_ARG0_TYPE, ARG1_TYPE, PG_ARG1_TYPE) \
+WindowsDllExport(pg_ ## NAME);\
 PG_FUNCTION_INFO_V1(pg_ ## NAME);\
-OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
+Datum pg_ ## NAME(PG_FUNCTION_ARGS) {\
     if(PG_ARGISNULL(0) || PG_ARGISNULL(1)){\
         PG_RETURN_NULL();\
     }\
@@ -57,8 +61,9 @@ OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
 }
 
 #define PG_FUNC_3(NAME, RETURN_TYPE, PG_RETURN_TYPE, ARG0_TYPE, PG_ARG0_TYPE, ARG1_TYPE, PG_ARG1_TYPE, ARG2_TYPE, PG_ARG2_TYPE) \
+WindowsDllExport(pg_ ## NAME);\
 PG_FUNCTION_INFO_V1(pg_ ## NAME);\
-OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
+Datum pg_ ## NAME(PG_FUNCTION_ARGS) {\
     if(PG_ARGISNULL(0) || PG_ARGISNULL(1) || PG_ARGISNULL(2)){\
         PG_RETURN_NULL();\
     }\
@@ -70,8 +75,9 @@ OSIndependentDatum pg_ ## NAME(PG_FUNCTION_ARGS) {\
 }
 
 #define PG_TRAPEZOIDAL_FUNCTION(NAME) \
+WindowsDllExport(pg_ ## NAME);\
 PG_FUNCTION_INFO_V1(pg_##NAME);\
-OSIndependentDatum pg_##NAME(PG_FUNCTION_ARGS) {\
+Datum pg_##NAME(PG_FUNCTION_ARGS) {\
     trapezoidal_function *f = NAME();\
     PG_RETURN_POINTER(f);\
 }
