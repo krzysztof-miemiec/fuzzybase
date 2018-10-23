@@ -1,4 +1,4 @@
-*.o
+fuzzy.o
 *.so
 fuzzy--*.sql
 cmake-build-debug

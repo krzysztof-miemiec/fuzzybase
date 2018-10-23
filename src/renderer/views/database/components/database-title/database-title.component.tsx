@@ -3,6 +3,7 @@ import React from 'react';
 import { DatabaseState } from '../../../../../common/db/store/app';
 import { R } from '../../../../../common/resources';
 import { View } from '../../../../shared/components/view';
+import { InstallExtensionDialog } from '../../../extension/containers/install-extension-dialog';
 import { styles } from './database-title.styles';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 
 interface State {
   menuAnchor?: any;
+  isExtensionDialogOpen?: boolean;
 }
 
 export class DatabaseTitle extends React.Component<Props, State> {
@@ -25,14 +27,22 @@ export class DatabaseTitle extends React.Component<Props, State> {
     this.setState({ menuAnchor: event.currentTarget });
   };
 
+  onOpenInstallExtensionDialog = () => {
+    this.setState({isExtensionDialogOpen: true});
+    this.onMenuClose();
+  };
+
+  onCloseInstallExtensionDialog = () => {
+    this.setState({isExtensionDialogOpen: false});
+  };
+
   onMenuClose = () => {
     this.setState({ menuAnchor: null });
-
   };
 
   render() {
     const { database, user, onCloseConnection } = this.props;
-    const { menuAnchor } = this.state;
+    const { menuAnchor, isExtensionDialogOpen } = this.state;
     return (
       <>
         <View
@@ -67,8 +77,16 @@ export class DatabaseTitle extends React.Component<Props, State> {
           onClose={this.onMenuClose}
         >
           <MenuItem onClick={this.onMenuClose}>Configure</MenuItem>
+          {!database.meta.hasFuzzyExtension && (
+            <MenuItem onClick={this.onOpenInstallExtensionDialog}>Install Fuzzy extension</MenuItem>
+          )}
           <MenuItem onClick={onCloseConnection}>Close</MenuItem>
         </Menu>
+        <InstallExtensionDialog
+          isOpen={isExtensionDialogOpen}
+          databaseId={database.id}
+          onClose={this.onCloseInstallExtensionDialog}
+        />
       </>
     );
   }

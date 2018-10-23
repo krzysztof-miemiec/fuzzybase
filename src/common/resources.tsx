@@ -1,5 +1,6 @@
 import { Color } from '../renderer/utils/color.util';
 import { Config } from './config';
+import * as path from "path";
 
 export const R = {
   color: {
@@ -28,6 +29,9 @@ export const R = {
   fontSize: {
     bolder: '16px',
     normal: '13px',
+  },
+  string: {
+    fuzzyPackage: path.join(__static, 'fuzzy.zip'),
   },
   timing: {
     animationDuration: 350,

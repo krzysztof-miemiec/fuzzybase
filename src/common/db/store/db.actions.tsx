@@ -20,6 +20,7 @@ export enum DB_ACTIONS {
   QUERY_RESULT = 'DB/QUERY_RESULT',
   GET_METADATA = 'DB/GET_METADATA',
   SET_METADATA = 'DB/SET_METADATA',
+  INSTALL_FUZZY_EXTENSION = 'DB/INSTALL_FUZZY_EXTENSION',
 }
 
 // DB/SET_DATABASE
@@ -79,8 +80,13 @@ export const getMetadata = (connectionId: string) =>
 
 // DB/SET_METADATA
 export type SetMetadataAction = ReturnType<typeof setMetadata>;
-export const setMetadata = (payload: { databaseId: string} & DatabaseMetadata) =>
+export const setMetadata = (payload: { databaseId: string } & DatabaseMetadata) =>
   createAction(DB_ACTIONS.SET_METADATA, payload);
+
+// DB/INSTALL_FUZZY_EXTENSION
+export type InstallFuzzyExtensionAction = ReturnType<typeof installFuzzyExtension>;
+export const installFuzzyExtension = (connectionId: string) =>
+  createAction(DB_ACTIONS.INSTALL_FUZZY_EXTENSION, { connectionId });
 
 export type DbAction =
   | SetDatabaseAction
@@ -93,4 +99,5 @@ export type DbAction =
   | CloseQueryAction
   | PostgresQueryResultAction
   | GetMetadataAction
-  | SetMetadataAction;
+  | SetMetadataAction
+  | InstallFuzzyExtensionAction;

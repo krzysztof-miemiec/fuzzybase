@@ -11,7 +11,7 @@ import {
   getUserName, processFuzzyFunctionsQueryResponse, processSearchPathQueryResponse,
   processTablesQueryResponse,
   processUserNameQueryResponse
-} from './db.system-actions';
+} from './db.system.epics';
 
 const connectionStatusChanged$ = (action$: ActionsObservable<DbAction>) => action$
   .ofType<ConnectionStatusChangedAction>(DB_ACTIONS.CONNECTION_STATUS_CHANGED)

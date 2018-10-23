@@ -34,13 +34,13 @@ class QueryToolbarComponent extends React.Component<Props> {
   };
 
   render() {
-    const {query} = this.props;
+    const { query } = this.props;
     return query ? (
       <>
         <Tooltip title="Execute query">
-        <IconButton onClick={this.executeQuery}>
-          <Send color="inherit" fontSize="inherit" />
-        </IconButton>
+          <IconButton onClick={this.executeQuery}>
+            <Send color="inherit" fontSize="inherit" />
+          </IconButton>
         </Tooltip>
       </>
     ) : (

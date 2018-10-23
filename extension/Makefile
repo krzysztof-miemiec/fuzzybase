@@ -17,7 +17,9 @@ fuzzy.sql:
 
 all: fuzzy.sql
 
-everything: clean all install installcheck
+add: clean all install
 
-.PHONY: fuzzy.sql everything
+everything: add installcheck
+
+.PHONY: fuzzy.sql everything add
 

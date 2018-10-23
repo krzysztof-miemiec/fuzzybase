@@ -12,7 +12,8 @@ reports/
 
 # Builds
 *.o
-*.so
+/extension/**/*.so
+*.log
 
 # OS
 .DS_Store

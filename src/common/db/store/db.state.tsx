@@ -60,12 +60,19 @@ export interface FuzzyType {
   functions: FuzzyFunction[];
 }
 
+export interface ExtensionInstallation {
+  status?: string;
+  success?: boolean;
+  error?: boolean;
+}
+
 export interface DatabaseMetadata {
   tables?: { [key: string]: Table };
   searchPath?: string[];
   user?: string;
   hasFuzzyExtension?: boolean;
   fuzzyTypes?: Record<string, FuzzyType>;
+  extensionInstallation?: ExtensionInstallation | null;
 }
 
 export interface DatabaseState {

@@ -1,6 +1,6 @@
 import { ofType, StateObservable } from 'redux-observable';
 import { Observable, of } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, map, take, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { select } from '../../utils/selector.util';
 import { DB_ACTIONS, postgresQuery, PostgresQueryResultAction, setMetadata } from './db.actions';
@@ -12,6 +12,24 @@ export const USER_NAME_QUERY_ID = 'user_name';
 export const FUZZY_FUNCTIONS_ID = 'fuzzy_functions';
 export const SEARCH_PATH_ID = 'search_paths';
 export const TABLES_QUERY_ID = 'table_metadata';
+export const CREATE_FUZZY_EXTENSION_ID = 'create_fuzzy_extension';
+
+export const createFuzzyExtension = (connectionId: string) => of(postgresQuery(
+  connectionId,
+  CREATE_FUZZY_EXTENSION_ID,
+  `SHOW search_path;`,
+  true
+));
+
+export const processCreateFuzzyExtensionResponse = (action$: Observable<any>) =>
+  action$.pipe(
+    ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
+    filter(action => action.queryId === CREATE_FUZZY_EXTENSION_ID),
+    take(1),
+    map(action => {
+      return !action.error;
+    })
+  );
 
 export const getSearchPath = (connectionId: string) => of(postgresQuery(
   connectionId,
@@ -40,7 +58,8 @@ export const processSearchPathQueryResponse = (action$: Observable<any>, state$:
 export const getFuzzyFunctions = (connectionId: string) => of(postgresQuery(
   connectionId,
   FUZZY_FUNCTIONS_ID,
-    `SELECT * FROM get_fuzzy_functions();`,
+    `SELECT *
+     FROM get_fuzzy_functions();`,
   true
 ));
 
@@ -49,8 +68,9 @@ export const processFuzzyFunctionsQueryResponse = (action$: Observable<any>, sta
     ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
     filter(action => action.queryId === FUZZY_FUNCTIONS_ID),
     take(1),
-    map(action => {
-      const connection = select(state$.value, getDatabasesState, getConnection(action.connectionId));
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      const connection = select(state, getDatabasesState, getConnection(action.connectionId));
       const hasFuzzyExtension = !action.error;
       const fuzzyTypes: Record<string, FuzzyType> = {};
       if (hasFuzzyExtension) {
@@ -84,9 +104,10 @@ export const processUserNameQueryResponse = (action$: Observable<any>, state$: S
     ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
     filter(action => action.queryId === USER_NAME_QUERY_ID),
     take(1),
-    map(action => {
+    withLatestFrom(state$),
+    map(([action, state]) => {
       const { rows } = action.result;
-      const connection = select(state$.value, getDatabasesState, getConnection(action.connectionId));
+      const connection = select(state, getDatabasesState, getConnection(action.connectionId));
 
       const user = rows[0][0];
 
@@ -115,9 +136,10 @@ export const processTablesQueryResponse = (action$: Observable<any>, state$: Sta
     ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
     filter(action => action.queryId === TABLES_QUERY_ID),
     take(1),
-    map(action => {
+    withLatestFrom(state$),
+    map(([action, state]) => {
       const { fields, rows } = action.result;
-      const connection = select(state$.value, getDatabasesState, getConnection(action.connectionId));
+      const connection = select(state, getDatabasesState, getConnection(action.connectionId));
       const field = findFieldByName(fields);
       const catalogName = field('table_catalog');
       const schemaName = field('table_schema');

@@ -33,6 +33,7 @@
     "postinstall": "node ./scripts/patch.js && electron-builder install-app-deps",
     "purge": "yarn clean && rimraf 'node_modules' && yarn",
     "clean": "rimraf '{release,dist,.tscache,reports,screenshots}'",
+    "extension": "rimraf '{extension/**/*.so, extension/**/*.o, extension/fuzzy--*.sql}' && zip -r ./static/fuzzy.zip ./extension",
     "build:prod": "electron-webpack && yarn build:sql",
     "build:release": "electron-builder -mwl",
     "build:sql": "(cd ./src/sql && make everything)",
@@ -128,6 +129,7 @@
     "redux-persist": "5.10.0",
     "rxjs": "6.3.2",
     "source-map-support": "0.5.9",
+    "sudo-prompt": "^8.2.3",
     "uuid": "3.3.2"
   },
   "devDependencies": {

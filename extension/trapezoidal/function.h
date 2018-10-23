@@ -232,7 +232,7 @@ trapezoidal_function *about_r(float8 l, float8 m, float8 n, float8 o) {
  */
 PG_FUNCTION_INFO_V1(pg_about);
 
-Datum pg_about(PG_FUNCTION_ARGS) {
+OSIndependentDatum pg_about(PG_FUNCTION_ARGS) {
     float8 l = PG_GETARG_FLOAT8(0);
     float8 m = PG_GETARG_FLOAT8(1);
     float8 n = PG_GETARG_FLOAT8(2);
