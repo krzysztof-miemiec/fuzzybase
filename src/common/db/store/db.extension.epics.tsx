@@ -13,20 +13,33 @@ import { getConnection, getDatabasesState } from './db.selectors';
 import { ExtensionInstallation } from './db.state';
 import { createFuzzyExtension, processCreateFuzzyExtensionResponse } from './db.system.epics';
 
-const findPaths = async (): Promise<{
-  extensionPath: string,
-  libraryPath: string,
-}> => {
+interface Paths {
+  extensionPath: string;
+  libraryPath: string;
+}
+
+const PG_CONFIG_COMMAND = 'pg_config';
+const execOptions = { encoding: 'utf8', windowsHide: true, timeout: 5000 };
+
+const commandExists = (command) => new Promise(resolve => {
+  const execCommand = process.platform === 'win32'
+    ? `${command} >nul 2>nul`
+    : `command -v ${command} >/dev/null 2>&1`;
+  exec(execCommand, execOptions, error => resolve(!error));
+});
+
+const findPaths = async (): Promise<Paths> => {
   const result = { extensionPath: '', libraryPath: '' };
-  new Promise(((resolve, reject) => {
-    exec('pg_config', { encoding: 'utf8', windowsHide: true, timeout: 5000 },
+  return new Promise<Paths>(async (resolve, reject) => {
+    await commandExists(PG_CONFIG_COMMAND);
+    exec(PG_CONFIG_COMMAND, { encoding: 'utf8', windowsHide: true, timeout: 5000 },
       (error, stdout, stderr) => {
         if (error) {
           console.log(stderr);
           return reject(error);
         }
         const libraryPathMatch = stdout.match(/PKGLIBDIR\s*=\s*(.+?)\n/);
-        const dataPathMatch = stdout.match(/'--datadir=(.+?)'/);
+        const dataPathMatch = stdout.match(/'SHAREDIR\s*=\s*(.+?)\n/);
         if (libraryPathMatch) {
           result.libraryPath = libraryPathMatch[1];
         }
@@ -36,15 +49,18 @@ const findPaths = async (): Promise<{
         if (result.extensionPath && result.libraryPath) {
           return resolve(result);
         }
+        reject(new Error('Fuzzybase couldn\'t find '));
       }
     );
-  }));
+  });
 };
 
 const extractFile = (): Observable<ExtensionInstallation> => {
   const subject = new Subject<ExtensionInstallation>();
   (async () => {
     try {
+      subject.next({ status: 'Looking for PostgreSQL extension paths...' });
+      const { extensionPath, libraryPath } = await findPaths();
       subject.next({ status: 'Copying extension source...' });
       const extension = path.join(app.getPath('temp'), 'extension');
       const processOptions = {
@@ -52,8 +68,6 @@ const extractFile = (): Observable<ExtensionInstallation> => {
       };
       await copy(R.string.fuzzyPackage, extension);
       subject.next({ status: 'Building an extension...' });
-
-      const makeProcess = exec(`make clean all`, processOptions);
 
     } catch (error) {
       subject.error(error);
