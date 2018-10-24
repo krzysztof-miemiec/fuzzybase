@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 import * as path from 'path';
 import { ActionsObservable, StateObservable } from 'redux-observable';
 import { concat, Observable, of, Subject } from 'rxjs';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { R } from '../../resources';
 import { copy } from '../../utils/files.util';
@@ -81,7 +81,7 @@ const extractExtension = (): Observable<ExtensionInstallation> => {
   return subject;
 };
 
-export const installExtension = (
+export const installExtension$ = (
   action$: ActionsObservable<DbAction>,
   state$: StateObservable<AppState>
 ) => action$
@@ -93,15 +93,18 @@ export const installExtension = (
         withLatestFrom(state$),
         switchMap(([success, state]) => {
           console.log('test');
-          if (success) {
-            const connection = select(state, getDatabasesState, getConnection(action.connectionId));
-
-            return of(setMetadata({
+          const connection = select(state, getDatabasesState, getConnection(action.connectionId));
+          return success
+            ? of(setMetadata({
               databaseId: connection.clientId,
               extensionInstallation: { success: true },
-            }));
-          }
-          return extractExtension();
+            }))
+            : extractExtension().pipe(
+              map(extensionInstallation => setMetadata({
+                databaseId: connection.clientId,
+                extensionInstallation,
+              }))
+            );
         })
       )
     ))

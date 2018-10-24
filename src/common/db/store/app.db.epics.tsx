@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { showSnackbar } from '../../../renderer/views/layout/store/layout.actions';
 import { ConnectionStatusChangedAction, DB_ACTIONS, DbAction, getMetadata, GetMetadataAction } from './db.actions';
+import { installExtension$ } from './db.extension.epics';
 import { ConnectionStatus } from './db.state';
 import {
   getFuzzyFunctions, getSearchPath,
@@ -53,5 +54,6 @@ const getMetadata$ = (action$: ActionsObservable<DbAction>, state$: StateObserva
 
 export const appDbEpics = combineEpics(
   connectionStatusChanged$,
-  getMetadata$
+  getMetadata$,
+  installExtension$
 );
