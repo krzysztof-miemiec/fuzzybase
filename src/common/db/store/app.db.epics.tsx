@@ -1,15 +1,28 @@
 import { ActionsObservable, combineEpics, StateObservable } from 'redux-observable';
 import { concat, EMPTY, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { showSnackbar } from '../../../renderer/views/layout/store/layout.actions';
-import { ConnectionStatusChangedAction, DB_ACTIONS, DbAction, getMetadata, GetMetadataAction } from './db.actions';
-import { installExtension$ } from './db.extension.epics';
+import { select } from '../../utils/selector.util';
+import {
+  ConnectionStatusChangedAction,
+  DB_ACTIONS,
+  DbAction,
+  getMetadata,
+  GetMetadataAction,
+  InstallFuzzyExtensionAction, setMetadata
+} from './db.actions';
+import { getConnection, getDatabasesState } from './db.selectors';
 import { ConnectionStatus } from './db.state';
 import {
-  getFuzzyFunctions, getSearchPath,
+  createFuzzyExtension,
+  getFuzzyFunctions,
+  getSearchPath,
   getTables,
-  getUserName, processFuzzyFunctionsQueryResponse, processSearchPathQueryResponse,
+  getUserName,
+  processCreateFuzzyExtensionResponse,
+  processFuzzyFunctionsQueryResponse,
+  processSearchPathQueryResponse,
   processTablesQueryResponse,
   processUserNameQueryResponse
 } from './db.system.epics';
@@ -49,6 +62,23 @@ const getMetadata$ = (action$: ActionsObservable<DbAction>, state$: StateObserva
       processTablesQueryResponse(action$, state$),
       processFuzzyFunctionsQueryResponse(action$, state$),
       processSearchPathQueryResponse(action$, state$)
+    ))
+  );
+
+const installExtension$ = (
+  action$: ActionsObservable<DbAction>,
+  state$: StateObservable<AppState>
+) => action$
+  .ofType<InstallFuzzyExtensionAction>(DB_ACTIONS.INSTALL_FUZZY_EXTENSION)
+  .pipe(
+    withLatestFrom(state$),
+    switchMap(([action, state]) => concat(
+      of(setMetadata({
+        databaseId: select(state, getDatabasesState, getConnection(action.connectionId)).clientId,
+        extensionInstallation: { status: 'Adding extension to the database...' },
+      })),
+      createFuzzyExtension(action.connectionId),
+      processCreateFuzzyExtensionResponse(action$, state$)
     ))
   );
 

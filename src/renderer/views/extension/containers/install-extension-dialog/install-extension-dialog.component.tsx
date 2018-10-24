@@ -11,12 +11,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { getDatabase, getDatabasesState, installFuzzyExtension } from '../../../../../common/db/store/app';
+import {
+  ExtensionInstallation,
+  getDatabase,
+  getDatabasesState,
+  installFuzzyExtension,
+  setMetadata
+} from '../../../../../common/db/store/app';
 import { R } from '../../../../../common/resources';
 import { copy, showSaveDialog } from '../../../../../common/utils/files.util';
 import { mapActions } from '../../../../../common/utils/redux.util';
 import { select } from '../../../../../common/utils/selector.util';
 import { AppState } from '../../../../store';
+import { styles } from './install-extension-dialog.styles';
 
 interface ComponentProps {
   databaseId: string;
@@ -38,6 +45,7 @@ const mapStateToProps = (state: AppState, ownProps: ComponentProps) => ({
 
 const mapDispatchToProps = mapActions({
   installFuzzyExtension,
+  setMetadata,
 });
 
 type Props =
@@ -89,6 +97,18 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
       this.saveSubscription = null;
     }
   };
+
+  componentDidUpdate(oldProps: Props) {
+    const { isOpen, actions, database } = this.props;
+    if (!oldProps.isOpen && isOpen) {
+      if (database.meta.extensionInstallation) {
+        actions.setMetadata({
+          databaseId: database.id,
+          extensionInstallation: null,
+        });
+      }
+    }
+  }
 
   componentWillUnmount() {
     this.clearSaveSubscription();
@@ -144,24 +164,34 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
     );
   };
 
-  renderInstallation = (status: string) => (
-    <>
-      <DialogTitle id="alert-dialog-title">
-        Installing Fuzzybase extension...
-      </DialogTitle>
-      <DialogContent>
-        <LinearProgress variant="indeterminate" />
-        <DialogContentText id="alert-dialog-description">
-          {status}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={this.onCloseClick} color="primary">
-          Abort
-        </Button>
-      </DialogActions>
-    </>
-  );
+  renderInstallation = (installation: ExtensionInstallation) => {
+    const isDone = installation.success || installation.error;
+    return (
+      <>
+        <DialogTitle id="alert-dialog-title">
+          Installing Fuzzybase extension...
+        </DialogTitle>
+        <DialogContent>
+          {!isDone && (
+            <LinearProgress className={styles.progressBar} variant="indeterminate" />
+          )}
+          <DialogContentText id="alert-dialog-description">
+            {installation.success
+              ? 'Installation has been finished successfully.'
+              : installation.status}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.onCloseClick} color="primary">
+            {isDone
+              ? 'Close'
+              : 'Abort'
+            }
+          </Button>
+        </DialogActions>
+      </>
+    );
+  };
 
   renderLocal = () => (
     <>
@@ -192,7 +222,7 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
   render() {
     const { isOpen, onClose, database } = this.props;
     const { fileCopy } = this.state;
-    const isInstallationInProgress = false;
+    const installation = database.meta.extensionInstallation;
 
     return (
       <Dialog
@@ -200,7 +230,7 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
         onClose={onClose}
       >
         {isLocal(database.host) ? (
-          isInstallationInProgress ? this.renderInstallation('blah') : this.renderLocal()
+          installation ? this.renderInstallation(installation) : this.renderLocal()
         ) : (
           fileCopy ? this.renderFileCopy() : this.renderRemote()
         )}

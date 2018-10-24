@@ -8,6 +8,7 @@ import { styles } from './database-title.styles';
 
 interface Props {
   database: DatabaseState;
+  connectionId: string;
   user: string;
   onCloseConnection: () => void;
 }
@@ -41,7 +42,7 @@ export class DatabaseTitle extends React.Component<Props, State> {
   };
 
   render() {
-    const { database, user, onCloseConnection } = this.props;
+    const { database, connectionId, user, onCloseConnection } = this.props;
     const { menuAnchor, isExtensionDialogOpen } = this.state;
     return (
       <>
@@ -85,6 +86,7 @@ export class DatabaseTitle extends React.Component<Props, State> {
         <InstallExtensionDialog
           isOpen={isExtensionDialogOpen}
           databaseId={database.id}
+          connectionId={connectionId}
           onClose={this.onCloseInstallExtensionDialog}
         />
       </>

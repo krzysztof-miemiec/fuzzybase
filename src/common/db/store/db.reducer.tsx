@@ -1,4 +1,4 @@
-import { defaultTo } from 'lodash';
+import { omit } from 'lodash';
 import { Reducer } from 'redux';
 import { PersistConfig, persistReducer } from 'redux-persist';
 import { defaultPersistConfig } from '../../../renderer/utils/persist.util';
@@ -91,6 +91,7 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
       };
     }
     case DB_ACTIONS.SET_METADATA: {
+      const metadata = omit(action, ['type', 'databaseId']);
       return {
         ...state,
         databases: arrayCollectionReducer(state.databases, db => db.id)
@@ -98,12 +99,8 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
             const database = {
               ...db,
               meta: {
-                searchPath: defaultTo(action.searchPath, db.meta.searchPath),
-                fuzzyTypes: defaultTo(action.fuzzyTypes, db.meta.fuzzyTypes),
-                hasFuzzyExtension: defaultTo(action.hasFuzzyExtension, db.meta.hasFuzzyExtension),
-                tables: defaultTo(action.tables, db.meta.tables),
-                user: defaultTo(action.user, db.meta.user),
-                extensionInstallation: defaultTo(action.extensionInstallation, db.meta.extensionInstallation),
+                ...db.meta,
+                ...metadata,
               },
             };
             database.meta.searchPath = database.meta.searchPath

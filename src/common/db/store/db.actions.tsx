@@ -21,6 +21,8 @@ export enum DB_ACTIONS {
   GET_METADATA = 'DB/GET_METADATA',
   SET_METADATA = 'DB/SET_METADATA',
   INSTALL_FUZZY_EXTENSION = 'DB/INSTALL_FUZZY_EXTENSION',
+  EXTRACT_FUZZY_EXTENSION = 'DB/EXTRACT_FUZZY_EXTENSION',
+  FATAL_ERROR = 'DB/FATAL_ERROR',
 }
 
 // DB/SET_DATABASE
@@ -70,7 +72,7 @@ export const postgresQuery = (connectionId: string, queryId: string, query: stri
 
 // DB/QUERY_RESULT
 export type PostgresQueryResultAction = ReturnType<typeof postgresQueryResult>;
-export const postgresQueryResult = (connectionId: string, queryId: string, result: PostgresResponse, error: Error) =>
+export const postgresQueryResult = (connectionId: string, queryId: string, result: PostgresResponse, error: any) =>
   createAction(DB_ACTIONS.QUERY_RESULT, { connectionId, queryId, result, error });
 
 // DB/GET_METADATA
@@ -88,6 +90,19 @@ export type InstallFuzzyExtensionAction = ReturnType<typeof installFuzzyExtensio
 export const installFuzzyExtension = (connectionId: string) =>
   createAction(DB_ACTIONS.INSTALL_FUZZY_EXTENSION, { connectionId });
 
+// DB/EXTRACT_FUZZY_EXTENSION
+export type ExtractFuzzyExtensionAction = ReturnType<typeof extractFuzzyExtension>;
+export const extractFuzzyExtension = (connectionId: string) =>
+  createAction(DB_ACTIONS.EXTRACT_FUZZY_EXTENSION, { connectionId });
+
+export type FatalErrorAction = ReturnType<typeof fatalError>;
+export const fatalError = (error: Error) =>
+  createAction(DB_ACTIONS.FATAL_ERROR, {
+    name: error.name,
+    message: error.message,
+    stack: error.stack,
+  });
+
 export type DbAction =
   | SetDatabaseAction
   | RemoveDatabaseAction
@@ -100,4 +115,6 @@ export type DbAction =
   | PostgresQueryResultAction
   | GetMetadataAction
   | SetMetadataAction
-  | InstallFuzzyExtensionAction;
+  | InstallFuzzyExtensionAction
+  | ExtractFuzzyExtensionAction
+  | FatalErrorAction;

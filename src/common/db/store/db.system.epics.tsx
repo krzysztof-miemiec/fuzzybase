@@ -1,9 +1,17 @@
+import { isString } from 'lodash';
 import { ofType, StateObservable } from 'redux-observable';
-import { Observable, of } from 'rxjs';
-import { filter, map, take, withLatestFrom } from 'rxjs/operators';
+import { concat, Observable, of } from 'rxjs';
+import { filter, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { select } from '../../utils/selector.util';
-import { DB_ACTIONS, postgresQuery, PostgresQueryResultAction, setMetadata } from './db.actions';
+import {
+  DB_ACTIONS,
+  extractFuzzyExtension,
+  getMetadata,
+  postgresQuery,
+  PostgresQueryResultAction,
+  setMetadata
+} from './db.actions';
 import { getConnection, getDatabasesState } from './db.selectors';
 import { FuzzyFunction, FuzzyType } from './db.state';
 import { findFieldByName } from './db.utils';
@@ -17,17 +25,32 @@ export const CREATE_FUZZY_EXTENSION_ID = 'create_fuzzy_extension';
 export const createFuzzyExtension = (connectionId: string) => of(postgresQuery(
   connectionId,
   CREATE_FUZZY_EXTENSION_ID,
-  `SHOW search_path;`,
+  `CREATE EXTENSION fuzzy;`,
   true
 ));
 
-export const processCreateFuzzyExtensionResponse = (action$: Observable<any>) =>
+export const processCreateFuzzyExtensionResponse = (action$: Observable<any>, state$: StateObservable<AppState>) =>
   action$.pipe(
     ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
     filter(action => action.queryId === CREATE_FUZZY_EXTENSION_ID),
     take(1),
-    map(action => {
-      return !action.error;
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const connection = select(state, getDatabasesState, getConnection(action.connectionId));
+      const installationSuccessful = !action.error;
+      const alreadyInstalled = isString(action.error) && action.error.match(/extension "fuzzy" already exists/);
+
+      return (
+        (installationSuccessful || alreadyInstalled)
+          ? concat(
+          of(setMetadata({
+            databaseId: connection.clientId,
+            extensionInstallation: { success: true },
+          })),
+          of(getMetadata(action.connectionId))
+          )
+          : of(extractFuzzyExtension(action.connectionId))
+      ) as Observable<any>;
     })
   );
 
@@ -43,8 +66,9 @@ export const processSearchPathQueryResponse = (action$: Observable<any>, state$:
     ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
     filter(action => action.queryId === SEARCH_PATH_ID),
     take(1),
-    map(action => {
-      const connection = select(state$.value, getDatabasesState, getConnection(action.connectionId));
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      const connection = select(state, getDatabasesState, getConnection(action.connectionId));
       const DEFAULT_SEARCH_PATH = '"$user", public';
       const searchPathString = (action.result && action.result.rows[0][0] || DEFAULT_SEARCH_PATH);
       return setMetadata({

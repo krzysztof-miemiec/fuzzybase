@@ -1,17 +1,8 @@
-import { exec } from 'child_process';
-import * as path from 'path';
-import { ActionsObservable, StateObservable } from 'redux-observable';
-import { concat, Observable, of, Subject } from 'rxjs';
-import { map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { AppState } from '../../../renderer/store';
-import { R } from '../../resources';
-import { copy } from '../../utils/files.util';
-import { select } from '../../utils/selector.util';
-import { DB_ACTIONS, DbAction, InstallFuzzyExtensionAction, setMetadata } from './db.actions';
-import { getConnection, getDatabasesState } from './db.selectors';
-import { ExtensionInstallation } from './db.state';
-import { createFuzzyExtension, processCreateFuzzyExtensionResponse } from './db.system.epics';
-
+import { ofType } from 'redux-observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DB_ACTIONS, ExtractFuzzyExtensionAction } from './db.actions';
+/*
 interface Paths {
   extensionPath: string;
   libraryPath: string;
@@ -79,33 +70,10 @@ const extractExtension = (): Observable<ExtensionInstallation> => {
     }
   })();
   return subject;
-};
+};*/
 
-export const installExtension$ = (
-  action$: ActionsObservable<DbAction>,
-  state$: StateObservable<AppState>
-) => action$
-  .ofType<InstallFuzzyExtensionAction>(DB_ACTIONS.INSTALL_FUZZY_EXTENSION)
+export const extractFuzzyExtension$ = (action$: Observable<any>) => action$
   .pipe(
-    switchMap(action => concat(
-      createFuzzyExtension(action.connectionId),
-      processCreateFuzzyExtensionResponse(action$).pipe(
-        withLatestFrom(state$),
-        switchMap(([success, state]) => {
-          console.log('test');
-          const connection = select(state, getDatabasesState, getConnection(action.connectionId));
-          return success
-            ? of(setMetadata({
-              databaseId: connection.clientId,
-              extensionInstallation: { success: true },
-            }))
-            : extractExtension().pipe(
-              map(extensionInstallation => setMetadata({
-                databaseId: connection.clientId,
-                extensionInstallation,
-              }))
-            );
-        })
-      )
-    ))
+    ofType<ExtractFuzzyExtensionAction>(DB_ACTIONS.EXTRACT_FUZZY_EXTENSION),
+    map(() => ({ type: 'DUPA' }))
   );

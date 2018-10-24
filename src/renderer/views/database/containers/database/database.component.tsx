@@ -133,6 +133,7 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
           <div className={styles.sidebar}>
             <DatabaseTitle
               database={database}
+              connectionId={connection.connectionId}
               user={metadata.user}
               onCloseConnection={this.onDisconnect}
             />
