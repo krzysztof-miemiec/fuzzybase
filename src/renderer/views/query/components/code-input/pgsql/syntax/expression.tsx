@@ -1,15 +1,13 @@
-import { Context, PostgresSyntax, PostgresSyntaxType } from '../postgres-syntax';
+import { Context, Match, matchRegExp, PostgresSyntax, PostgresSyntaxType } from '../postgres-syntax';
 
 export class ExpressionElement extends PostgresSyntax {
-
-  constructor(_: RegExpExecArray, context: Context) {
-    super(context);
+  constructor(type: PostgresSyntaxType, match: Match, context: Context) {
+    super(type, match, context);
   }
 }
 
 export const ExpressionQueryType: PostgresSyntaxType = {
-  build: (match: RegExpExecArray, context: Context) => new ExpressionElement(match, context),
-  matcher: /^/,
+  syntaxClass: ExpressionElement,
+  matcher: matchRegExp(/^/),
   name: 'expression',
-  priority: 3,
 };

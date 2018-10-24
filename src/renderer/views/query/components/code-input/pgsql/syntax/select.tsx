@@ -1,9 +1,9 @@
-import { Context, PostgresSyntax, PostgresSyntaxType } from '../postgres-syntax';
+import { Context, Match, matchRegExp, PostgresSyntax, PostgresSyntaxType } from '../postgres-syntax';
+import { ConditionExpression } from './condition';
 import { ExpressionElement } from './expression';
 import { AllClause } from './select.all';
 import { DistinctClause } from './select.distinct';
 import { FromClause } from './select.from';
-import { ConditionExpression } from './condition';
 
 /**
  * SELECT [ ALL | DISTINCT [ ON ( expression [, ...] ) ] ]
@@ -27,22 +27,20 @@ export class SelectClause extends PostgresSyntax {
   select: ExpressionElement[];
   from?: FromClause[];
   where?: ConditionExpression[];
-  groupBy?: GroupingElement[];
-  having?: ConditionElement[];
-  window?: WindowElement[];
+  // groupBy?: GroupByClause[];
+  having?: ConditionExpression[];
+  // window?: WindowExpression[];
   union?: SelectClause;
   intersect?: SelectClause;
   except?: SelectClause;
 
-  constructor(match: RegExpExecArray, context: Context) {
-    super(context);
-    this.parse(match.)
+  constructor(type: PostgresSyntaxType, match: Match, context: Context) {
+    super(type, match, context);
   }
 }
 
 export const SelectQueryType: PostgresSyntaxType = {
-  build: (match: RegExpExecArray, context: Context) => new SelectClause(match, context),
-  matcher: /^SELECT (?<D>.+) (FROM)/,
+  syntaxClass: SelectClause,
+  matcher: matchRegExp(/^SELECT/),
   name: 'SELECT',
-  priority: 0,
 };

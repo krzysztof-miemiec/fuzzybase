@@ -3,7 +3,7 @@ import { Context, Match, matchRegExp, PostgresSyntax, PostgresSyntaxType } from 
 export class FromClause extends PostgresSyntax {
   constructor(type: PostgresSyntaxType, match: Match, context: Context) {
     super(type, match, context);
-    const { elements } = match.matches;
+    // const { elements } = match.matches;
   }
 }
 
