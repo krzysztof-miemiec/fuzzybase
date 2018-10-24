@@ -20,6 +20,7 @@ import { AppState } from '../../../../store';
 
 interface ComponentProps {
   databaseId: string;
+  connectionId: string;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -60,8 +61,9 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
   };
 
   onInstallClick = () => {
-    const { actions, databaseId } = this.props;
-    actions.installFuzzyExtension(databaseId);
+    const { actions, connectionId } = this.props;
+    console.log('inst');
+    actions.installFuzzyExtension(connectionId);
   };
 
   onSaveClick = () => {
@@ -77,7 +79,7 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
     }, error => {
       this.setState({ fileCopy: { error: error.message } });
     }, () => {
-      this.clearSaveSubscription();
+      this.onCloseClick();
     });
   };
 
@@ -170,16 +172,18 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
         <DialogContentText id="alert-dialog-description">
           Allow Fuzzybase to install the Fuzzy extension to local PostgreSQL database.
           <br /><br />
-          We'll try to automatically download all required packages that may be required
-          to build and install the extension.
+          You may be asked to type a root password if your PostgreSQL location is protected.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={this.onCloseClick} color="primary">
           Cancel
         </Button>
+        <Button onClick={this.onSaveClick} color="primary">
+          Save the package
+        </Button>
         <Button onClick={this.onInstallClick} color="primary" autoFocus={true}>
-          Install
+          Install the extension
         </Button>
       </DialogActions>
     </>

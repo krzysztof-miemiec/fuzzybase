@@ -14,13 +14,13 @@ interface Props {
 
 interface State {
   menuAnchor?: any;
-  isExtensionDialogOpen?: boolean;
+  isExtensionDialogOpen: boolean;
 }
 
 export class DatabaseTitle extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = { isExtensionDialogOpen: false };
   }
 
   onTitleClick = event => {
@@ -28,12 +28,12 @@ export class DatabaseTitle extends React.Component<Props, State> {
   };
 
   onOpenInstallExtensionDialog = () => {
-    this.setState({isExtensionDialogOpen: true});
+    this.setState({ isExtensionDialogOpen: true });
     this.onMenuClose();
   };
 
   onCloseInstallExtensionDialog = () => {
-    this.setState({isExtensionDialogOpen: false});
+    this.setState({ isExtensionDialogOpen: false });
   };
 
   onMenuClose = () => {

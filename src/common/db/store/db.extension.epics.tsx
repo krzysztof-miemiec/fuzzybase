@@ -1,5 +1,4 @@
 import { exec } from 'child_process';
-import { app } from 'electron';
 import * as path from 'path';
 import { ActionsObservable, StateObservable } from 'redux-observable';
 import { concat, Observable, of, Subject } from 'rxjs';
@@ -55,22 +54,27 @@ const findPaths = async (): Promise<Paths> => {
   });
 };
 
-const extractFile = (): Observable<ExtensionInstallation> => {
+const extractExtension = (): Observable<ExtensionInstallation> => {
   const subject = new Subject<ExtensionInstallation>();
   (async () => {
     try {
       subject.next({ status: 'Looking for PostgreSQL extension paths...' });
       const { extensionPath, libraryPath } = await findPaths();
-      subject.next({ status: 'Copying extension source...' });
-      const extension = path.join(app.getPath('temp'), 'extension');
-      const processOptions = {
-        encoding: 'utf8', cwd: extension, windowsHide: true,
-      };
-      await copy(R.string.fuzzyPackage, extension);
-      subject.next({ status: 'Building an extension...' });
-
+      subject.next({ status: 'Copying extension files to PostgreSQL directories...' });
+      await copy(
+        path.join(R.string.extension, 'fuzzy.control'),
+        path.join(extensionPath, 'fuzzy.control')
+      );
+      await copy(
+        path.join(R.string.extension, 'fuzzy--0.0.2.sql'),
+        path.join(extensionPath, 'fuzzy--0.0.2.sql')
+      );
+      await copy(
+        path.join(R.string.extension, R.string.fuzzyLibrary),
+        path.join(libraryPath, R.string.fuzzyTargetLibrary)
+      );
     } catch (error) {
-      subject.error(error);
+      subject.next({ status: error.message, error: true });
       subject.complete();
     }
   })();
@@ -88,6 +92,7 @@ export const installExtension = (
       processCreateFuzzyExtensionResponse(action$).pipe(
         withLatestFrom(state$),
         switchMap(([success, state]) => {
+          console.log('test');
           if (success) {
             const connection = select(state, getDatabasesState, getConnection(action.connectionId));
 
@@ -96,7 +101,7 @@ export const installExtension = (
               extensionInstallation: { success: true },
             }));
           }
-
+          return extractExtension();
         })
       )
     ))

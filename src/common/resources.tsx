@@ -1,6 +1,6 @@
+import * as path from 'path';
 import { Color } from '../renderer/utils/color.util';
 import { Config } from './config';
-import * as path from "path";
 
 export const R = {
   color: {
@@ -32,6 +32,9 @@ export const R = {
   },
   string: {
     fuzzyPackage: path.join(__static, 'fuzzy.zip'),
+    extension: path.join(__static, 'extension'),
+    fuzzyLibrary: `fuzzy-${process.platform}-${process.arch}.${Config.IS_WINDOWS ? 'dll' : 'so'}`,
+    fuzzyTargetLibrary: `fuzzy.${Config.IS_WINDOWS ? 'dll' : 'so'}`,
   },
   timing: {
     animationDuration: 350,

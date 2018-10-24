@@ -103,6 +103,7 @@ const baseReducer = (state: void | DbState, action: DbAction): DbState => {
                 hasFuzzyExtension: defaultTo(action.hasFuzzyExtension, db.meta.hasFuzzyExtension),
                 tables: defaultTo(action.tables, db.meta.tables),
                 user: defaultTo(action.user, db.meta.user),
+                extensionInstallation: defaultTo(action.extensionInstallation, db.meta.extensionInstallation),
               },
             };
             database.meta.searchPath = database.meta.searchPath
