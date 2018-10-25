@@ -11,12 +11,11 @@ cache:
 
 install:
 - yarn
-- cd app && yarn && cd ..
 
 script:
 - node --version
 - yarn lint
-- yarn test
+- yarn start:prod
 - yarn lemmy
 
 branches:
