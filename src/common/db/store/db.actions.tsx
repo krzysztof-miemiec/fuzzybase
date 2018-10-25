@@ -13,6 +13,7 @@ export enum DB_ACTIONS {
   REMOVE_DATABASE = 'DB/REMOVE_DATABASE',
   CONNECT = 'DB/CONNECT',
   CONNECTION_STATUS_CHANGED = 'DB/CONNECTION_STATUS_CHANGED',
+  RECONNECT = 'DB/RECONNECT',
   DISCONNECT = 'DB/DISCONNECT',
   QUERY = 'DB/QUERY',
   SET_QUERY = 'DB/SET_QUERY',
@@ -21,7 +22,6 @@ export enum DB_ACTIONS {
   GET_METADATA = 'DB/GET_METADATA',
   SET_METADATA = 'DB/SET_METADATA',
   INSTALL_FUZZY_EXTENSION = 'DB/INSTALL_FUZZY_EXTENSION',
-  EXTRACT_FUZZY_EXTENSION = 'DB/EXTRACT_FUZZY_EXTENSION',
   FATAL_ERROR = 'DB/FATAL_ERROR',
 }
 
@@ -55,6 +55,11 @@ export type DisconnectFromPostgresAction = ReturnType<typeof disconnectFromPostg
 export const disconnectFromPostgres = (connectionId: string) =>
   createAction(DB_ACTIONS.DISCONNECT, { connectionId });
 
+// DB/RECONNECT
+export type ReconnectToPostgresAction = ReturnType<typeof reconnectToPostgres>;
+export const reconnectToPostgres = (connectionId: string) =>
+  createAction(DB_ACTIONS.RECONNECT, { connectionId });
+
 // DB/SET_QUERY
 export type SetQueryAction = ReturnType<typeof setQuery>;
 export const setQuery = (connectionId: string, queryId: string, query: string, isSystemQuery?: boolean) =>
@@ -86,14 +91,15 @@ export const setMetadata = (payload: { databaseId: string } & DatabaseMetadata) 
   createAction(DB_ACTIONS.SET_METADATA, payload);
 
 // DB/INSTALL_FUZZY_EXTENSION
-export type InstallFuzzyExtensionAction = ReturnType<typeof installFuzzyExtension>;
-export const installFuzzyExtension = (connectionId: string) =>
-  createAction(DB_ACTIONS.INSTALL_FUZZY_EXTENSION, { connectionId });
+export enum InstallationStage {
+  CREATE_EXTENSION,
+  EXTRACT_FILES,
+  RECREATE_EXTENSION,
+}
 
-// DB/EXTRACT_FUZZY_EXTENSION
-export type ExtractFuzzyExtensionAction = ReturnType<typeof extractFuzzyExtension>;
-export const extractFuzzyExtension = (connectionId: string) =>
-  createAction(DB_ACTIONS.EXTRACT_FUZZY_EXTENSION, { connectionId });
+export type InstallFuzzyExtensionAction = ReturnType<typeof installFuzzyExtension>;
+export const installFuzzyExtension = (connectionId: string, stage: InstallationStage, databaseId?: string) =>
+  createAction(DB_ACTIONS.INSTALL_FUZZY_EXTENSION, { connectionId, stage, databaseId });
 
 export type FatalErrorAction = ReturnType<typeof fatalError>;
 export const fatalError = (error: Error) =>
@@ -107,6 +113,7 @@ export type DbAction =
   | SetDatabaseAction
   | RemoveDatabaseAction
   | ConnectAction
+  | ReconnectToPostgresAction
   | ConnectionStatusChangedAction
   | DisconnectFromPostgresAction
   | PostgresQueryAction
@@ -116,5 +123,4 @@ export type DbAction =
   | GetMetadataAction
   | SetMetadataAction
   | InstallFuzzyExtensionAction
-  | ExtractFuzzyExtensionAction
   | FatalErrorAction;

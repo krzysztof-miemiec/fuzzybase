@@ -7,6 +7,7 @@ export const styles = createStyles({
     margin: R.dimen.spacing,
     alignItems: 'center',
     flexDirection: 'column',
+    cursor: 'pointer',
     '&:hover': {
       '& $iconContainer': {
         backgroundColor: R.color.lightGray,
@@ -28,5 +29,9 @@ export const styles = createStyles({
   text: {
     paddingTop: R.dimen.spacing / 2,
     color: R.color.white,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '90%',
   },
 });

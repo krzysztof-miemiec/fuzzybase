@@ -33,6 +33,7 @@ export const styles = createStyles({
     fontSize: 20,
     flex: '0 0 auto',
     color: R.color.semiLightGray,
+    cursor: 'pointer',
     '&:hover': {
       color: R.color.white,
     },
@@ -44,6 +45,7 @@ export const styles = createStyles({
     paddingBottom: R.dimen.spacing,
     paddingRight: R.dimen.spacing * 2,
     paddingLeft: R.dimen.spacing * 2,
+    cursor: 'pointer',
     '&:hover': {
       backgroundColor: R.color.gray,
       '& $elementIcon': {

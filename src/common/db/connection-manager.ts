@@ -13,6 +13,13 @@ export module ConnectionManager {
     return client;
   };
 
+  export const reconnect = (connectionId: string): void => {
+    const connection = getConnection(connectionId);
+    if (connection) {
+      connection.reconnect();
+    }
+  };
+
   export const getConnection = (key: string): PostgresConnection => {
     return connections[key];
   };

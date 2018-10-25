@@ -1,6 +1,6 @@
 import { ActionsObservable, combineEpics, StateObservable } from 'redux-observable';
 import { concat, EMPTY, of } from 'rxjs';
-import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { filter, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
 import { showSnackbar } from '../../../renderer/views/layout/store/layout.actions';
 import { select } from '../../utils/selector.util';
@@ -10,7 +10,9 @@ import {
   DbAction,
   getMetadata,
   GetMetadataAction,
-  InstallFuzzyExtensionAction, setMetadata
+  InstallationStage,
+  InstallFuzzyExtensionAction,
+  setMetadata
 } from './db.actions';
 import { getConnection, getDatabasesState } from './db.selectors';
 import { ConnectionStatus } from './db.state';
@@ -71,6 +73,8 @@ const installExtension$ = (
 ) => action$
   .ofType<InstallFuzzyExtensionAction>(DB_ACTIONS.INSTALL_FUZZY_EXTENSION)
   .pipe(
+    filter(action => action.stage === InstallationStage.CREATE_EXTENSION
+      || action.stage === InstallationStage.RECREATE_EXTENSION),
     withLatestFrom(state$),
     switchMap(([action, state]) => concat(
       of(setMetadata({
@@ -78,7 +82,7 @@ const installExtension$ = (
         extensionInstallation: { status: 'Adding extension to the database...' },
       })),
       createFuzzyExtension(action.connectionId),
-      processCreateFuzzyExtensionResponse(action$, state$)
+      processCreateFuzzyExtensionResponse(action$, state$, action.stage === InstallationStage.CREATE_EXTENSION)
     ))
   );
 

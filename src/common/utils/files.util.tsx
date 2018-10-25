@@ -1,6 +1,7 @@
 import { dialog, remote } from 'electron';
-import { createReadStream, createWriteStream, stat } from 'fs';
-import { Observable, Observer, Subject } from 'rxjs';
+import { createReadStream, createWriteStream, stat, writeFile as fsWriteFile } from 'fs';
+import { Observable, Subject, Subscriber } from 'rxjs';
+import { promisify } from 'util';
 import SaveDialogOptions = Electron.SaveDialogOptions;
 
 export interface CopyStatus {
@@ -19,63 +20,53 @@ export const showSaveDialog = (options: SaveDialogOptions): Observable<string> =
   return subject.asObservable();
 };
 
-export const copy = (source: string, destination: string): Observable<CopyStatus> => {
-  let observers = [];
-  let done = false;
-  const subject: Subject<CopyStatus> = Subject.create((observer: Observer<CopyStatus>) => {
-    observers.push(observer);
-    return () => {
-      observers.splice(observers.indexOf(observer), 1);
-      if (!observers.length) {
-        done = true;
+export const writeFile = promisify(fsWriteFile);
+
+export const copy = (source: string, destination: string): Observable<CopyStatus> =>
+  Observable.create((subscriber: Subscriber<CopyStatus>) => {
+    let done = false;
+    const onlyOnce = (fn: (...args: any[]) => void) => (...args: any[]) => {
+      if (done) {
+        return;
       }
+      done = true;
+      fn(args);
     };
-  });
-  setTimeout(() => {
+
     stat(source, (err, stats) => {
       if (err) {
-        subject.error(err);
-        subject.complete();
+        subscriber.error(err);
+        subscriber.complete();
         return;
       }
       if (done) {
-        subject.complete();
+        subscriber.complete();
         return;
       }
       const totalSize = stats.size || 1;
       let readSize = 0;
       const readStream = createReadStream(source);
       const writeStream = createWriteStream(destination);
-      const onError = (err: Error) => {
-        if (done) {
-          return;
-        }
-        done = true;
-        subject.error(err);
-        subject.complete();
-      };
+      const onError = onlyOnce((err: Error) => {
+        subscriber.error(err);
+        subscriber.complete();
+      });
       readStream.on('data', data => {
         if (done) {
           return;
         }
         readSize += data.length;
-        subject.next({ progress: Math.min(1, readSize / totalSize) });
+        subscriber.next({ progress: Math.min(1, readSize / totalSize) });
       });
       readStream.on('error', onError);
       writeStream.on('error', onError);
-      readStream.on('end', () => {
-        if (done) {
-          return;
-        }
-        done = true;
+      readStream.on('end', onlyOnce(() => {
         writeStream.close();
         readStream.close();
-        subject.next({ progress: 1 });
-        subject.complete();
-      });
+        subscriber.next({ progress: 1 });
+        subscriber.complete();
+      }));
       readStream.pipe(writeStream);
     });
-  }, 0);
-
-  return subject.asObservable();
-};
+    return () => done = true;
+  });

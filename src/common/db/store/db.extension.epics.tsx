@@ -1,8 +1,21 @@
+import { exec } from 'child_process';
+import { app } from 'electron';
+import * as path from 'path';
 import { ofType } from 'redux-observable';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DB_ACTIONS, ExtractFuzzyExtensionAction } from './db.actions';
-/*
+import { from, merge, Observable, of, zip } from 'rxjs';
+import { catchError, filter, mapTo, switchMap } from 'rxjs/operators';
+import { Config } from '../../config';
+import { R } from '../../resources';
+import { copy } from '../../utils/files.util';
+import { sudoExec } from '../../utils/sudo.util';
+import {
+  DB_ACTIONS,
+  InstallationStage,
+  installFuzzyExtension,
+  InstallFuzzyExtensionAction,
+  setMetadata
+} from './db.actions';
+
 interface Paths {
   extensionPath: string;
   libraryPath: string;
@@ -10,6 +23,11 @@ interface Paths {
 
 const PG_CONFIG_COMMAND = 'pg_config';
 const execOptions = { encoding: 'utf8', windowsHide: true, timeout: 5000 };
+
+const setInstallationStatus = (databaseId: string, status: string) => setMetadata({
+  databaseId,
+  extensionInstallation: { status },
+});
 
 const commandExists = (command) => new Promise(resolve => {
   const execCommand = process.platform === 'win32'
@@ -29,7 +47,7 @@ const findPaths = async (): Promise<Paths> => {
           return reject(error);
         }
         const libraryPathMatch = stdout.match(/PKGLIBDIR\s*=\s*(.+?)\n/);
-        const dataPathMatch = stdout.match(/'SHAREDIR\s*=\s*(.+?)\n/);
+        const dataPathMatch = stdout.match(/SHAREDIR\s*=\s*(.+?)\n/);
         if (libraryPathMatch) {
           result.libraryPath = libraryPathMatch[1];
         }
@@ -39,41 +57,71 @@ const findPaths = async (): Promise<Paths> => {
         if (result.extensionPath && result.libraryPath) {
           return resolve(result);
         }
-        reject(new Error('Fuzzybase couldn\'t find '));
+        reject(new Error('Fuzzybase couldn\'t find location of PostgreSQL files.'));
       }
     );
   });
 };
 
-const extractExtension = (): Observable<ExtensionInstallation> => {
-  const subject = new Subject<ExtensionInstallation>();
-  (async () => {
-    try {
-      subject.next({ status: 'Looking for PostgreSQL extension paths...' });
-      const { extensionPath, libraryPath } = await findPaths();
-      subject.next({ status: 'Copying extension files to PostgreSQL directories...' });
-      await copy(
-        path.join(R.string.extension, 'fuzzy.control'),
-        path.join(extensionPath, 'fuzzy.control')
-      );
-      await copy(
-        path.join(R.string.extension, 'fuzzy--0.0.2.sql'),
-        path.join(extensionPath, 'fuzzy--0.0.2.sql')
-      );
-      await copy(
-        path.join(R.string.extension, R.string.fuzzyLibrary),
-        path.join(libraryPath, R.string.fuzzyTargetLibrary)
-      );
-    } catch (error) {
-      subject.next({ status: error.message, error: true });
-      subject.complete();
-    }
-  })();
-  return subject;
-};*/
+const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<any> => merge(
+  of(setInstallationStatus(databaseId, 'Copying extension files to temporary location...')),
+  zip(
+    copy(
+      path.join(R.string.extension, R.string.fuzzyControl),
+      path.join(app.getPath('temp'), R.string.fuzzyControl)
+    ),
+    copy(
+      path.join(R.string.extension, R.string.fuzzySql),
+      path.join(app.getPath('temp'), R.string.fuzzySql)
+    ),
+    copy(
+      path.join(R.string.extension, R.string.fuzzyLibrary),
+      path.join(app.getPath('temp'), R.string.fuzzyTargetLibrary)
+    )
+  ).pipe(
+    switchMap(() => {
+      const cp = Config.IS_WINDOWS ? 'xcopy' : 'cp';
+      const temp = app.getPath('temp');
+      return sudoExec(`
+        ${cp} ${path.join(temp, R.string.fuzzyControl)} ${paths.extensionPath}
+        ${cp} ${path.join(temp, R.string.fuzzySql)} ${paths.extensionPath}
+        ${cp} ${path.join(temp, R.string.fuzzyTargetLibrary)} ${paths.libraryPath}
+      `);
+    })
+  )
+);
+
+const extractExtension$ = (connectionId: string, databaseId: string): Observable<any> => merge(
+  of(setInstallationStatus(databaseId, 'Looking for PostgreSQL extension paths...')),
+  from(findPaths())
+    .pipe(
+      switchMap(paths => merge(
+        of(setInstallationStatus(databaseId, 'Copying extension files to PostgreSQL directories...')),
+        zip(
+          copy(
+            path.join(R.string.extension, R.string.fuzzyControl),
+            path.join(paths.extensionPath, R.string.fuzzyControl)
+          ),
+          copy(
+            path.join(R.string.extension, R.string.fuzzySql),
+            path.join(paths.extensionPath, R.string.fuzzySql)
+          ),
+          copy(
+            path.join(R.string.extension, R.string.fuzzyLibrary),
+            path.join(paths.libraryPath, R.string.fuzzyTargetLibrary)
+          )
+        ).pipe(
+          catchError(() => extractExtensionAsSudo$(databaseId, paths)),
+          mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION))
+        )
+      )),
+      catchError(error => of({ status: error.message, error: true }))
+    )
+);
 
 export const extractFuzzyExtension$ = (action$: Observable<any>) => action$
   .pipe(
-    ofType<ExtractFuzzyExtensionAction>(DB_ACTIONS.EXTRACT_FUZZY_EXTENSION),
-    map(() => ({ type: 'DUPA' }))
+    ofType<InstallFuzzyExtensionAction>(DB_ACTIONS.INSTALL_FUZZY_EXTENSION),
+    filter(action => action.stage === InstallationStage.EXTRACT_FILES),
+    switchMap((action) => extractExtension$(action.connectionId, action.databaseId))
   );

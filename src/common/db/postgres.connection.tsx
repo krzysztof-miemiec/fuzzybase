@@ -29,35 +29,43 @@ export class PostgresConnection {
     this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.DISCONNECTED));
   };
 
-  connect = () => {
-    this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTING));
-    this.client.connect()
-      .then(() => {
-        this.isConnected = true;
-        this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTED));
-      })
+  reconnect = () => {
+    this.client.end()
+      .then(() => this.isConnected = false)
+      .then(() => this.client.connect())
+      .then(() => this.isConnected = true)
       .catch(this.onError);
-  };
+};
 
-  disconnect = () => {
-    if (this.isConnected) {
-      this.client.end().then(this.onDisconnected);
-    }
-  };
+connect = () => {
+  this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTING));
+  this.client.connect()
+    .then(() => {
+      this.isConnected = true;
+      this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTED));
+    })
+    .catch(this.onError);
+};
 
-  query = (id: string, queryString: string) => {
-    if (!this.isConnected) {
-      throw new Error('Client is not connected to database.');
-    }
-    return this.client.query({
-      text: queryString,
-      rowMode: 'array',
-    }).then(result => {
-      this.dispatch(postgresQueryResult(
-        this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result, undefined
-      ));
-    }).catch(error => {
-      this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));
-    });
-  };
+disconnect = () => {
+  if (this.isConnected) {
+    this.client.end().then(this.onDisconnected);
+  }
+};
+
+query = (id: string, queryString: string) => {
+  if (!this.isConnected) {
+    throw new Error('Client is not connected to database.');
+  }
+  return this.client.query({
+    text: queryString,
+    rowMode: 'array',
+  }).then(result => {
+    this.dispatch(postgresQueryResult(
+      this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result, undefined
+    ));
+  }).catch(error => {
+    this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));
+  });
+};
 }

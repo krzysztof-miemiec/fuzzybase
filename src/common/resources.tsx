@@ -33,6 +33,8 @@ export const R = {
   string: {
     fuzzyPackage: path.join(__static, 'fuzzy.zip'),
     extension: path.join(__static, 'extension'),
+    fuzzySql: 'fuzzy--0.0.2.sql',
+    fuzzyControl: 'fuzzy.control',
     fuzzyLibrary: `fuzzy-${process.platform}-${process.arch}.${Config.IS_WINDOWS ? 'dll' : 'so'}`,
     fuzzyTargetLibrary: `fuzzy.${Config.IS_WINDOWS ? 'dll' : 'so'}`,
   },

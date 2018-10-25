@@ -97,7 +97,9 @@ class QueryComponent extends React.PureComponent<Props, State> {
   componentWillUnmount() {
     const { connection, query, actions } = this.props;
     const { code } = this.state;
-    actions.setQuery(connection.connectionId, query.id, code);
+    if (query) {
+      actions.setQuery(connection.connectionId, query.id, code);
+    }
   }
 
   setCode = (code: string) => {

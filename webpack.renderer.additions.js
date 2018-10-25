@@ -3,6 +3,7 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 module.exports = {
   devServer: {
     historyApiFallback: true,
+    stats: 'minimal',
   },
   module: {
     rules: [

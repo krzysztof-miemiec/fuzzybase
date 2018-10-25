@@ -15,6 +15,7 @@ import {
   ExtensionInstallation,
   getDatabase,
   getDatabasesState,
+  InstallationStage,
   installFuzzyExtension,
   setMetadata
 } from '../../../../../common/db/store/app';
@@ -70,8 +71,7 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
 
   onInstallClick = () => {
     const { actions, connectionId } = this.props;
-    console.log('inst');
-    actions.installFuzzyExtension(connectionId);
+    actions.installFuzzyExtension(connectionId, InstallationStage.CREATE_EXTENSION);
   };
 
   onSaveClick = () => {
@@ -220,15 +220,12 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
   );
 
   render() {
-    const { isOpen, onClose, database } = this.props;
+    const { isOpen, database } = this.props;
     const { fileCopy } = this.state;
     const installation = database.meta.extensionInstallation;
 
     return (
-      <Dialog
-        open={isOpen}
-        onClose={onClose}
-      >
+      <Dialog open={isOpen}>
         {isLocal(database.host) ? (
           installation ? this.renderInstallation(installation) : this.renderLocal()
         ) : (

@@ -6,8 +6,9 @@ import { AppState } from '../../../renderer/store';
 import { select } from '../../utils/selector.util';
 import {
   DB_ACTIONS,
-  extractFuzzyExtension,
   getMetadata,
+  InstallationStage,
+  installFuzzyExtension,
   postgresQuery,
   PostgresQueryResultAction,
   setMetadata
@@ -29,7 +30,11 @@ export const createFuzzyExtension = (connectionId: string) => of(postgresQuery(
   true
 ));
 
-export const processCreateFuzzyExtensionResponse = (action$: Observable<any>, state$: StateObservable<AppState>) =>
+export const processCreateFuzzyExtensionResponse = (
+  action$: Observable<any>,
+  state$: StateObservable<AppState>,
+  extractOnFailure: boolean
+) =>
   action$.pipe(
     ofType<PostgresQueryResultAction>(DB_ACTIONS.QUERY_RESULT),
     filter(action => action.queryId === CREATE_FUZZY_EXTENSION_ID),
@@ -41,15 +46,16 @@ export const processCreateFuzzyExtensionResponse = (action$: Observable<any>, st
       const alreadyInstalled = isString(action.error) && action.error.match(/extension "fuzzy" already exists/);
 
       return (
-        (installationSuccessful || alreadyInstalled)
+        installationSuccessful || alreadyInstalled
           ? concat(
-          of(setMetadata({
-            databaseId: connection.clientId,
-            extensionInstallation: { success: true },
-          })),
+          of(setMetadata({ databaseId: connection.clientId, extensionInstallation: { success: true } })),
           of(getMetadata(action.connectionId))
           )
-          : of(extractFuzzyExtension(action.connectionId))
+          : (
+            extractOnFailure
+              ? of(installFuzzyExtension(connection.connectionId, InstallationStage.EXTRACT_FILES, connection.clientId))
+              : of(setMetadata({ databaseId: connection.clientId, extensionInstallation: { error: true } }))
+          )
       ) as Observable<any>;
     })
   );
