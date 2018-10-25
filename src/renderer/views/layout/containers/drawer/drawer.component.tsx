@@ -11,6 +11,7 @@ import { styles } from './drawer.styles';
 
 import AddIcon from '@material-ui/icons/Add';
 import DatabaseIcon from '@material-ui/icons/Storage';
+import { compose } from 'redux';
 
 const mapStateToProps = (state: AppState) => ({
   databases: select(state, getDatabasesState, getDatabaseList),
@@ -44,4 +45,7 @@ class DrawerComponent extends React.PureComponent<Props> {
   }
 }
 
-export const Drawer = connect(mapStateToProps)(withRouter(DrawerComponent));
+export const Drawer: React.SFC = compose(
+  connect(mapStateToProps, null),
+  withRouter
+)(DrawerComponent) as any;

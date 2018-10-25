@@ -2,19 +2,22 @@ import { R } from '../../../../common/resources';
 import { createStyles, noDraggable } from '../../../app.styles';
 
 export const styles = createStyles({
+  scrollView: {
+    height: '100%',
+    overflow: 'scroll',
+  },
   container: {
     display: 'flex',
     flexFlow: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: R.dimen.spacing * 4,
   },
   frame: {
     display: 'flex',
     flexFlow: 'column',
     background: R.color.white,
     borderRadius: R.dimen.corner,
-    margin: R.dimen.spacing * 4,
+    margin: R.dimen.spacing * 6,
     ...noDraggable,
   },
   link: {

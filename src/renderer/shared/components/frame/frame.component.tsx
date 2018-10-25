@@ -11,22 +11,24 @@ interface Props {
 export const DialogFrame: React.SFC<Props> = ({
   headline, footer, children,
 }) => (
-  <div className={styles.container}>
-    <div className={styles.frame}>
-      <div className={styles.header}>
-        <Typography
-          variant="title"
-          className={styles.headerText}
-        >
-          {headline}
-        </Typography>
+  <div className={styles.scrollView}>
+    <div className={styles.container}>
+      <div className={styles.frame}>
+        <div className={styles.header}>
+          <Typography
+            variant="title"
+            className={styles.headerText}
+          >
+            {headline}
+          </Typography>
+        </div>
+        <div className={styles.content}>
+          {children}
+        </div>
       </div>
-      <div className={styles.content}>
-        {children}
+      <div className={styles.footer}>
+        {footer}
       </div>
-    </div>
-    <div className={styles.footer}>
-      {footer}
     </div>
   </div>
 );

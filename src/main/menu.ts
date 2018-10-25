@@ -20,11 +20,11 @@ export const setMenu = (mainWindow: BrowserWindow) => {
           type: 'separator',
         }, {
           label: 'Hide Fuzzybase',
-          accelerator: 'Command+H',
+          accelerator: `${cmd}+H`,
           role: 'hide',
         }, {
           label: 'Hide Others',
-          accelerator: 'Command+Shift+H',
+          accelerator: `${cmd}+Shift+H`,
           role: 'hideOthers',
         }, {
           label: 'Show SettingsActions',
@@ -33,7 +33,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
           type: 'separator',
         }, {
           label: 'Quit',
-          accelerator: 'Command+Q',
+          accelerator: `${cmd}+Q`,
           role: 'quit',
         },
       ],
@@ -42,7 +42,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
       submenu: [
         {
           label: '&Close',
-          accelerator: 'Ctrl+W',
+          accelerator: `${cmd}+W`,
           click() {
             mainWindow.close();
           },
@@ -54,29 +54,29 @@ export const setMenu = (mainWindow: BrowserWindow) => {
       submenu: [
         {
           label: 'Undo',
-          accelerator: 'Command+Z',
+          accelerator: `${cmd}+Z`,
           role: 'undo',
         }, {
           label: 'Redo',
-          accelerator: 'Shift+Command+Z',
+          accelerator: `Shift+${cmd}+Z`,
           role: 'redo',
         }, {
           type: 'separator',
         }, {
           label: 'Cut',
-          accelerator: 'Command+X',
+          accelerator: `${cmd}+X`,
           role: 'cut',
         }, {
           label: 'Copy',
-          accelerator: 'Command+C',
+          accelerator: `${cmd}+C`,
           role: 'copy',
         }, {
           label: 'Paste',
-          accelerator: 'Command+V',
+          accelerator: `${cmd}+V`,
           role: 'paste',
         }, {
-          label: 'Select SettingsActions',
-          accelerator: 'Command+A',
+          label: 'Select All',
+          accelerator: `${cmd}+A`,
           role: 'selectAll',
         },
       ],
@@ -84,17 +84,15 @@ export const setMenu = (mainWindow: BrowserWindow) => {
     {
       label: '&View',
       submenu: [
-        ...(process.env.NODE_ENV === 'development') ? [
-          {
-            label: '&Reload',
-            accelerator: `${cmd}+R`,
-            role: 'forceReload',
-          }, {
-            label: 'Toggle &Developer Tools',
-            accelerator: `Alt+${cmd}+I`,
-            role: 'toggleDevTools',
-          },
-        ] : [],
+        {
+          label: '&Reload',
+          accelerator: `${cmd}+R`,
+          role: 'forceReload',
+        }, {
+          label: 'Toggle &Developer Tools',
+          accelerator: `Alt+${cmd}+I`,
+          role: 'toggleDevTools',
+        },
         {
           label: 'Toggle &Full Screen',
           accelerator: isMac ? 'Ctrl+Command+F' : 'F11',
@@ -102,7 +100,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
         },
       ],
     },
-    isMac ? {
+    {
       label: 'Window',
       submenu: [
         {
@@ -117,7 +115,7 @@ export const setMenu = (mainWindow: BrowserWindow) => {
           type: 'separator',
         },
       ],
-    } : null,
+    },
     {
       label: 'Help',
       submenu: [

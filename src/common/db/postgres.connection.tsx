@@ -49,7 +49,7 @@ connect = () => {
 
 disconnect = () => {
   if (this.isConnected) {
-    this.client.end().then(this.onDisconnected);
+    this.client.end();
   }
 };
 

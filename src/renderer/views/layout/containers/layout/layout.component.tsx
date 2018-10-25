@@ -7,6 +7,7 @@ import { AppState } from '../../../../store';
 import { getLayoutState, isDrawerOpen } from '../../store';
 import { closeDrawer, openDrawer } from '../../store/layout.actions';
 import { Drawer } from '../drawer/drawer.component';
+import { Snackbars } from '../snackbar/snackbars.component';
 import { styles } from './layout.styles';
 
 const mapStateToProps = (state: AppState) => ({
@@ -28,6 +29,7 @@ const LayoutComponent: React.SFC<Props> = ({
     <View style={styles.content}>
       {children}
     </View>
+    <Snackbars />
   </View>
 );
 
