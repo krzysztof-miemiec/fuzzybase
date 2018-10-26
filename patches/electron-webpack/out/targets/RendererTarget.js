@@ -160,7 +160,7 @@ let generateIndexFile = (() => {
 <html>
   <head>
     <meta charset="utf-8">
-    ${!configurator.isProduction ? `<base href="http://${baseHref}/">`: ''}
+    ${!configurator.isProduction ? `<base href="http://${baseHref}/">`: '<base href = "./">'}
     ${title == null ? '' : `<title>${title}</title>`}
     <script>
       ${nodeModulePath == null ? '' : `require("module").globalPaths.push("${nodeModulePath.replace(/\\/g, '/')}")`}
