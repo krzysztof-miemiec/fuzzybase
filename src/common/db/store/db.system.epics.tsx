@@ -46,6 +46,11 @@ export const processCreateFuzzyExtensionResponse = (
       const setInstallationStatus = (extensionInstallation: ExtensionInstallation) => of(setMetadata({
         databaseId: connection.clientId, extensionInstallation,
       }));
+      const installExtension = () => of(installFuzzyExtension(
+        connection.connectionId,
+        InstallationStage.EXTRACT_FILES,
+        connection.clientId
+      ));
 
       const installationSuccessful = !hasError();
 
@@ -56,6 +61,9 @@ export const processCreateFuzzyExtensionResponse = (
           });
         }
         if (hasError('permission denied to create extension')) {
+          if (extractOnFailure) {
+            return installExtension();
+          }
           return setInstallationStatus({
             status: 'error', message: 'Current PostgreSQL user doesn\'t have permissions to install the extension.',
           });
@@ -65,11 +73,7 @@ export const processCreateFuzzyExtensionResponse = (
           hasError('has no installation script nor update path') ||
           hasError('no such file or')
         )) {
-          return of(installFuzzyExtension(
-            connection.connectionId,
-            InstallationStage.EXTRACT_FILES,
-            connection.clientId
-          ));
+          return installExtension();
         }
         return setInstallationStatus({
           status: 'error', message: 'An error occurred: ' + action.error,
