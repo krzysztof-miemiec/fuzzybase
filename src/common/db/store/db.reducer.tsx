@@ -15,7 +15,7 @@ export const persistConfig: PersistConfig = {
 const connectionReducer = (state: void | DatabaseConnectionState, action: DbAction): DatabaseConnectionState => {
   if (!state) {
     state = {
-      clientId: '',
+      databaseId: '',
       connectionId: '',
       status: ConnectionStatus.DISCONNECTED,
       queries: {},
@@ -25,7 +25,7 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
     case DB_ACTIONS.CONNECTION_STATUS_CHANGED: {
       return {
         ...state,
-        databaseId: action.clientId,
+        databaseId: action.databaseId,
         connectionId: action.connectionId,
         status: action.status,
         error: action.error,

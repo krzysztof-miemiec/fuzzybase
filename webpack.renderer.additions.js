@@ -2,6 +2,8 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   devServer: {
+    inline: true,
+    port: 9080,
     historyApiFallback: true,
     stats: 'minimal',
   },
@@ -11,7 +13,7 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'tslint-loader',
         options: {
-          emitErrors: true
+          emitErrors: false
         },
       }
     ],

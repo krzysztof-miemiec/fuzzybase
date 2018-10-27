@@ -43,12 +43,12 @@ export const connectToPostgres = (configuration: PostgresClientConfiguration) =>
 // DB/CONNECTION_STATUS_CHANGED
 export type ConnectionStatusChangedAction = ReturnType<typeof connectionStatusChanged>;
 export const connectionStatusChanged = (
-  clientId: string,
+  databaseId: string,
   connectionId: string,
   status: ConnectionStatus,
   error?: string
 ) =>
-  createAction(DB_ACTIONS.CONNECTION_STATUS_CHANGED, { clientId, connectionId, status, error });
+  createAction(DB_ACTIONS.CONNECTION_STATUS_CHANGED, { databaseId, connectionId, status, error });
 
 // DB/DISCONNECT
 export type DisconnectFromPostgresAction = ReturnType<typeof disconnectFromPostgres>;

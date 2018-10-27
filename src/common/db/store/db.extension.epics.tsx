@@ -69,7 +69,7 @@ const findPaths = async (): Promise<Paths> => {
   });
 };
 
-const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<any> => merge(
+const extractExtensionAsSudo$ = (connectionId: string, databaseId: string, paths: Paths): Observable<any> => merge(
   setInstallationStatus(databaseId, {
     status: 'progress',
     message: 'Copying extension files to temporary location...',
@@ -95,8 +95,11 @@ const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<a
         ${cp} ${path.join(temp, R.string.fuzzyControl)} ${paths.extensionPath}
         ${cp} ${path.join(temp, R.string.fuzzySql)} ${paths.extensionPath}
         ${cp} ${path.join(temp, R.string.fuzzyTargetLibrary)} ${paths.libraryPath}
-      `);
-    })
+      `, {
+        name: 'Fuzzybase',
+      });
+    }),
+    mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION))
   )
 );
 
@@ -126,8 +129,8 @@ const extractExtension$ = (connectionId: string, databaseId: string): Observable
             path.join(paths.libraryPath, R.string.fuzzyTargetLibrary)
           )
         ).pipe(
-          catchError(() => extractExtensionAsSudo$(databaseId, paths)),
-          mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION))
+          mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION)),
+          catchError(() => extractExtensionAsSudo$(connectionId, databaseId, paths))
         )
       )),
       catchError(error => setInstallationStatus(databaseId, {

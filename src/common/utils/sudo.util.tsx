@@ -15,21 +15,26 @@ interface SudoExecResult {
   stderr: string;
 }
 
-export const sudoExec = (script: string, options?: Options): Observable<SudoExecResult> =>
+export const sudoExec = (script: string, options: Options = {}): Observable<SudoExecResult> =>
   new Observable((observer: Subscriber<SudoExecResult>) => {
     let run = true;
     const scriptPath = path.join(app.getPath('temp'), Config.IS_WINDOWS ? 'script.cmd' : 'script.sh');
-    writeFile(scriptPath, '#!/bin/bash\nset -e\n\n' + script, { encoding: 'utf8', mode: 755 }).then(() => {
+    let fullScript = Config.IS_WINDOWS ? '' : '#!/bin/bash\nset -e\n' + script + '\n';
+    if (Config.IS_WINDOWS) {
+      fullScript = fullScript.replace(/\n/g, '\r\n');
+    }
+    writeFile(scriptPath, fullScript, { encoding: 'utf8', mode: 755 }).then(() => {
       if (!run) {
         return;
       }
-      sudo.exec(`${path}`, options, (error, stdout, stderr) => {
+      sudo.exec(scriptPath, options, (error, stdout, stderr) => {
         if (!run) {
           return;
         }
-        observer.next({ stdout, stderr });
         if (error) {
           observer.error(error);
+        } else {
+          observer.next({ stdout, stderr });
         }
         observer.complete();
       });

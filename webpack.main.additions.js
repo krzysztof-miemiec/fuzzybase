@@ -1,7 +1,9 @@
 module.exports = {
   devServer: {
+    inline: true,
+    port: 9080,
     historyApiFallback: true,
-    stats: 'minimal',
+    stats: 'none',
   },
   module: {
     rules: [
@@ -9,7 +11,7 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'tslint-loader',
         options: {
-          emitErrors: true
+          emitErrors: false
         },
       }
     ],
