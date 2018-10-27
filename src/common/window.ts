@@ -35,7 +35,6 @@ export function createRendererWindow({ window: windowOptions, show }: RendererWi
   if (show) {
     window.webContents.on('did-finish-load', () => {
       window.show();
-      window.focus();
     });
   }
 

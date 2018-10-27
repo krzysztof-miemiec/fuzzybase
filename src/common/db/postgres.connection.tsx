@@ -21,12 +21,30 @@ export class PostgresConnection {
 
   onError = (error: Error) => {
     this.isConnected = false;
-    connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.DISCONNECTED, error.message);
+    this.dispatch(connectionStatusChanged(
+      this.clientId,
+      this.connectionId,
+      ConnectionStatus.DISCONNECTED,
+      error.message
+    ));
   };
 
-  onDisconnected = () => {
+  onConnected = () => {
+    this.isConnected = true;
+    this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTED));
+  };
+
+  onDisconnected = (error?: Error) => {
+    if (!this.isConnected) {
+      return;
+    }
     this.isConnected = false;
-    this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.DISCONNECTED));
+    this.dispatch(connectionStatusChanged(
+      this.clientId,
+      this.connectionId,
+      ConnectionStatus.DISCONNECTED,
+      error && error.message
+    ));
   };
 
   reconnect = () => {
@@ -35,37 +53,36 @@ export class PostgresConnection {
       .then(() => this.client.connect())
       .then(() => this.isConnected = true)
       .catch(this.onError);
-};
+  };
 
-connect = () => {
-  this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTING));
-  this.client.connect()
-    .then(() => {
-      this.isConnected = true;
-      this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTED));
-    })
-    .catch(this.onError);
-};
+  connect = () => {
+    this.dispatch(connectionStatusChanged(this.clientId, this.connectionId, ConnectionStatus.CONNECTING));
+    this.client.connect()
+      .then(this.onConnected)
+      .catch(() => {
+        // Connection error is handled in ondisconnected
+      });
+  };
 
-disconnect = () => {
-  if (this.isConnected) {
-    this.client.end();
-  }
-};
+  disconnect = () => {
+    if (this.isConnected) {
+      this.client.end();
+    }
+  };
 
-query = (id: string, queryString: string) => {
-  if (!this.isConnected) {
-    throw new Error('Client is not connected to database.');
-  }
-  return this.client.query({
-    text: queryString,
-    rowMode: 'array',
-  }).then(result => {
-    this.dispatch(postgresQueryResult(
-      this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result, undefined
-    ));
-  }).catch(error => {
-    this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));
-  });
-};
+  query = (id: string, queryString: string) => {
+    if (!this.isConnected) {
+      throw new Error('Client is not connected to database.');
+    }
+    return this.client.query({
+      text: queryString,
+      rowMode: 'array',
+    }).then(result => {
+      this.dispatch(postgresQueryResult(
+        this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result, undefined
+      ));
+    }).catch(error => {
+      this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));
+    });
+  };
 }

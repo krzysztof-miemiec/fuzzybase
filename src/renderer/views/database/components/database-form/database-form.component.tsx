@@ -58,7 +58,7 @@ export class DatabaseForm extends React.Component<Props, State> {
     return database ? (
       <DialogFrame
         headline="Create a new database connection"
-        footer={this.renderFooter}
+        footer={this.renderFooter()}
       >
         <FormInput
           form={database}

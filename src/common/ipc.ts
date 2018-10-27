@@ -13,8 +13,7 @@ export const setIpcReceiver = (receiver?: WebContents | IpcRenderer) => ipcRecei
 
 export const listen = (): Observable<Action<any>> => {
   const subject = new Subject<Action<any>>();
-  ipc.on(DIRECT_CHANNEL, (_event, payloadString) => {
-    const payload: CommunicationAction = JSON.parse(payloadString);
+  ipc.on(DIRECT_CHANNEL, (_event, payload: CommunicationAction) => {
     subject.next(payload);
   });
   return subject.asObservable();
@@ -24,7 +23,7 @@ export const send = (action: Action<any>) => {
   if (!ipcReceiver) {
     throw new Error('Receiver not set yet.');
   }
-  ipcReceiver.send(DIRECT_CHANNEL, JSON.stringify(action));
+  ipcReceiver.send(DIRECT_CHANNEL, action);
 };
 
 export const sendAction$ = (action$: ActionsObservable<any>) => action$

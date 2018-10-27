@@ -17,7 +17,8 @@ export const styles = createStyles({
     flexFlow: 'column',
     background: R.color.white,
     borderRadius: R.dimen.corner,
-    margin: R.dimen.spacing * 6,
+    marginTop: R.dimen.spacing * 6,
+    marginBottom: R.dimen.spacing * 2,
     ...noDraggable,
   },
   link: {
@@ -46,5 +47,7 @@ export const styles = createStyles({
     flexFlow: 'column',
     padding: R.dimen.spacing * 2,
   },
-  footer: {},
+  footer: {
+    paddingBottom: R.dimen.spacing * 2,
+  },
 });

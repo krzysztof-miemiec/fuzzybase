@@ -39,7 +39,12 @@ const commandExists = (command) => new Promise(resolve => {
 const findPaths = async (): Promise<Paths> => {
   const result = { extensionPath: '', libraryPath: '' };
   return new Promise<Paths>(async (resolve, reject) => {
-    await commandExists(PG_CONFIG_COMMAND);
+    if (!await commandExists(PG_CONFIG_COMMAND)) {
+      return reject(
+        `The "${PG_CONFIG_COMMAND}" command was not found on your system.` +
+        `Please add PostgreSQL binary directory to your PATH environmental variable.`
+      );
+    }
     exec(PG_CONFIG_COMMAND, { encoding: 'utf8', windowsHide: true, timeout: 5000 },
       (error, stdout, stderr) => {
         if (error) {

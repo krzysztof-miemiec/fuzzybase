@@ -27,7 +27,6 @@ export class ResultsDom extends ResultsComponent {
 
   render() {
     const { data, headers } = this.props;
-    console.log('resultsdom render');
     return (
       <div className={styles.table}>
         <Table>

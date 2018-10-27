@@ -57,10 +57,7 @@ const createAppWindow = () => {
     // Setup development app
     appWindow.webContents.openDevTools();
     appWindow.webContents.on('devtools-opened', () => {
-      appWindow.focus();
-      setImmediate(() => {
-        appWindow.focus();
-      });
+      setImmediate(() => appWindow.focus());
     });
     appWindow.webContents.on('context-menu', (_e, props) => {
       const { x, y } = props;

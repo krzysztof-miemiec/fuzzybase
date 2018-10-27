@@ -81,7 +81,7 @@ export class DatabaseTitle extends React.Component<Props, State> {
           {!database.meta.hasFuzzyExtension && (
             <MenuItem onClick={this.onOpenInstallExtensionDialog}>Install Fuzzy extension</MenuItem>
           )}
-          <MenuItem onClick={onCloseConnection}>Close</MenuItem>
+          <MenuItem onClick={onCloseConnection}>Disconnect</MenuItem>
         </Menu>
         <InstallExtensionDialog
           isOpen={isExtensionDialogOpen}
