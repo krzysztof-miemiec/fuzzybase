@@ -15,6 +15,7 @@ import {
   InstallFuzzyExtensionAction,
   setMetadata
 } from './db.actions';
+import { ExtensionInstallation } from './db.state';
 
 interface Paths {
   extensionPath: string;
@@ -24,9 +25,9 @@ interface Paths {
 const PG_CONFIG_COMMAND = 'pg_config';
 const execOptions = { encoding: 'utf8', windowsHide: true, timeout: 5000 };
 
-const setInstallationProgress = (databaseId: string, message: string) => of(setMetadata({
+const setInstallationStatus = (databaseId: string, extensionInstallation: ExtensionInstallation) => of(setMetadata({
   databaseId,
-  extensionInstallation: { status: 'progress', message },
+  extensionInstallation,
 }));
 
 const commandExists = (command) => new Promise(resolve => {
@@ -69,7 +70,10 @@ const findPaths = async (): Promise<Paths> => {
 };
 
 const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<any> => merge(
-  setInstallationProgress(databaseId, 'Copying extension files to temporary location...'),
+  setInstallationStatus(databaseId, {
+    status: 'progress',
+    message: 'Copying extension files to temporary location...',
+  }),
   zip(
     copy(
       path.join(R.string.extension, R.string.fuzzyControl),
@@ -97,11 +101,17 @@ const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<a
 );
 
 const extractExtension$ = (connectionId: string, databaseId: string): Observable<any> => merge(
-  setInstallationProgress(databaseId, 'Looking for PostgreSQL extension paths...'),
+  setInstallationStatus(databaseId, {
+    status: 'progress',
+    message: 'Looking for PostgreSQL extension paths...',
+  }),
   from(findPaths())
     .pipe(
       switchMap(paths => merge(
-        setInstallationProgress(databaseId, 'Copying extension files to PostgreSQL directories...'),
+        setInstallationStatus(databaseId, {
+          status: 'progress',
+          message: 'Copying extension files to PostgreSQL directories...',
+        }),
         zip(
           copy(
             path.join(R.string.extension, R.string.fuzzyControl),
@@ -120,7 +130,10 @@ const extractExtension$ = (connectionId: string, databaseId: string): Observable
           mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION))
         )
       )),
-      catchError(error => of({ status: error.message, error: true }))
+      catchError(error => setInstallationStatus(databaseId, {
+        status: 'error',
+        message: error.message,
+      }))
     )
 );
 

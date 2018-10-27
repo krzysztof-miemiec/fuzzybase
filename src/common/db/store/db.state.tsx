@@ -18,7 +18,7 @@ export interface DatabaseQueryState {
 }
 
 export interface DatabaseConnectionState {
-  clientId: string;
+  databaseId: string;
   connectionId: string;
   status: ConnectionStatus;
   error?: string;

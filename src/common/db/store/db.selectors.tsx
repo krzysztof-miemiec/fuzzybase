@@ -21,11 +21,11 @@ export const getTables = (state: Partial<DatabaseMetadata>) => state.tables;
 
 export const getFirstDatabaseConnection = (databaseId: string) => (state: DbState) =>
   Object.values(state.connections)
-    .find(connection => connection.clientId === databaseId);
+    .find(connection => connection.databaseId === databaseId);
 
 export const getDatabaseConnections =  (databaseId: string) => (state: DbState) =>
   Object.values(state.connections)
-    .filter(connection => connection.clientId === databaseId);
+    .filter(connection => connection.databaseId === databaseId);
 
 export const getStatus = (state: DatabaseConnectionState) => state.status;
 

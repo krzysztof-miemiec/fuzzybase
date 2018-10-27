@@ -92,7 +92,7 @@ class DatabaseComponent extends React.PureComponent<Props, State> {
 
   navigateToQuery = (queryId: string) => {
     const { history, connection } = this.props;
-    history.replace(PATHS.QUERY(connection.clientId, connection.connectionId, queryId));
+    history.replace(PATHS.QUERY(connection.databaseId, connection.connectionId, queryId));
   };
 
   onTableClick = (_: Table) => {

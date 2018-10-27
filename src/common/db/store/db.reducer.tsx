@@ -25,7 +25,7 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
     case DB_ACTIONS.CONNECTION_STATUS_CHANGED: {
       return {
         ...state,
-        clientId: action.clientId,
+        databaseId: action.clientId,
         connectionId: action.connectionId,
         status: action.status,
         error: action.error,

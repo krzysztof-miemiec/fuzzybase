@@ -44,12 +44,12 @@ export const processCreateFuzzyExtensionResponse = (
 
       const hasError = (error?: string) => action.error && action.error.match(new RegExp(error, 'i'));
       const setInstallationStatus = (extensionInstallation: ExtensionInstallation) => of(setMetadata({
-        databaseId: connection.clientId, extensionInstallation,
+        databaseId: connection.databaseId, extensionInstallation,
       }));
       const installExtension = () => of(installFuzzyExtension(
         connection.connectionId,
         InstallationStage.EXTRACT_FILES,
-        connection.clientId
+        connection.databaseId
       ));
 
       const installationSuccessful = !hasError();
@@ -106,7 +106,7 @@ export const processSearchPathQueryResponse = (action$: Observable<any>, state$:
       const DEFAULT_SEARCH_PATH = '"$user", public';
       const searchPathString = (action.result && action.result.rows[0][0] || DEFAULT_SEARCH_PATH);
       return setMetadata({
-        databaseId: connection.clientId,
+        databaseId: connection.databaseId,
         searchPath: searchPathString.split(',')
           .map(str => str.replace(/^"(.*)"$/, '$1')),
       });
@@ -143,7 +143,7 @@ export const processFuzzyFunctionsQueryResponse = (action$: Observable<any>, sta
         }
       }
       return setMetadata({
-        databaseId: connection.clientId,
+        databaseId: connection.databaseId,
         hasFuzzyExtension,
         fuzzyTypes,
       });
@@ -170,7 +170,7 @@ export const processUserNameQueryResponse = (action$: Observable<any>, state$: S
       const user = rows[0][0];
 
       return setMetadata({
-        databaseId: connection.clientId,
+        databaseId: connection.databaseId,
         user,
       });
     })
@@ -209,7 +209,7 @@ export const processTablesQueryResponse = (action$: Observable<any>, state$: Sta
       const udtName = field('udt_name');
       const dataType = field('data_type');
       return setMetadata({
-        databaseId: connection.clientId,
+        databaseId: connection.databaseId,
         tables: rows
           .map((row: any[]) => ({
             catalog: catalogName(row),
