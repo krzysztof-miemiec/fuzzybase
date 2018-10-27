@@ -79,7 +79,7 @@ const installExtension$ = (
     switchMap(([action, state]) => concat(
       of(setMetadata({
         databaseId: select(state, getDatabasesState, getConnection(action.connectionId)).clientId,
-        extensionInstallation: { status: 'Adding extension to the database...' },
+        extensionInstallation: { status: 'progress', message: 'Adding extension to the database...' },
       })),
       createFuzzyExtension(action.connectionId),
       processCreateFuzzyExtensionResponse(action$, state$, action.stage === InstallationStage.CREATE_EXTENSION)

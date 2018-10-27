@@ -1,4 +1,3 @@
-import { isString } from 'lodash';
 import { ofType, StateObservable } from 'redux-observable';
 import { concat, Observable, of } from 'rxjs';
 import { filter, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
@@ -14,7 +13,7 @@ import {
   setMetadata
 } from './db.actions';
 import { getConnection, getDatabasesState } from './db.selectors';
-import { FuzzyFunction, FuzzyType } from './db.state';
+import { ExtensionInstallation, FuzzyFunction, FuzzyType } from './db.state';
 import { findFieldByName } from './db.utils';
 
 export const USER_NAME_QUERY_ID = 'user_name';
@@ -40,23 +39,48 @@ export const processCreateFuzzyExtensionResponse = (
     filter(action => action.queryId === CREATE_FUZZY_EXTENSION_ID),
     take(1),
     withLatestFrom(state$),
-    switchMap(([action, state]) => {
+    switchMap(([action, state]): Observable<any> => {
       const connection = select(state, getDatabasesState, getConnection(action.connectionId));
-      const installationSuccessful = !action.error;
-      const alreadyInstalled = isString(action.error) && action.error.match(/extension "fuzzy" already exists/);
 
-      return (
-        installationSuccessful || alreadyInstalled
-          ? concat(
-          of(setMetadata({ databaseId: connection.clientId, extensionInstallation: { success: true } })),
-          of(getMetadata(action.connectionId))
-          )
-          : (
-            extractOnFailure
-              ? of(installFuzzyExtension(connection.connectionId, InstallationStage.EXTRACT_FILES, connection.clientId))
-              : of(setMetadata({ databaseId: connection.clientId, extensionInstallation: { error: true } }))
-          )
-      ) as Observable<any>;
+      const hasError = (error?: string) => action.error && action.error.match(new RegExp(error, 'i'));
+      const setInstallationStatus = (extensionInstallation: ExtensionInstallation) => of(setMetadata({
+        databaseId: connection.clientId, extensionInstallation,
+      }));
+
+      const installationSuccessful = !hasError();
+
+      if (!installationSuccessful) {
+        if (hasError('extension "fuzzy" already exists')) {
+          return setInstallationStatus({
+            status: 'error', message: 'Extension is already installed.',
+          });
+        }
+        if (hasError('permission denied to create extension')) {
+          return setInstallationStatus({
+            status: 'error', message: 'Current PostgreSQL user doesn\'t have permissions to install the extension.',
+          });
+        }
+        if (extractOnFailure && (
+          hasError('could not open extension control file') ||
+          hasError('has no installation script nor update path') ||
+          hasError('no such file or')
+        )) {
+          return of(installFuzzyExtension(
+            connection.connectionId,
+            InstallationStage.EXTRACT_FILES,
+            connection.clientId
+          ));
+        }
+        return setInstallationStatus({
+          status: 'error', message: 'An error occurred: ' + action.error,
+        });
+      }
+      return concat(
+        of(getMetadata(action.connectionId)),
+        setInstallationStatus({
+          status: 'success',
+        })
+      );
     })
   );
 

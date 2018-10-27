@@ -1,0 +1,70 @@
+@font-face {
+  font-family: "Fira Code";
+  src: url(../assets/fonts/FiraCode-Light.ttf);
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Fira Code";
+  src: url(../assets/fonts/FiraCode-Regular.ttf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Fira Code";
+  src: url(../assets/fonts/FiraCode-Medium.ttf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Fira Code";
+  src: url(../assets/fonts/FiraCode-Bold.ttf);
+  font-weight: 700;
+}
+
+body {
+  user-select: none;
+  cursor: default;
+  margin: 0;
+}
+
+#app {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+$scrollbar-border-color: rgba(#fff, .5);
+$scrollbar-color: rgba(#000, .5);
+$scrollbar-inactive-border-color: rgba(#fff, .1);
+$scrollbar-inactive-color: rgba(#000, .1);
+$scrollbar-size: 10px;
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  position: absolute;
+  left:0;
+  width: $scrollbar-size;
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-inactive-color;
+  border: 1px solid $scrollbar-inactive-border-color;
+  border-radius: $scrollbar-size / 2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $scrollbar-color;
+  border: 1px solid $scrollbar-border-color;
+}

@@ -165,25 +165,24 @@ class InstallExtensionDialogComponent extends React.PureComponent<Props, State> 
   };
 
   renderInstallation = (installation: ExtensionInstallation) => {
-    const isDone = installation.success || installation.error;
     return (
       <>
         <DialogTitle id="alert-dialog-title">
-          Installing Fuzzybase extension...
+          Fuzzy extension installation
         </DialogTitle>
         <DialogContent>
-          {!isDone && (
+          {installation.status === 'progress' && (
             <LinearProgress className={styles.progressBar} variant="indeterminate" />
           )}
           <DialogContentText id="alert-dialog-description">
-            {installation.success
+            {installation.status === 'success'
               ? 'Installation has been finished successfully.'
-              : installation.status}
+              : installation.message}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={this.onCloseClick} color="primary">
-            {isDone
+            {installation.status !== 'progress'
               ? 'Close'
               : 'Abort'
             }

@@ -95,7 +95,7 @@ export class DatabaseForm extends React.Component<Props, State> {
         <View style={styles.divider} />
         <FormInput
           form={database}
-          id="username"
+          id="user"
           label={i18n.t('database.username')}
           onValueChange={this.onValueChange}
         />

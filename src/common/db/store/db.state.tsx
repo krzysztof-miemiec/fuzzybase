@@ -14,7 +14,7 @@ export interface DatabaseQueryState {
   start: number;
   end: number;
   result?: PostgresResponse;
-  error?: Error;
+  error?: string;
 }
 
 export interface DatabaseConnectionState {
@@ -33,7 +33,6 @@ export interface PostgresClientConfiguration {
   password?: string;
   port?: number;
   host?: string;
-  connectionString?: string;
 }
 
 export interface Column {
@@ -61,9 +60,8 @@ export interface FuzzyType {
 }
 
 export interface ExtensionInstallation {
-  status?: string;
-  success?: boolean;
-  error?: boolean;
+  status: 'progress' | 'success' | 'error';
+  message?: string;
 }
 
 export interface DatabaseMetadata {

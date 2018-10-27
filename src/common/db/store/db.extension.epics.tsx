@@ -24,10 +24,10 @@ interface Paths {
 const PG_CONFIG_COMMAND = 'pg_config';
 const execOptions = { encoding: 'utf8', windowsHide: true, timeout: 5000 };
 
-const setInstallationStatus = (databaseId: string, status: string) => setMetadata({
+const setInstallationProgress = (databaseId: string, message: string) => of(setMetadata({
   databaseId,
-  extensionInstallation: { status },
-});
+  extensionInstallation: { status: 'progress', message },
+}));
 
 const commandExists = (command) => new Promise(resolve => {
   const execCommand = process.platform === 'win32'
@@ -69,7 +69,7 @@ const findPaths = async (): Promise<Paths> => {
 };
 
 const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<any> => merge(
-  of(setInstallationStatus(databaseId, 'Copying extension files to temporary location...')),
+  setInstallationProgress(databaseId, 'Copying extension files to temporary location...'),
   zip(
     copy(
       path.join(R.string.extension, R.string.fuzzyControl),
@@ -97,11 +97,11 @@ const extractExtensionAsSudo$ = (databaseId: string, paths: Paths): Observable<a
 );
 
 const extractExtension$ = (connectionId: string, databaseId: string): Observable<any> => merge(
-  of(setInstallationStatus(databaseId, 'Looking for PostgreSQL extension paths...')),
+  setInstallationProgress(databaseId, 'Looking for PostgreSQL extension paths...'),
   from(findPaths())
     .pipe(
       switchMap(paths => merge(
-        of(setInstallationStatus(databaseId, 'Copying extension files to PostgreSQL directories...')),
+        setInstallationProgress(databaseId, 'Copying extension files to PostgreSQL directories...'),
         zip(
           copy(
             path.join(R.string.extension, R.string.fuzzyControl),

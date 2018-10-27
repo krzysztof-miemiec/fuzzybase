@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Config } from '../common/config';
 import { App } from './app.component';
-import './main.css';
+import './main.scss';
 
 (window as any).ELECTRON_DISABLE_SECURITY_WARNINGS = Config.IS_DEV;
 

@@ -79,7 +79,7 @@ export class PostgresConnection {
       rowMode: 'array',
     }).then(result => {
       this.dispatch(postgresQueryResult(
-        this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result, undefined
+        this.connectionId, id, Array.isArray(result) ? result[result.length - 1] : result
       ));
     }).catch(error => {
       this.dispatch(postgresQueryResult(this.connectionId, id, undefined, error.message));

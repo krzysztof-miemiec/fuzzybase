@@ -77,7 +77,7 @@ export const postgresQuery = (connectionId: string, queryId: string, query: stri
 
 // DB/QUERY_RESULT
 export type PostgresQueryResultAction = ReturnType<typeof postgresQueryResult>;
-export const postgresQueryResult = (connectionId: string, queryId: string, result: PostgresResponse, error: any) =>
+export const postgresQueryResult = (connectionId: string, queryId: string, result: PostgresResponse, error?: string) =>
   createAction(DB_ACTIONS.QUERY_RESULT, { connectionId, queryId, result, error });
 
 // DB/GET_METADATA
