@@ -1,4 +1,15 @@
 // eslint-disable global-require
+import * as logger from 'electron-log';
+
+console.log = (...args: any[]) => logger.log(args);
+console.info = (...args: any[]) => logger.info(args);
+console.debug = (...args: any[]) => logger.debug(args);
+console.warn = (...args: any[]) => logger.warn(args);
+console.error = (...args: any[]) => logger.error(args);
+logger.transports.console.level = false;
+logger.transports.rendererConsole.level = 'verbose';
+// logger.transports.rendererConsole.format = msg => msg.data;
+
 import { app, BrowserWindow, Menu } from 'electron';
 import { Config } from '../common/config';
 import { listen, setIpcReceiver } from '../common/ipc';
@@ -8,8 +19,6 @@ import { store } from './main.store';
 import { setMenu } from './menu';
 
 let appWindow: BrowserWindow = null;
-
-const isMac = process.platform === 'darwin';
 
 const installExtensions = (): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {
@@ -38,7 +47,7 @@ const createAppWindow = () => {
       width: 1024,
       height: 728,
       title: Config.NAME,
-      titleBarStyle: isMac ? 'hidden' : 'default',
+      titleBarStyle: Config.IS_MAC ? 'hidden' : 'default',
     },
     show: true,
   });
@@ -85,7 +94,7 @@ app.on('activate', () => {
   }
 });
 app.on('window-all-closed', () => {
-  if (!isMac) {
+  if (!Config.IS_MAC) {
     app.quit();
   }
 });

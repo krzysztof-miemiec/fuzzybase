@@ -70,8 +70,8 @@ export const processCreateFuzzyExtensionResponse = (
         }
         if (extractOnFailure && (
           hasError('could not open extension control file') ||
-          hasError('has no installation script nor update path') ||
-          hasError('no such file or')
+          hasError('no installation script nor update path') ||
+          hasError('no such file')
         )) {
           return installExtension();
         }

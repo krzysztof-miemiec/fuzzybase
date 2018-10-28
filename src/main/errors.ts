@@ -6,9 +6,8 @@ if (!Config.IS_DEV) {
 }
 
 export const handleError = error => {
-  if (Config.IS_DEV) {
-    console.error(error);
-  } else {
+  console.error(error);
+  if (!Config.IS_DEV) {
     Raven.captureException(error);
   }
 };

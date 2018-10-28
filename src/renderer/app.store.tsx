@@ -2,6 +2,7 @@ import { createBrowserHistory } from 'history';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { createLogger } from 'redux-logger';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { persistStore } from 'redux-persist';
 import * as databases from '../common/db/store/app';
@@ -17,6 +18,8 @@ import { layoutEpics } from './views/layout/store/layout.epics';
 const reduxModule = require('redux');
 reduxModule.__DO_NOT_USE__ActionTypes.INIT = '@@redux/INIT';
 reduxModule.__DO_NOT_USE__ActionTypes.REPLACE = '@@redux/REPLACE';
+
+const DEBUG = true;
 
 function configureStore() {
 
@@ -44,7 +47,10 @@ function configureStore() {
   const store: AppStore = createStore(rootReducer, initialState, composeWithDevTools(
     applyMiddleware(
       routerMiddleware(history),
-      epicMiddleware
+      epicMiddleware,
+      DEBUG ? createLogger({
+        // ...options
+      }) : undefined
     )
   ));
   const persistor = persistStore(store);

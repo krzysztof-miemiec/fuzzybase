@@ -1,5 +1,7 @@
-import { dialog, remote } from 'electron';
+import { app, dialog, remote } from 'electron';
 import { createReadStream, createWriteStream, stat, writeFile as fsWriteFile } from 'fs';
+import * as mkdirp from 'mkdirp';
+import * as path from 'path';
 import { Observable, Subject, Subscriber } from 'rxjs';
 import { promisify } from 'util';
 import SaveDialogOptions = Electron.SaveDialogOptions;
@@ -7,6 +9,8 @@ import SaveDialogOptions = Electron.SaveDialogOptions;
 export interface CopyStatus {
   progress: number;
 }
+
+export const getTempPath = (): string => path.join(app.getPath('temp'), 'fuzzybase');
 
 export const showSaveDialog = (options: SaveDialogOptions): Observable<string> => {
   const subject = new Subject<string>();
@@ -32,8 +36,7 @@ export const copy = (source: string, destination: string): Observable<CopyStatus
       done = true;
       fn(args);
     };
-
-    stat(source, (err, stats) => {
+    mkdirp(path.dirname(destination), err => {
       if (err) {
         subscriber.error(err);
         subscriber.complete();
@@ -43,30 +46,41 @@ export const copy = (source: string, destination: string): Observable<CopyStatus
         subscriber.complete();
         return;
       }
-      const totalSize = stats.size || 1;
-      let readSize = 0;
-      const readStream = createReadStream(source);
-      const writeStream = createWriteStream(destination);
-      const onError = onlyOnce((err: Error) => {
-        subscriber.error(err);
-        subscriber.complete();
-      });
-      readStream.on('data', data => {
-        if (done) {
+      stat(source, (err, stats) => {
+        if (err) {
+          subscriber.error(err);
+          subscriber.complete();
           return;
         }
-        readSize += data.length;
-        subscriber.next({ progress: Math.min(1, readSize / totalSize) });
+        if (done) {
+          subscriber.complete();
+          return;
+        }
+        const totalSize = stats.size || 1;
+        let readSize = 0;
+        const readStream = createReadStream(source);
+        const writeStream = createWriteStream(destination);
+        const onError = onlyOnce((err: Error) => {
+          subscriber.error(err);
+          subscriber.complete();
+        });
+        readStream.on('data', data => {
+          if (done) {
+            return;
+          }
+          readSize += data.length;
+          subscriber.next({ progress: Math.min(1, readSize / totalSize) });
+        });
+        readStream.on('error', onError);
+        writeStream.on('error', onError);
+        readStream.on('end', onlyOnce(() => {
+          writeStream.close();
+          readStream.close();
+          subscriber.next({ progress: 1 });
+          subscriber.complete();
+        }));
+        readStream.pipe(writeStream);
       });
-      readStream.on('error', onError);
-      writeStream.on('error', onError);
-      readStream.on('end', onlyOnce(() => {
-        writeStream.close();
-        readStream.close();
-        subscriber.next({ progress: 1 });
-        subscriber.complete();
-      }));
-      readStream.pipe(writeStream);
     });
     return () => done = true;
   });
