@@ -5,7 +5,7 @@ module.exports = {
     inline: true,
     port: 9080,
     historyApiFallback: true,
-    stats: 'minimal',
+    stats: 'none',
   },
   module: {
     rules: [

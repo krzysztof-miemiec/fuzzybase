@@ -2,6 +2,7 @@ import { ofType, StateObservable } from 'redux-observable';
 import { concat, Observable, of } from 'rxjs';
 import { filter, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../../../renderer/store';
+import { debug } from '../../utils/rx.utils';
 import { select } from '../../utils/selector.util';
 import {
   DB_ACTIONS,
@@ -85,7 +86,8 @@ export const processCreateFuzzyExtensionResponse = (
           status: 'success',
         })
       );
-    })
+    }),
+    debug('after install 0')
   );
 
 export const getSearchPath = (connectionId: string) => of(postgresQuery(

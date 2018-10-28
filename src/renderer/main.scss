@@ -47,6 +47,7 @@ $scrollbar-size: 10px;
   position: absolute;
   left:0;
   width: $scrollbar-size;
+  height: $scrollbar-size;
 }
 
 ::-webkit-scrollbar-corner,

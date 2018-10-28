@@ -19,6 +19,7 @@
   },
   "keywords": [
     "postgres",
+    "fuzzy",
     "electron",
     "react",
     "flux",
@@ -30,11 +31,11 @@
   },
   "main": "./dist/main/main.js",
   "scripts": {
-    "postinstall": "node ./scripts/patch.js && electron-builder install-app-deps",
+    "postinstall": "node ./scripts/patch.js && electron-builder install-app-deps && electron-webpack dll",
     "purge": "yarn clean && rimraf 'node_modules' && yarn",
     "clean": "rimraf '{release,dist,.tscache,reports,screenshots}' && yarn clean:extension",
     "clean:extension": "rimraf '{extension/**/*.so,extension/**/*.o,extension/fuzzy--*.sql,extension/windows/.vs,extension/windows/**/x64,extension/**/*.user}'",
-    "build": "yarn clean && yarn build:js && yarn build:extension-zip && yarn build:extension && yarn build:packages",
+    "build": "yarn build:js && yarn build:extension-zip && yarn build:extension && yarn build:packages",
     "build:js": "electron-webpack",
     "build:packages": "electron-builder -mwl",
     "build:extension": "(cd ./extension && make everything)",
@@ -49,7 +50,15 @@
     },
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js",
-      "webpackDllConfig": "webpack.main.additions.js"
+      "webpackDllConfig": "webpack.renderer.additions.js",
+      "dll": [
+        "react",
+        "react-dom",
+        "react-router",
+        "redux",
+        "rxjs",
+        "monaco-editor"
+      ]
     }
   },
   "build": {
@@ -103,7 +112,6 @@
   "dependencies": {
     "@material-ui/core": "3.1.0",
     "@material-ui/icons": "3.0.1",
-    "@types/react-data-grid": "^4.0.0",
     "ag-grid-community": "^19.0.0",
     "ag-grid-react": "^19.0.0",
     "classnames": "2.2.6",
@@ -150,6 +158,7 @@
     "@types/mkdirp": "^0.5.2",
     "@types/pg": "7.4.10",
     "@types/react": "16.4.18",
+    "@types/react-data-grid": "^4.0.0",
     "@types/react-redux": "6.0.9",
     "@types/react-router": "4.0.32",
     "@types/react-router-redux": "5.0.16",
@@ -157,8 +166,8 @@
     "@types/uuid": "3.4.4",
     "@types/which": "^1.3.1",
     "cpx": "1.5.0",
-    "electron": "3.0.3",
-    "electron-builder": "20.28.4",
+    "electron": "3.0.6",
+    "electron-builder": "20.29.0",
     "electron-webpack": "2.3.1",
     "electron-webpack-ts": "2.1.1",
     "jest": "23.6.0",
@@ -170,7 +179,7 @@
     "tslint-loader": "3.6.0",
     "tslint-react": "3.6.0",
     "typescript": "3.1.3",
-    "webpack": "4.20.2",
+    "webpack": "4.23.1",
     "webpack-build-notifier": "0.1.30"
   },
   "resolutions": {

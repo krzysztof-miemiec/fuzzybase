@@ -7,6 +7,7 @@ import * as which from 'which';
 import { Config } from '../../config';
 import { R } from '../../resources';
 import { copy, getTempPath } from '../../utils/files.util';
+import { debug } from '../../utils/rx.utils';
 import { sudoExec } from '../../utils/sudo.util';
 import {
   DB_ACTIONS,
@@ -32,6 +33,7 @@ const setInstallationStatus = (databaseId: string, extensionInstallation: Extens
 const resolveCommand = (command: string) => new Promise<string>((resolve, reject) => {
   which(command, { all: false }, (err, path) => {
     if (err) {
+      console.log(err);
       return reject(new Error(`Could not find "${command}" executable.`));
     }
     return resolve(path);
@@ -68,6 +70,7 @@ const extractExtensionAsSudo$ = (connectionId: string, databaseId: string, paths
     status: 'progress',
     message: 'Copying extension files to temporary location...',
   }),
+  debug('extract as sudo'),
   zip(
     copy(
       path.join(R.string.extension, R.string.fuzzyControl),
@@ -82,6 +85,7 @@ const extractExtensionAsSudo$ = (connectionId: string, databaseId: string, paths
       path.join(getTempPath(), R.string.fuzzyTargetLibrary)
     )
   ).pipe(
+    debug('copied to temp'),
     switchMap(() => {
       const cp = Config.IS_WINDOWS ? 'xcopy' : 'cp';
       const temp = getTempPath();
@@ -93,7 +97,9 @@ const extractExtensionAsSudo$ = (connectionId: string, databaseId: string, paths
         name: 'Fuzzybase',
       });
     }),
-    mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION))
+    debug('sudo copy done'),
+    mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION)),
+    debug('recreate after sudo')
   )
 );
 
@@ -102,7 +108,9 @@ const extractExtension$ = (connectionId: string, databaseId: string): Observable
     status: 'progress',
     message: 'Looking for PostgreSQL extension paths...',
   }),
+  debug('extract extension'),
   from(findPaths()).pipe(
+    debug('after find paths'),
     switchMap(paths => merge(
       setInstallationStatus(databaseId, {
         status: 'progress',
@@ -122,10 +130,13 @@ const extractExtension$ = (connectionId: string, databaseId: string): Observable
           path.join(paths.libraryPath, R.string.fuzzyTargetLibrary)
         )
       ).pipe(
+        debug('copied files successfully'),
         mapTo(installFuzzyExtension(connectionId, InstallationStage.RECREATE_EXTENSION)),
+        debug('after recreate'),
         catchError(() => extractExtensionAsSudo$(connectionId, databaseId, paths))
       )
     )),
+    debug('after extract'),
     catchError(error => setInstallationStatus(databaseId, {
       status: 'error',
       message: error.message,
@@ -137,5 +148,5 @@ export const extractFuzzyExtension$ = (action$: Observable<any>) => action$
   .pipe(
     ofType<InstallFuzzyExtensionAction>(DB_ACTIONS.INSTALL_FUZZY_EXTENSION),
     filter(action => action.stage === InstallationStage.EXTRACT_FILES),
-    switchMap((action) => extractExtension$(action.connectionId, action.databaseId))
+    switchMap(action => extractExtension$(action.connectionId, action.databaseId))
   );

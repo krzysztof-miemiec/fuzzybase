@@ -15,7 +15,7 @@ import { extractFuzzyExtension$ } from './db.extension.epics';
 const errorHandler = (err) => of(fatalError(err));
 const handleEventualErrors = result => result.type === DB_ACTIONS.FATAL_ERROR
   ? of(result)
-  : of(result).pipe(ignoreElements());
+  : (of(result).pipe(ignoreElements()));
 
 const connect$ = (action$: ActionsObservable<DbAction>) => action$
   .ofType<ConnectAction>(DB_ACTIONS.CONNECT)

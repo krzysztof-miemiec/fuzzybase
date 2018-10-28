@@ -15,6 +15,7 @@ export const listen = (): Observable<Action<any>> => {
   const subject = new Subject<Action<any>>();
   ipc.on(DIRECT_CHANNEL, (_event, payload: CommunicationAction) => {
     subject.next(payload);
+    console.log('received', payload);
   });
   return subject.asObservable();
 };

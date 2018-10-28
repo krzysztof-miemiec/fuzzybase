@@ -19,7 +19,7 @@ const reduxModule = require('redux');
 reduxModule.__DO_NOT_USE__ActionTypes.INIT = '@@redux/INIT';
 reduxModule.__DO_NOT_USE__ActionTypes.REPLACE = '@@redux/REPLACE';
 
-const DEBUG = true;
+const DEBUG = false;
 
 function configureStore() {
 
@@ -45,13 +45,11 @@ function configureStore() {
   const epicMiddleware = createEpicMiddleware();
 
   const store: AppStore = createStore(rootReducer, initialState, composeWithDevTools(
-    applyMiddleware(
+    applyMiddleware(...[
       routerMiddleware(history),
       epicMiddleware,
-      DEBUG ? createLogger({
-        // ...options
-      }) : undefined
-    )
+      DEBUG ? createLogger() : undefined,
+    ].filter(Boolean))
   ));
   const persistor = persistStore(store);
   epicMiddleware.run(epics);

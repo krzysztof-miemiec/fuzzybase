@@ -4,7 +4,7 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { mainDbEpics } from '../common/db/store/main.db.epics';
 import { sendAction$ } from '../common/ipc';
 
-const DEBUG = true;
+const DEBUG = false;
 
 // REDUCERS
 const reducer: Reducer = (state) => state || {};
@@ -20,13 +20,11 @@ const epics = combineEpics<any>(
 // ------------------------------------
 const epicMiddleware = createEpicMiddleware();
 const configureStore = () => {
-  const store =  createStore(reducer, compose(
-    applyMiddleware(
+  const store = createStore(reducer, compose(
+    applyMiddleware(...[
       epicMiddleware,
-      DEBUG ? createLogger({
-        // ...options
-      }) : undefined
-    )
+      DEBUG ? createLogger() : undefined,
+    ].filter(Boolean))
   ));
   epicMiddleware.run(epics);
   return store;
