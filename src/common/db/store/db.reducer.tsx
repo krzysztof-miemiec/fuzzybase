@@ -68,6 +68,7 @@ const connectionReducer = (state: void | DatabaseConnectionState, action: DbActi
         queries: objectCollectionReducer(state.queries).put(action.queryId, query => ({
           ...query,
           end: Date.now(),
+          ipcTime: (action as any)._ipc_time,
           result: action.result,
           error: action.error,
         })),

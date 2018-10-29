@@ -143,7 +143,10 @@ class QueryComponent extends React.PureComponent<Props, State> {
           <Typography variant="caption">
             {data
               ? (query.end && query.start) || (!query.end && !query.start)
-                ? `Rows: ${data.length.toLocaleString()}, Execution time: ${
+                ? `Rows: ${data.length.toLocaleString()}, ${query.ipcTime
+                  ? `App communication time: ${query.ipcTime} ms, `
+                  : ''
+                  }Execution time: ${
                   (query.end - query.start || 0).toLocaleString()} ms`
                 : 'Query in progress...'
               : 'No query data.'

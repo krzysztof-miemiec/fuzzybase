@@ -119,45 +119,27 @@ export class CodeInput extends React.PureComponent<Props, State> {
           handleHeight={true}
           onResize={this.onResize}
         >
-          <MonacoEditor
-            editorDidMount={this.editorDidMount}
-            width={width}
-            height={height}
-            language="pgsql"
-            theme="vs"
-            value={text}
-            options={{
-              lineNumbers: 'on',
-              selectOnLineNumbers: true,
-              fontFamily: 'Fira Code',
-              fontSize: 13,
-              fontLigatures: true,
-              folding: true,
-              contextmenu: false,
-              showFoldingControls: 'always',
-            }}
-            onChange={this.onChange}
-          />
-          {/*<Controlled
-          value={text}
-          className={styles.input}
-          options={{
-            mode: 'text/x-pgsql',
-            theme: 'idea',
-            lineNumbers: true,
-            tabSize: 2,
-            extraKeys: {
-              'Ctrl-Space': 'autocomplete',
-            },
-            showCursorWhenSelecting: true,
-            lineWrapping: true,
-          }}
-          onBeforeChange={(_editor, _data, value) => {
-            if (onTextChanged) {
-              onTextChanged(value);
-            }
-          }}
-        />*/}
+          <View style={styles.wrapper}>
+            <MonacoEditor
+              editorDidMount={this.editorDidMount}
+              width={width}
+              height={height}
+              language="pgsql"
+              theme="vs"
+              value={text}
+              options={{
+                lineNumbers: 'on',
+                selectOnLineNumbers: true,
+                fontFamily: 'Fira Code',
+                fontSize: 13,
+                fontLigatures: true,
+                folding: true,
+                contextmenu: false,
+                showFoldingControls: 'always',
+              }}
+              onChange={this.onChange}
+            />
+          </View>
         </ReactResizeDetector>
       </View>
     );

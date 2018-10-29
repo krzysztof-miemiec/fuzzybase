@@ -13,6 +13,7 @@ export interface DatabaseQueryState {
   query: string;
   start: number;
   end: number;
+  ipcTime?: number;
   result?: PostgresResponse;
   error?: string;
 }

@@ -3,7 +3,6 @@ import { Action } from 'redux';
 import { ActionsObservable } from 'redux-observable';
 import { Observable, Subject } from 'rxjs';
 import { ignoreElements, tap } from 'rxjs/operators';
-import { CommunicationAction } from './actions';
 import { Config } from './config';
 
 export const DIRECT_CHANNEL = 'direct';
@@ -13,9 +12,9 @@ export const setIpcReceiver = (receiver?: WebContents | IpcRenderer) => ipcRecei
 
 export const listen = (): Observable<Action<any>> => {
   const subject = new Subject<Action<any>>();
-  ipc.on(DIRECT_CHANNEL, (_event, payload: CommunicationAction, time: number) => {
+  ipc.on(DIRECT_CHANNEL, (_event, payload: any, time: number) => {
+    payload._ipc_time = Date.now() - time;
     subject.next(payload);
-    console.log(`IPC Time (${payload.type}) ${Date.now() - time}`);
   });
   return subject.asObservable();
 };
