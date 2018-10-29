@@ -13,9 +13,9 @@ export const setIpcReceiver = (receiver?: WebContents | IpcRenderer) => ipcRecei
 
 export const listen = (): Observable<Action<any>> => {
   const subject = new Subject<Action<any>>();
-  ipc.on(DIRECT_CHANNEL, (_event, payload: CommunicationAction) => {
+  ipc.on(DIRECT_CHANNEL, (_event, payload: CommunicationAction, time: number) => {
     subject.next(payload);
-    console.log('received', payload);
+    console.log(`IPC Time (${payload.type}) ${Date.now() - time}`);
   });
   return subject.asObservable();
 };
@@ -24,7 +24,7 @@ export const send = (action: Action<any>) => {
   if (!ipcReceiver) {
     throw new Error('Receiver not set yet.');
   }
-  ipcReceiver.send(DIRECT_CHANNEL, action);
+  ipcReceiver.send(DIRECT_CHANNEL, action, Date.now());
 };
 
 export const sendAction$ = (action$: ActionsObservable<any>) => action$

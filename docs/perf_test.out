@@ -1,0 +1,210 @@
+There are 942080 rows in the table.
+Fuzzy age query
+SELECT * FROM heart_disease WHERE age~=('age'|>'old')>0;
+341,980
+332,807
+444,568
+371,337
+369,449
+357,831
+401,431
+336,437
+338,699
+338,521
+365,694
+403,301
+347,234
+345,804
+360,461
+342,828
+342,686
+439,911
+401,648
+378,042
+# No listing
+148,751
+143,040
+141,154
+142,845
+149,108
+142,666
+140,154
+143,306
+141,851
+156,686
+161,383
+157,591
+164,512
+160,789
+157,007
+162,676
+157,068
+157,183
+166,310
+157,128
+
+Standard age query
+SELECT * FROM heart_disease WHERE age>60 AND age<120;
+386,523
+349,929
+404,487
+425,972
+363,142
+338,668
+332,093
+396,167
+346,022
+362,727
+334,059
+356,431
+328,899
+380,046
+365,375
+329,068
+339,280
+334,742
+352,853
+326,545
+# No listing
+71,031
+70,972
+72,216
+73,192
+71,194
+71,038
+71,082
+75,809
+71,660
+72,344
+71,483
+71,257
+71,175
+73,203
+71,613
+71,691
+74,403
+83,357
+67,480
+62,863
+
+
+Fuzzy group by pressure query
+SELECT
+    trestbps~>'blood_pressure' AS pressure,
+    COUNT(*) AS COUNT
+    FROM heart_disease
+    GROUP BY pressure;
+25149,872
+23878,419
+22061,176
+21997,078
+22429,374
+21959,635
+21791,267
+21907,154
+23390,141
+22509,365
+22448,682
+22749,862
+22697,475
+22427,890
+22366,350
+22381,122
+22187,193
+22220,663
+22396,719
+22218,602
+Standard group by pressure query
+SELECT
+    CASE
+      WHEN trestbps<80 THEN 'hypotension'
+       WHEN trestbps<120 THEN 'normal'
+       WHEN trestbps<140 THEN 'prehypertension'
+       WHEN trestbps<170 THEN 'hypertension stage 1'
+       WHEN trestbps<180 THEN 'hypertension stage 2'
+       ELSE 'high crisis (emergency)'
+    END
+        AS pressure,
+        COUNT(*) AS COUNT
+    FROM heart_disease
+    GROUP BY pressure;
+120,551
+116,008
+120,235
+116,433
+118,805
+117,548
+114,633
+115,318
+123,330
+116,237
+118,776
+118,073
+119,670
+116,401
+114,575
+118,382
+115,074
+118,910
+116,287
+118,889
+Fuzzy group by normal pressure query
+SELECT
+    trestbps~=('blood_pressure'|>'normal') AS pressure,
+    COUNT(*) AS COUNT
+    FROM heart_disease
+    GROUP BY pressure;
+245,572
+244,818
+253,132
+248,250
+242,105
+248,929
+246,038
+252,474
+245,182
+275,839
+262,611
+261,061
+264,702
+265,911
+263,082
+253,004
+262,025
+260,750
+263,953
+259,634
+Standard group by normal pressure query
+SELECT
+    CASE
+        WHEN (trestbps IS NULL) THEN NULL
+        WHEN (trestbps<75) THEN 0.0
+        WHEN (trestbps<80) THEN (trestbps-75.0)/5.0
+        WHEN (trestbps<120) THEN 1.0
+        WHEN (trestbps<130) THEN (trestbps-130.0)/-10.0
+        ELSE 0.0
+    END
+     AS pressure,
+     COUNT(*) AS count
+    FROM heart_disease
+    GROUP BY pressure;
+152,074
+156,422
+154,294
+152,451
+151,387
+154,251
+153,466
+152,851
+156,563
+152,897
+145,421
+150,886
+148,914
+145,608
+148,460
+146,860
+145,323
+148,435
+152,020
+145,406

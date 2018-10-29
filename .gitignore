@@ -21,5 +21,6 @@ Thumbs.db
 **/.idea/*
 !.idea/runConfigurations
 
-# Word
+# Office
 ~$*.docx
+~$*.xlsx
