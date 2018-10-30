@@ -136,7 +136,7 @@ class QueryComponent extends React.PureComponent<Props, State> {
         />
         <div className={styles.tableContainer}>
           {data && (
-            <ResultsVirtual headers={headers} data={data} />
+            <ResultsVirtual headers={headers} data={data} query={query} />
           )}
         </div>
         <div className={styles.statusBar}>

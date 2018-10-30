@@ -21,24 +21,17 @@ export class ResultsVirtual extends ResultsComponent {
   };
 
   render() {
-    const { headers, data } = this.props;
+    const { headers, data, query } = this.props;
 
-    console.time('Data preparation');
+    const time = Date.now();
     const columnDefs = headers
       ? headers.map((header, index) => ({
         field: index.toString(),
         headerName: header.name,
       }))
       : [];
-    const rowData = data
-      ? data.map(row => row.reduce((object, value, index) => {
-        object[index.toString()] = value;
-        return object;
-      }, {}))
-      : undefined;
-    console.timeEnd('Data preparation');
+    const rowData = data;
 
-    console.time('Render');
     const result = (
       <View style={[styles.container, 'ag-theme-fresh']}>
         <AgGridReact
@@ -55,7 +48,9 @@ export class ResultsVirtual extends ResultsComponent {
         />
       </View>
     );
-    console.timeEnd('Render');
+    if (rowData && query.end - query.start > 0) {
+      console.log('VDOM:\t' + (Date.now() - time) + '\tQ:\t' + (query.end - query.start) + '\tIPC:\t' + query.ipcTime);
+    }
     return result;
   }
 }

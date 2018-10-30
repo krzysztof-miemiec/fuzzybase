@@ -26,8 +26,9 @@ export class ResultsDom extends ResultsComponent {
   };
 
   render() {
-    const { data, headers } = this.props;
-    return (
+    const { data, headers, query } = this.props;
+    const time = Date.now();
+    const result = (
       <div className={styles.table}>
         <Table>
           <TableHead>
@@ -42,5 +43,9 @@ export class ResultsDom extends ResultsComponent {
         </Table>
       </div>
     );
+    if (query.end - query.start > 0) {
+      console.log('DOM:\t' + (Date.now() - time) + '\tQ:\t' + (query.end - query.start) + '\tIPC:\t' + query.ipcTime);
+    }
+    return result;
   }
 }
