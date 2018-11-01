@@ -42,7 +42,8 @@
     "build:extension-zip": "yarn clean:extension && zip -r ./static/fuzzy.zip ./extension",
     "start": "electron-webpack dev",
     "start:prod": "yarn build:prod && yarn build:release",
-    "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish"
+    "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish",
+    "graph": "depcruise --exclude '^node_modules' --output-type dot src/**/*.tsx --ts-config | dot -T svg > dependencygraph.svg"
   },
   "electronWebpack": {
     "main": {
@@ -166,6 +167,7 @@
     "@types/uuid": "3.4.4",
     "@types/which": "^1.3.1",
     "cpx": "1.5.0",
+    "dependency-cruiser": "^4.6.1",
     "electron": "3.0.6",
     "electron-builder": "20.29.0",
     "electron-webpack": "2.3.1",

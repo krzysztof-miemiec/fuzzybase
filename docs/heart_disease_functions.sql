@@ -18,13 +18,11 @@ SELECT add_fuzzy_function('total_cholesterol', '0~200\210', 'desirable')
 UNION SELECT add_fuzzy_function('total_cholesterol', '190/200~240\250', 'borderline high')
 UNION SELECT add_fuzzy_function('total_cholesterol', '230/240~1000', 'high');
 
-SELECT add_fuzzy_function('age', '0~10\18', 'very young')
-UNION SELECT add_fuzzy_function('age', '10/16~21\25', 'young')
-UNION SELECT add_fuzzy_function('age', '21~30\35', 'young adult')
-UNION SELECT add_fuzzy_function('age', '30/35~45\55', 'adult')
-UNION SELECT add_fuzzy_function('age', '50/60~60\65', 'old adult')
-UNION SELECT add_fuzzy_function('age', '60/70~100\120', 'old')
-UNION SELECT add_fuzzy_function('age', '90/100~200', 'very old');
+SELECT add_fuzzy_function('age', '0~12\15', 'child')
+UNION SELECT add_fuzzy_function('age', '10/12~16\19', 'young')
+UNION SELECT add_fuzzy_function('age', '17/19~39\45', 'young adult')
+UNION SELECT add_fuzzy_function('age', '35/40~60\65', 'adult')
+UNION SELECT add_fuzzy_function('age', '60/65~200', 'old');
 
 CREATE VIEW heart_disease_explained AS (
   SELECT
