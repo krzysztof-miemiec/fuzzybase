@@ -43,7 +43,8 @@
     "start": "electron-webpack dev",
     "start:prod": "yarn build:prod && yarn build:release",
     "lint": "mkdir -p reports && tslint './src/**/*.{js,ts,tsx}' --project ./ --format json --out './reports/lint.json' || tslint './src/**/*.{js,ts,tsx}' --project ./ --format stylish",
-    "graph": "depcruise --exclude '^node_modules' --output-type dot src/**/*.tsx --ts-config | dot -T svg > dependencygraph.svg"
+    "graph": "depcruise --exclude '^node_modules' --output-type dot src/**/*.tsx --ts-config | dot -T svg > dependencygraph.svg",
+    "extension:test": "(cd ./extension/ && make everything); (cd ./docs && psql -d test -f perf_test_setup.sql) && ./docs/perf_test.sh"
   },
   "electronWebpack": {
     "main": {
