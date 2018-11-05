@@ -145,27 +145,11 @@ DROP FUNCTION IF EXISTS get_fuzzy_name(
 CREATE FUNCTION get_fuzzy_name(
   input FLOAT8,
   type_name VARCHAR(64)
-
 ) RETURNS VARCHAR(64) AS $$
-DECLARE
-  type_id fuzzy.types.id%TYPE;
-  deg FLOAT8;
-  result_name VARCHAR(64);
-BEGIN
-  type_id := get_fuzzy_type(type_name);
-  SELECT
-      degree(input, fun) AS d, name
-    INTO
-      deg, result_name
-    FROM fuzzy.functions
-    WHERE type=type_id
-    ORDER BY d DESC LIMIT 1;
-  IF deg=0 THEN
-    RETURN NULL;
-  END IF;
-  RETURN result_name;
-END;
-$$ LANGUAGE plpgsql IMMUTABLE STRICT;
+  SELECT f.name FROM fuzzy.functions f, fuzzy.types t
+  WHERE t.name=type_name AND t.id=f.type AND degree(input, f.fun)>0
+  ORDER BY degree(input, f.fun) DESC LIMIT 1;
+$$ LANGUAGE sql STABLE;
 
 CREATE OPERATOR ~> (
   PROCEDURE = get_fuzzy_name,
